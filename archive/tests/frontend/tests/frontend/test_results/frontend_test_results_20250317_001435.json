@@ -1,0 +1,493 @@
+{
+  "orchestrator_type": "FrontendTestOrchestrator",
+  "timestamp": "2025-03-17 00:13:49.183902",
+  "agent_results": {
+    "ui_component": {
+      "agent_type": "UIComponentAgent",
+      "timestamp": "2025-03-17 00:13:49.183919",
+      "components_tested": 10,
+      "components_passed": 0,
+      "components_failed": 10,
+      "tests": [
+        {
+          "component": "Dashboard",
+          "timestamp": "2025-03-17 00:13:49.425023",
+          "rendering_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:49.496785",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:50.346265",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:50.950790",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "FileUpload",
+          "timestamp": "2025-03-17 00:13:50.953351",
+          "rendering_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:50.982292",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:51.584790",
+            "status": "failed",
+            "interactions": [
+              {
+                "description": "Click file input",
+                "success": false,
+                "error": "Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"input[type=file]\") to be visible\n"
+              }
+            ],
+            "errors": [
+              "Error in Click file input: Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"input[type=file]\") to be visible\n"
+            ]
+          },
+          "api_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:57.202579",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Navbar",
+          "timestamp": "2025-03-17 00:13:57.204999",
+          "rendering_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:57.235526",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-17 00:13:57.851952",
+            "status": "failed",
+            "interactions": [
+              {
+                "description": "Click home link",
+                "success": false,
+                "error": "Locator.wait_for: Error: strict mode violation: locator(\"a[href='/']\") resolved to 2 elements:\n    1) <a href=\"/\" class=\"flex items-center space-x-2\">\u2026</a> aka get_by_role(\"link\", name=\"RecruitX\")\n    2) <a href=\"/\" aria-current=\"page\" class=\"text-primary-600 font-medium\">Dashboard</a> aka get_by_role(\"link\", name=\"Dashboard\")\n\nCall log:\n  - waiting for locator(\"a[href='/']\") to be visible\n"
+              },
+              {
+                "description": "Click resume analysis link",
+                "success": false,
+                "error": "Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href='/resume-analysis']\") to be visible\n"
+              },
+              {
+                "description": "Click job analysis link",
+                "success": false,
+                "error": "Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href='/job-analysis']\") to be visible\n"
+              },
+              {
+                "description": "Click matching link",
+                "success": false,
+                "error": "Locator.wait_for: Error: strict mode violation: locator(\"a[href='/matching']\") resolved to 3 elements:\n    1) <a href=\"/matching\" class=\"text-gray-600 hover:text-primary-500 transition-colors duration-200\">Matching</a> aka get_by_role(\"link\", name=\"Matching\", exact=True)\n    2) <a href=\"/matching\" class=\"inline-block bg-white text-primary-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200\">Get Started</a> aka get_by_role(\"link\", name=\"Get Started\")\n    3) <a href=\"/matching\" class=\"mt-auto btn btn-primary\">Start Matching</a> aka get_by_role(\"link\", name=\"Start Matching\")\n\nCall log:\n  - waiting for locator(\"a[href='/matching']\") to be visible\n"
+              }
+            ],
+            "errors": [
+              "Error in Click home link: Locator.wait_for: Error: strict mode violation: locator(\"a[href='/']\") resolved to 2 elements:\n    1) <a href=\"/\" class=\"flex items-center space-x-2\">\u2026</a> aka get_by_role(\"link\", name=\"RecruitX\")\n    2) <a href=\"/\" aria-current=\"page\" class=\"text-primary-600 font-medium\">Dashboard</a> aka get_by_role(\"link\", name=\"Dashboard\")\n\nCall log:\n  - waiting for locator(\"a[href='/']\") to be visible\n",
+              "Error in Click resume analysis link: Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href='/resume-analysis']\") to be visible\n",
+              "Error in Click job analysis link: Locator.wait_for: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"a[href='/job-analysis']\") to be visible\n",
+              "Error in Click matching link: Locator.wait_for: Error: strict mode violation: locator(\"a[href='/matching']\") resolved to 3 elements:\n    1) <a href=\"/matching\" class=\"text-gray-600 hover:text-primary-500 transition-colors duration-200\">Matching</a> aka get_by_role(\"link\", name=\"Matching\", exact=True)\n    2) <a href=\"/matching\" class=\"inline-block bg-white text-primary-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200\">Get Started</a> aka get_by_role(\"link\", name=\"Get Started\")\n    3) <a href=\"/matching\" class=\"mt-auto btn btn-primary\">Start Matching</a> aka get_by_role(\"link\", name=\"Start Matching\")\n\nCall log:\n  - waiting for locator(\"a[href='/matching']\") to be visible\n"
+            ]
+          },
+          "api_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:08.503791",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Footer",
+          "timestamp": "2025-03-17 00:14:08.506790",
+          "rendering_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:08.536405",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:09.143430",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:09.755508",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ResumeAnalysis",
+          "timestamp": "2025-03-17 00:14:09.758686",
+          "rendering_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-17 00:14:09.787918",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-17 00:14:10.398772",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-17 00:14:11.007595",
+            "status": "failed",
+            "api_calls": [],
+            "errors": [
+              "Error simulating file upload: Locator.set_input_files: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"input[type=file]\")\n",
+              "No API calls detected"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "JobAnalysis",
+          "timestamp": "2025-03-17 00:14:17.609800",
+          "rendering_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-17 00:14:17.645254",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-17 00:14:18.254601",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-17 00:14:18.862678",
+            "status": "failed",
+            "api_calls": [],
+            "errors": [
+              "No API calls detected"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Matching",
+          "timestamp": "2025-03-17 00:14:20.435110",
+          "rendering_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-17 00:14:20.469475",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-17 00:14:21.083080",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-17 00:14:21.694587",
+            "status": "failed",
+            "api_calls": [],
+            "errors": [
+              "No API calls detected"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ApiStatus",
+          "timestamp": "2025-03-17 00:14:23.279032",
+          "rendering_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-17 00:14:23.316510",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-17 00:14:23.863834",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-17 00:14:24.407458",
+            "status": "failed",
+            "api_calls": [],
+            "errors": [
+              "No API calls detected"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "SkillList",
+          "timestamp": "2025-03-17 00:14:25.923927",
+          "rendering_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:25.959890",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:26.570573",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-17 00:14:27.181081",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "NotFound",
+          "timestamp": "2025-03-17 00:14:27.183174",
+          "rendering_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-17 00:14:27.213277",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "'APIRequestContext' object has no attribute 'all'"
+            ]
+          },
+          "interaction_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-17 00:14:27.816901",
+            "status": "skipped",
+            "interactions": [
+              {
+                "description": "No interactions defined for this component"
+              }
+            ],
+            "errors": []
+          },
+          "api_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-17 00:14:28.424056",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        }
+      ]
+    },
+    "performance": {
+      "agent_type": "PerformanceAgent",
+      "timestamp": "2025-03-17 00:14:28.445865",
+      "routes_tested": 1,
+      "page_load_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-17 00:14:28.679274",
+          "load_times": [
+            0.7551097869873047
+          ],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: Page.evaluate: SyntaxError: Illegal return statement\n    at eval (<anonymous>)\n    at UtilityScript.evaluate (<anonymous>:234:30)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+          ],
+          "avg_load_time": 0.7551097869873047,
+          "median_load_time": 0.7551097869873047
+        }
+      ],
+      "responsiveness_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-17 00:14:29.554157",
+          "interactions": [
+            {
+              "description": "Link click",
+              "response_time_ms": 160.509033203125,
+              "action": "click"
+            }
+          ],
+          "errors": [
+            "Error in Button click: Locator.click: Timeout 5000ms exceeded.\nCall log:\n  - waiting for locator(\"button\").first\n  -     - locator resolved to <button type=\"button\" class=\"text-gray-600 hover:text-primary-500 focus:outline-none\">\u2026</button>\n  -   - attempting click action\n  -     2 \u00d7 waiting for element to be visible, enabled and stable\n  -       - element is not visible\n  -     - retrying click action\n  -     - waiting 20ms\n  -     2 \u00d7 waiting for element to be visible, enabled and stable\n  -       - element is not visible\n  -     - retrying click action\n  -       - waiting 100ms\n  -     10 \u00d7 waiting for element to be visible, enabled and stable\n  -        - element is not visible\n  -      - retrying click action\n  -        - waiting 500ms\n"
+          ]
+        }
+      ],
+      "summary": {
+        "avg_load_time_all_routes": 0.7551097869873047,
+        "slowest_route": [
+          "Home",
+          0.7551097869873047
+        ],
+        "fastest_route": [
+          "Home",
+          0.7551097869873047
+        ]
+      },
+      "errors": []
+    }
+  },
+  "system_metrics": {
+    "total_components_tested": 10,
+    "total_routes_tested": 1,
+    "completion_time": "2025-03-17 00:14:35.436768",
+    "component_status": {
+      "ui_components": "0/10 passed"
+    }
+  }
+}

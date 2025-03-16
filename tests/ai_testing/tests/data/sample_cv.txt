@@ -1,0 +1,52 @@
+John Doe
+Software Engineer
+
+Contact:
+Email: john.doe@example.com
+Phone: (555) 123-4567
+Location: San Francisco, CA
+
+Summary:
+Experienced software engineer with 5+ years of expertise in full-stack development, specializing in React, Node.js, and Python. Strong background in building scalable web applications and implementing AI/ML solutions.
+
+Experience:
+
+Senior Software Engineer | TechCorp Inc. | 2020-Present
+- Led development of microservices architecture using Node.js and Docker
+- Implemented ML-powered recommendation system using TensorFlow
+- Reduced API response times by 40% through optimization
+- Mentored junior developers and conducted code reviews
+
+Software Engineer | StartupX | 2018-2020
+- Developed React-based frontend for e-commerce platform
+- Built RESTful APIs using Django and PostgreSQL
+- Implemented CI/CD pipeline using Jenkins
+- Improved test coverage from 60% to 95%
+
+Education:
+B.S. Computer Science | Stanford University | 2014-2018
+- GPA: 3.8/4.0
+- Relevant coursework: AI, Machine Learning, Distributed Systems
+
+Skills:
+- Languages: Python, JavaScript, TypeScript, Java
+- Frontend: React, Vue.js, HTML5, CSS3
+- Backend: Node.js, Django, Flask
+- Database: PostgreSQL, MongoDB, Redis
+- Tools: Docker, Kubernetes, Git, AWS
+- ML/AI: TensorFlow, PyTorch, scikit-learn
+
+Projects:
+- AI Chat Assistant: Built open-source chatbot using GPT-3
+- Data Visualization Dashboard: Created real-time analytics platform
+- Blockchain Explorer: Developed tool for tracking transactions
+
+Certifications:
+- AWS Certified Solutions Architect
+- Google Cloud Professional Developer
+- MongoDB Certified Developer
+
+Languages:
+- English (Native)
+- Spanish (Professional)
+- Mandarin (Basic) 

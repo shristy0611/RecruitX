@@ -1,0 +1,20 @@
+# Testing Framework
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-xdist>=3.5.0  # Parallel test execution
+
+# Video Recording
+opencv-python>=4.9.0
+numpy>=1.24.0
+
+# Monitoring
+psutil>=5.9.0  # System metrics
+memory-profiler>=0.61.0
+
+# Reporting
+rich>=13.7.0  # Console output
+jinja2>=3.1.0  # Report templates
+
+# Development
+black>=24.2.0  # Code formatting
+pylint>=3.0.0  # Code linting 

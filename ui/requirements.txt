@@ -1,0 +1,30 @@
+# UI Framework
+streamlit>=1.32.0  # Modern Python web framework
+streamlit-extras>=0.4.0  # Additional Streamlit components
+streamlit-option-menu>=0.3.6  # Navigation menu component
+
+# Data Visualization
+plotly>=5.19.0  # Interactive charts
+altair>=5.2.0  # Declarative statistical visualization
+
+# UI Components
+streamlit-ace>=0.1.1  # Code editor component
+streamlit-chat>=0.1.1  # Chat interface component
+streamlit-custom-notification>=0.1.1  # Toast notifications
+streamlit-modal>=0.1.1  # Modal dialogs
+
+# Styling and Theming
+streamlit-custom-css>=0.1.1  # Custom CSS support
+streamlit-theme>=0.1.1  # Theme customization
+
+# Accessibility
+streamlit-accessibility>=0.1.1  # A11y improvements
+
+# Animation and Interaction
+streamlit-lottie>=0.0.5  # Lottie animations
+streamlit-autorefresh>=0.0.1  # Auto-refresh components
+
+# Development Tools
+watchdog>=4.0.0  # File system events monitoring
+black>=24.2.0  # Code formatting
+pylint>=3.0.0  # Code linting 

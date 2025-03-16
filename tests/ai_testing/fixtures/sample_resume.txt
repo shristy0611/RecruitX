@@ -1,0 +1,60 @@
+JOHN DOE
+Software Developer
+
+Contact:
+Email: john.doe@example.com
+Phone: (123) 456-7890
+LinkedIn: linkedin.com/in/johndoe
+GitHub: github.com/johndoe
+
+SUMMARY
+-----------
+Experienced Software Developer with 5 years of experience in full-stack development specializing in Python, JavaScript, and cloud technologies. Strong problem-solving skills with a focus on creating efficient and maintainable code.
+
+SKILLS
+-----------
+Programming Languages: Python, JavaScript, TypeScript, HTML, CSS
+Frameworks/Libraries: React, Django, Flask, Node.js, Express
+Databases: PostgreSQL, MongoDB, Redis
+DevOps: Docker, Kubernetes, CI/CD, AWS, GCP
+Tools: Git, Jira, VS Code, PyCharm
+Methodologies: Agile, Scrum, Test-Driven Development
+
+EXPERIENCE
+-----------
+Senior Software Developer
+ABC Technologies Inc. | Jan 2021 - Present
+• Led development of a microservices-based application that increased system performance by 40%
+• Implemented CI/CD pipelines that reduced deployment time by 60%
+• Mentored junior developers and conducted code reviews
+
+Software Developer
+XYZ Solutions | Mar 2018 - Dec 2020
+• Developed RESTful APIs using Django and Flask for internal and customer-facing applications
+• Created responsive front-end interfaces using React and TypeScript
+• Collaborated with cross-functional teams to deliver projects on time
+
+Junior Developer
+Tech Innovations | Jun 2016 - Feb 2018
+• Assisted in developing full-stack web applications using Python and JavaScript
+• Participated in code reviews and quality assurance processes
+• Fixed bugs and implemented new features in existing applications
+
+EDUCATION
+-----------
+Bachelor of Science in Computer Science
+University of Technology | 2012 - 2016
+• GPA: 3.8/4.0
+• Relevant coursework: Data Structures, Algorithms, Database Systems, Web Development
+
+PROJECTS
+-----------
+• Data Visualization Dashboard: Created an analytics dashboard using React and D3.js
+• Inventory Management System: Developed a backend system using Django and PostgreSQL
+• Personal Blog: Built a blog platform with Next.js and Markdown support
+
+CERTIFICATIONS
+-----------
+• AWS Certified Developer - Associate (2020)
+• Microsoft Certified: Azure Developer Associate (2019)
+• Python Professional Certification (2018) 

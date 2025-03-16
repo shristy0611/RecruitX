@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecruitX API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .status-loading {
+      background-color: #fff9c2;
+    }
+    .status-success {
+      background-color: #d4edda;
+    }
+    .status-error {
+      background-color: #f8d7da;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      overflow: auto;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>RecruitX API Connection Test</h1>
+  
+  <div class="card">
+    <h2>Direct API Test</h2>
+    <div id="direct-test" class="status status-loading">
+      Testing direct API connection...
+    </div>
+    <div id="direct-result"></div>
+  </div>
+  
+  <div class="card">
+    <h2>Proxied API Test</h2>
+    <div id="proxy-test" class="status status-loading">
+      Testing proxied API connection...
+    </div>
+    <div id="proxy-result"></div>
+  </div>
+
+  <script>
+    // Helper function to display results
+    function displayResult(containerId, resultId, success, message, data) {
+      const container = document.getElementById(containerId);
+      const resultContainer = document.getElementById(resultId);
+      
+      container.textContent = message;
+      container.className = `status status-${success ? 'success' : 'error'}`;
+      
+      if (data) {
+        const pre = document.createElement('pre');
+        pre.textContent = JSON.stringify(data, null, 2);
+        resultContainer.innerHTML = '';
+        resultContainer.appendChild(pre);
+      }
+    }
+
+    // Test direct API connection
+    async function testDirectAPI() {
+      try {
+        const response = await fetch('http://localhost:8000/health');
+        const data = await response.json();
+        displayResult(
+          'direct-test',
+          'direct-result',
+          true,
+          '✅ Direct API connection successful!',
+          data
+        );
+      } catch (error) {
+        displayResult(
+          'direct-test',
+          'direct-result',
+          false,
+          '❌ Direct API connection failed',
+          {
+            error: error.message,
+            details: 'This may fail due to CORS if the API doesnt allow direct connections'
+          }
+        );
+      }
+    }
+
+    // Test proxied API connection
+    async function testProxiedAPI() {
+      try {
+        const response = await fetch('/api/health');
+        const data = await response.json();
+        displayResult(
+          'proxy-test',
+          'proxy-result',
+          true,
+          '✅ Proxied API connection successful!',
+          data
+        );
+      } catch (error) {
+        displayResult(
+          'proxy-test',
+          'proxy-result',
+          false,
+          '❌ Proxied API connection failed',
+          {
+            error: error.message,
+            details: 'This suggests an issue with the Vite proxy configuration'
+          }
+        );
+      }
+    }
+
+    // Run the tests
+    testDirectAPI();
+    testProxiedAPI();
+  </script>
+</body>
+</html> 

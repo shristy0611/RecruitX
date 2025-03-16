@@ -1,0 +1,583 @@
+{
+  "orchestrator_type": "TestOrchestrator",
+  "timestamp": "2025-03-16 23:33:17.423686",
+  "agent_results": {
+    "file_processing": {
+      "agent_type": "FileProcessingAgent",
+      "timestamp": "2025-03-16 23:33:17.423696",
+      "tests": {
+        "format_tests": {
+          "pdf": {
+            "format": ".pdf",
+            "file_size": 312,
+            "mime_type": "application/pdf",
+            "status_code": 200,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Gemini API returned an invalid response.",
+                "The API response could not be parsed as JSON.  This suggests a problem with the Gemini API's output, not necessarily the request.",
+                "The 'content_preview' indicates that the resume content was missing from the request to the Gemini API."
+              ],
+              "suggestions": [
+                "Check the Gemini API's documentation to ensure the request format and parameters are correct.",
+                "Verify that the resume content is being properly sent in the request to the Gemini API.  The error message explicitly states that the resume text is missing.",
+                "Inspect the Gemini API's logs for more detailed error messages or debugging information.",
+                "Retry the request after ensuring the resume content is included.  Consider using a tool to inspect the request and response to identify discrepancies.",
+                "If the problem persists, contact Gemini API support for assistance."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "programming skills",
+                "Test content"
+              ],
+              "validation_errors": [
+                "API error: Invalid response from Gemini API",
+                "Could not parse API response as JSON"
+              ]
+            }
+          },
+          "docx": {
+            "format": ".docx",
+            "file_size": 36618,
+            "mime_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "status_code": 200,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Gemini API returned an invalid response.",
+                "The API response could not be parsed as JSON.",
+                "The root cause is likely an issue with the request sent to the Gemini API (possibly missing or incorrect resume content)."
+              ],
+              "suggestions": [
+                "Verify that the resume content is being correctly sent to the Gemini API.",
+                "Check the format of the request sent to the Gemini API. Ensure it adheres to the API's specifications.",
+                "Inspect the request logs to identify any errors or missing parameters.",
+                "Review the Gemini API documentation to understand the expected request format and error handling.",
+                "If using a library to interact with the Gemini API, ensure it's correctly configured and up-to-date.",
+                "Try sending a test request with a known good resume to isolate whether the problem is with the resume content or the API interaction."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "programming skills",
+                "Test content"
+              ],
+              "validation_errors": [
+                "API request failed",
+                "Invalid JSON response received"
+              ]
+            }
+          },
+          "txt": {
+            "format": ".txt",
+            "file_size": 44,
+            "mime_type": "text/plain",
+            "status_code": 200,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "The API call to Gemini was unsuccessful despite a 200 status code.",
+                "The response indicates a failure to parse the Gemini API's response as JSON, even though a JSON snippet is provided in `content_preview`.",
+                "The Gemini API returned an unexpected or malformed response.  The root cause needs investigation on the Gemini API side.",
+                "The resume data is incomplete:  'experience' and 'education' sections are empty."
+              ],
+              "suggestions": [
+                "Investigate the Gemini API's response handling.  Check for potential errors in the API call itself (e.g., incorrect headers, authentication issues, rate limits).",
+                "Examine the Gemini API's logs for errors related to the request that produced this response.",
+                "Verify the Gemini API's endpoint and parameters are correct.",
+                "If the issue persists, contact Gemini API support for assistance.",
+                "Improve the resume data by adding experience and education details.  The current resume is insufficient for most purposes.",
+                "Implement more robust error handling in the application to gracefully handle unexpected responses from external APIs, including better parsing and error reporting."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "Test content with programming skills"
+              ],
+              "validation_errors": [
+                "API response indicates an error: 'Invalid response from Gemini API'.  The expected content was not found in the parsed JSON preview."
+              ]
+            }
+          }
+        },
+        "invalid_formats": {
+          "invalid_format_tests": [
+            {
+              "format": ".xyz",
+              "status_code": 400,
+              "error": "Unsupported file format: .xyz",
+              "analysis": {
+                "is_success": true,
+                "issues": [],
+                "suggestions": [
+                  "Format validation working as expected"
+                ]
+              }
+            },
+            {
+              "format": ".exe",
+              "status_code": 400,
+              "error": "Unsupported file format: .exe",
+              "analysis": {
+                "is_success": true,
+                "issues": [],
+                "suggestions": [
+                  "Format validation working as expected"
+                ]
+              }
+            },
+            {
+              "format": ".zip",
+              "status_code": 400,
+              "error": "Unsupported file format: .zip",
+              "analysis": {
+                "is_success": true,
+                "issues": [],
+                "suggestions": [
+                  "Format validation working as expected"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "matching": {
+      "agent_type": "MatchingAgent",
+      "timestamp": "2025-03-16 23:33:28.228416",
+      "tests": {
+        "basic_matching": [
+          {
+            "status_code": 200,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                "The response body contains a `match_score` of 0, indicating no match, which contradicts the previewed JSON showing a match score of 90.",
+                "The `matching_skills` and `missing_skills` arrays are empty, inconsistent with the previewed JSON.",
+                "The previewed JSON suggests a successful skill match, while the actual response indicates failure. This points to an internal inconsistency or error in the API's response handling."
+              ],
+              "suggestions": [
+                "Investigate the Gemini API integration to identify why an 'Invalid response' error is returned despite a 200 status code. Check for network issues, request formatting errors, or API rate limits.",
+                "Debug the API response handling logic to ensure it correctly parses and interprets the Gemini API's response. The discrepancy between the reported and previewed match scores and skill lists suggests a parsing or data transformation error.",
+                "Implement more robust error handling to catch and report internal errors within the API.  The current error message is not informative enough.",
+                "Log the raw response from the Gemini API to aid in debugging. This will provide more context for identifying the root cause of the inconsistency.",
+                "Consider adding more detailed error codes or messages to the API response to provide better diagnostics.",
+                "Review the Gemini API documentation to ensure the request and response formats are correctly handled."
+              ]
+            },
+            "verification": {
+              "match_quality": 90,
+              "key_matches": [
+                "Python",
+                "Django"
+              ],
+              "missing_requirements": [],
+              "false_positives": [],
+              "confidence_score": 95
+            },
+            "cached": false
+          },
+          {
+            "status_code": 200,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                "The response body contains a JSON snippet showing a successful skill match (score 75) with specific matching and missing skills, contradicting the 'Invalid response' error.",
+                "There's a mismatch between the reported error and the actual data.  The API is likely experiencing an internal inconsistency or reporting error.",
+                "The `match_score` in the main response body is 0, while the embedded JSON shows a `match_score` of 75. This discrepancy needs investigation."
+              ],
+              "suggestions": [
+                "Investigate the Gemini API integration to identify the root cause of the 'Invalid response' error. Check for network issues, API key validity, rate limits, or any other potential integration problems.",
+                "Review the Gemini API's error handling and logging mechanisms to understand why the error is reported despite seemingly successful data processing.",
+                "Examine the code that handles the Gemini API response.  The parsing or handling of the response might be flawed, leading to the incorrect error message.",
+                "Ensure consistent handling of the `match_score` and other fields. The discrepancy between the main response and the embedded JSON suggests a bug in data processing or reporting.",
+                "Implement more robust error handling to gracefully manage unexpected responses from the Gemini API, including cases where the status code is 200 but the response body indicates an error.",
+                "Consider adding more detailed logging to track the API request, response, and any processing steps to facilitate debugging."
+              ]
+            },
+            "verification": {
+              "match_quality": 75,
+              "key_matches": [
+                "Java",
+                "Spring Boot",
+                "Microservices",
+                "Containerization"
+              ],
+              "missing_requirements": [
+                "Senior Level Experience"
+              ],
+              "false_positives": [],
+              "confidence_score": 90
+            },
+            "cached": false
+          }
+        ],
+        "edge_cases": {
+          "edge_case_tests": [
+            {
+              "case": "empty_inputs",
+              "result": {
+                "status_code": 500,
+                "error": "Extra data: line 8 column 1 (char 126)",
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "Failed to process match: Extra data: line 8 column 1 (char 126)"
+                  ],
+                  "suggestions": [
+                    "Check server logs for details"
+                  ]
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "long_inputs",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The Gemini API returned an invalid response.",
+                    "The reported `match_score` is 0, indicating no skills matched.",
+                    "The `matching_skills` array is empty, confirming no skill match.",
+                    "The `missing_skills` array contains 'Java', highlighting a key skill gap.",
+                    "There's a discrepancy between the main response and the `content_preview`. The `content_preview` shows 'Java' as a missing skill, while the main response's `missing_skills` array is empty. This suggests a bug in the API response handling or formatting."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration to identify the root cause of the 'Invalid response from Gemini API' error.",
+                    "Review the job description or skill requirements to ensure they accurately reflect the needed skills.",
+                    "Address the missing 'Java' skill.  This could involve training, hiring someone with Java expertise, or revising the requirements if Java is not strictly necessary.",
+                    "Debug the code handling the Gemini API response to resolve the inconsistency between the main response and the `content_preview`.  The `content_preview` seems to contain more accurate information.",
+                    "Consider adding more robust error handling to gracefully manage invalid responses from the Gemini API, including logging the error details for debugging purposes.",
+                    "If the issue persists, contact Gemini API support for assistance."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 0,
+                  "key_matches": [],
+                  "missing_requirements": [
+                    "Java"
+                  ],
+                  "false_positives": [],
+                  "confidence_score": 100
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "special_chars",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The response body contains a `match_score` of 0, indicating no match, which contradicts the previewed JSON showing a match score of 90.",
+                    "The `matching_skills` and `missing_skills` arrays are empty, inconsistent with the previewed JSON.",
+                    "The `content_preview` shows a seemingly valid JSON response from the Gemini API, suggesting an internal error in processing the Gemini API's response."
+                  ],
+                  "suggestions": [
+                    "Investigate the discrepancy between the reported error and the previewed JSON.  The root cause likely lies in how the API handles or parses the Gemini API's response.",
+                    "Check the error handling and logging within the API to identify the exact point of failure when processing the Gemini API's response.",
+                    "Ensure that the API correctly parses the JSON response from the Gemini API.  Consider using a robust JSON parsing library and adding error handling for malformed JSON.",
+                    "Review the Gemini API integration to ensure it's functioning correctly and that the necessary credentials and permissions are in place.",
+                    "Implement more comprehensive error handling to provide more informative error messages to the client, including the original error from the Gemini API if possible.",
+                    "Add more detailed logging to track the Gemini API response and the internal processing steps within the API to aid in debugging."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 90,
+                  "key_matches": [
+                    "Python",
+                    "Java",
+                    "SQL"
+                  ],
+                  "missing_requirements": [],
+                  "false_positives": [],
+                  "confidence_score": 95
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "exact_match",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The response body contains a `match_score` of 0, indicating no match, which contradicts the embedded JSON showing a `match_score` of 100.",
+                    "The `matching_skills` and `missing_skills` arrays are empty, conflicting with the embedded JSON data.",
+                    "The embedded JSON within the response body suggests a successful skill match, while the outer response indicates failure. This inconsistency points to a serious internal error within the API."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration. The error 'Invalid response from Gemini API' suggests a problem with the communication or data handling between the API and the application.",
+                    "Examine the error handling within the API.  The discrepancy between the status code (200) and the error message indicates a flaw in how errors are reported.",
+                    "Debug the data transformation process. The conflicting data between the outer and inner JSON suggests a problem in how the Gemini API response is parsed and formatted.",
+                    "Implement more robust error handling and logging to pinpoint the exact location of the failure.  Include detailed logging of the Gemini API request and response.",
+                    "Consider adding more comprehensive error codes to the API response to provide more context about the nature of the failure.",
+                    "Review the Gemini API documentation to ensure the integration is correctly implemented and that the expected response format is being handled appropriately."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 100,
+                  "key_matches": [
+                    "Python (5 years experience)"
+                  ],
+                  "missing_requirements": [],
+                  "false_positives": [],
+                  "confidence_score": 95
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "no_overlap",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The response body contains a `match_score` of 0, which contradicts the preview showing a `match_score` of 20.",
+                    "The `matching_skills` array is empty, indicating no skills matched.",
+                    "The `missing_skills` array is empty in the main response but shows ['Python', 'Java'] in the preview.",
+                    "There's a significant discrepancy between the main response and the `content_preview` suggesting a data inconsistency or error in the API's response handling."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration to identify why an 'Invalid response' error is returned despite the 200 status code. Check for network issues, API key validity, or rate limits.",
+                    "Debug the API response handling logic to understand why the `match_score`, `matching_skills`, and `missing_skills` fields are inconsistent between the main response and the preview.",
+                    "Review the Gemini API documentation to ensure the request format and parameters are correct.",
+                    "Implement more robust error handling to catch and report inconsistencies in the API response data.",
+                    "Consider adding logging to track the raw Gemini API response to aid in debugging.",
+                    "If the issue persists, contact Gemini API support for assistance."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 0,
+                  "key_matches": [],
+                  "missing_requirements": [
+                    "Python",
+                    "Java"
+                  ],
+                  "false_positives": [],
+                  "confidence_score": 100
+                },
+                "cached": false
+              }
+            }
+          ]
+        },
+        "skill_variations": {
+          "skill_variation_tests": [
+            {
+              "case": "different_versions",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite providing a seemingly valid JSON response in the `content_preview`.",
+                    "There's a discrepancy between the reported `match_score` of 0 and the `match_score` of 90 shown in the `content_preview`.",
+                    "The `matching_skills` and `missing_skills` arrays are empty, contradicting the information in the `content_preview`.",
+                    "The root cause of the 'Invalid response from Gemini API' error is unknown and needs investigation."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration to identify why it's reporting an error despite receiving what appears to be a valid JSON response.",
+                    "Debug the Gemini API call to pinpoint the exact point of failure. Check for network issues, authentication problems, or rate limits.",
+                    "Review the Gemini API documentation to ensure the request format and parameters are correct.",
+                    "Examine the error handling within the API wrapper or client code.  The error message is too generic and doesn't provide enough context.",
+                    "Improve error handling to provide more specific error messages, including the original error from the Gemini API if possible.",
+                    "Consider adding logging to track the API request and response details for debugging purposes.",
+                    "Ensure that the JSON parsing logic correctly handles the response from the Gemini API.  A parsing error could lead to the discrepancy in the reported data."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 80,
+                  "key_matches": [
+                    "Python",
+                    "Java"
+                  ],
+                  "missing_requirements": [
+                    "Java 8+"
+                  ],
+                  "false_positives": [],
+                  "confidence_score": 90
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "skill_levels",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The response body contains a `content_preview` showing a different, seemingly correct, response from the Gemini API. This indicates a discrepancy between the reported error and the actual data.",
+                    "The reported `match_score` is 0, while the `content_preview` shows a `match_score` of 75. This inconsistency needs investigation.",
+                    "The reported `matching_skills` and `missing_skills` arrays are empty, contradicting the data in `content_preview`.",
+                    "The root cause of the 'Invalid response from Gemini API' error needs to be identified and resolved."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration to understand why the error is being returned despite receiving what appears to be a valid response.",
+                    "Check for potential parsing errors or data transformation issues between receiving the Gemini API response and constructing the final API response.",
+                    "Review the error handling mechanisms within the API to ensure that they correctly interpret and report errors from the Gemini API.",
+                    "Log the raw Gemini API response to aid in debugging and identifying the source of the discrepancy.",
+                    "Implement more robust error handling to provide more informative error messages to the client, including the raw Gemini API response if possible.",
+                    "Consider using a more descriptive error code than 200 when an error occurs during processing of the Gemini API response.  A 5xx code would be more appropriate."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 75,
+                  "key_matches": [
+                    "Python"
+                  ],
+                  "missing_requirements": [
+                    "Advanced Python",
+                    "Basic Java"
+                  ],
+                  "false_positives": [],
+                  "confidence_score": 80
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "alternative_names",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The `match_score` in the main response body is 0, indicating no match, which contradicts the 100 match score shown in the `content_preview`.",
+                    "The `matching_skills` and `missing_skills` arrays are empty in the main response body, while the `content_preview` shows a match with JavaScript, Python, and PostgreSQL.",
+                    "The discrepancy between the main response and the `content_preview` suggests a serious internal error or data inconsistency within the API."
+                  ],
+                  "suggestions": [
+                    "Investigate the Gemini API integration to identify why an 'Invalid response' error is returned despite a 200 status code.  Check for network issues, authentication problems, or rate limits.",
+                    "Debug the API's internal logic to understand why the `match_score`, `matching_skills`, and `missing_skills` data are inconsistent between the main response and the `content_preview`.",
+                    "Implement more robust error handling and logging within the API to capture and report internal errors effectively.",
+                    "Consider adding more detailed error messages to provide more context to the user about the nature of the failure.",
+                    "Review the data processing pipeline between the Gemini API call and the final response generation to pinpoint the source of the inconsistency.",
+                    "If the `content_preview` accurately reflects the expected output, investigate why the main response is failing to produce the correct data."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 100,
+                  "key_matches": [
+                    "JavaScript",
+                    "Python",
+                    "PostgreSQL"
+                  ],
+                  "missing_requirements": [],
+                  "false_positives": [],
+                  "confidence_score": 95
+                },
+                "cached": false
+              }
+            },
+            {
+              "case": "skill_combinations",
+              "result": {
+                "status_code": 200,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The API returned an 'Invalid response from Gemini API' error despite a 200 status code.",
+                    "The response body contains a `match_score` of 0, indicating no match, which contradicts the previewed JSON showing a match score of 90.",
+                    "The `matching_skills` and `missing_skills` arrays are empty, inconsistent with the previewed JSON.",
+                    "The `content_preview` shows a seemingly valid JSON response from the Gemini API, suggesting an internal error in handling the Gemini API response."
+                  ],
+                  "suggestions": [
+                    "Investigate the discrepancy between the reported error and the previewed JSON.  The Gemini API call likely succeeded, but the processing of its response failed.",
+                    "Debug the error handling within the API. The API should properly handle potential errors from the Gemini API and return a more informative error message or a consistent response structure.",
+                    "Check for potential parsing errors when handling the Gemini API's JSON response.  The code might be failing to correctly parse the JSON data.",
+                    "Implement more robust error logging to capture the raw Gemini API response and the internal error details for better debugging.",
+                    "Consider adding retry mechanisms for the Gemini API call in case of transient network issues or temporary unavailability.",
+                    "Improve the API response structure to provide more context and details about the error, including the original Gemini API response if possible."
+                  ]
+                },
+                "verification": {
+                  "match_quality": 90,
+                  "key_matches": [
+                    "React",
+                    "Node.js",
+                    "MongoDB"
+                  ],
+                  "missing_requirements": [],
+                  "false_positives": [],
+                  "confidence_score": 95
+                },
+                "cached": false
+              }
+            }
+          ]
+        }
+      },
+      "analysis": "{\n  \"analysis\": {\n    \"overall_matching_accuracy\": \"Unreliable.  The API consistently returns an 'Invalid response from Gemini API' error despite often showing correct match data within the `content_preview`. This indicates a serious flaw in the API's response handling and error reporting, not necessarily in the matching algorithm itself.\",\n    \"edge_case_handling\": \"Poor.  The `empty_inputs` edge case results in a 500 error, indicating a failure to handle malformed input. Other edge cases (long_inputs, special_chars, exact_match, no_overlap) all exhibit the same 'Invalid response from Gemini API' error, highlighting a lack of robustness in handling various input scenarios.\",\n    \"skill_variation_handling\": \"Unreliable. Similar to the overall matching accuracy, the handling of skill variations (different_versions, skill_levels, alternative_names, skill_combinations) suffers from the same 'Invalid response from Gemini API' error, masking the true performance of the skill variation handling logic. The `content_preview` consistently shows accurate results, suggesting the underlying matching logic is functional but the reporting is severely broken.\",\n    \"false_positive_rate\": \"Cannot be reliably determined. The consistent reporting errors prevent accurate assessment of false positives. The `verification` data suggests a low false positive rate, but this is unreliable due to the API issues.\",\n    \"false_negative_rate\": \"Cannot be reliably determined.  Similar to false positives, the API errors prevent a reliable assessment of false negatives.  The `verification` data suggests a potential high false negative rate due to the frequent 0 match scores reported despite the `content_preview` showing matches.\",\n    \"performance_metrics\": \"Cannot be reliably determined. The pervasive 'Invalid response from Gemini API' error prevents the measurement of performance metrics like latency or throughput.\",\n    \"cache_effectiveness\": \"Not applicable.  The `cached` field is consistently false, indicating the cache is not being used or is not functioning correctly. This needs further investigation.\",\n    \"api_reliability\": \"Extremely low. The API is unreliable due to the consistent 'Invalid response from Gemini API' error, even with 200 status codes.  The discrepancy between the main response and the `content_preview` strongly suggests a critical bug in the API's response processing or error handling.  The API needs immediate attention and debugging.\"\n  },\n  \"recommendations\": [\n    \"Prioritize debugging the API's response handling and error reporting. The root cause of the 'Invalid response from Gemini API' error must be identified and fixed.  Thorough logging of the Gemini API request and response is crucial.\",\n    \"Improve error handling to provide more informative error messages.  The current error message is too generic and unhelpful.\",\n    \"Implement robust input validation to handle edge cases effectively.  Address the 500 error for empty inputs.\",\n    \"Investigate the cache mechanism. Determine why it's not being used or why it's failing.\",\n    \"Conduct thorough testing with a wider range of inputs and skill variations to assess the true accuracy and performance of the matching algorithm once the API reliability issues are resolved.\",\n    \"Consider using a more descriptive status code (e.g., 5xx) when an error occurs during processing of the Gemini API response.\",\n    \"Contact Gemini API support if the issue persists after internal debugging.\"\n  ]\n}"
+    }
+  },
+  "system_metrics": {
+    "total_tests": 5,
+    "completion_time": "2025-03-16 23:36:24.245544",
+    "component_status": {
+      "file_processing": "operational",
+      "matching": "operational"
+    }
+  },
+  "analysis": {
+    "analysis": {
+      "overall_system_health": "Degraded. While individual components (FileProcessingAgent and MatchingAgent) report as 'operational', the system's overall health is severely compromised due to pervasive errors originating from the Gemini API integration.  The core functionality of matching resumes is unreliable.",
+      "integration_points": {
+        "FileProcessingAgent_GeminiAPI": "The FileProcessingAgent relies heavily on the Gemini API for file format analysis and content extraction.  Errors in the Gemini API's response (invalid JSON, missing content) directly impact the FileProcessingAgent's success rate.",
+        "MatchingAgent_GeminiAPI": "The MatchingAgent depends entirely on the Gemini API for skill matching.  The consistent 'Invalid response from Gemini API' error, even with 200 status codes, renders the MatchingAgent's results unreliable and unusable.  The discrepancy between the main response and the `content_preview` suggests a serious flaw in the API's response handling.",
+        "FileProcessingAgent_MatchingAgent": "The FileProcessingAgent's output (processed resume data) serves as input to the MatchingAgent.  Errors in the FileProcessingAgent could indirectly affect the MatchingAgent, although the current dominant issue stems from the Gemini API integration."
+      },
+      "system_reliability_and_stability": "Extremely low. The system is highly unreliable due to the consistent failures in the Gemini API integration.  The 'Invalid response from Gemini API' error, coupled with inconsistent data (discrepancies between main response and `content_preview`), indicates a critical bug in the Gemini API interaction or the API response handling within the application.  The system is not stable and produces inconsistent, unreliable results.",
+      "performance_characteristics": "Cannot be reliably assessed. The pervasive errors prevent accurate measurement of performance metrics such as latency, throughput, and resource utilization.  The `cached` field consistently being false suggests caching is not functioning correctly, further impacting performance.",
+      "security_considerations": "No specific security vulnerabilities are identified in the provided data. However, the reliance on an external API (Gemini API) introduces potential security risks if the API's security is compromised or if sensitive data is improperly handled during the API interaction.",
+      "areas_needing_improvement": [
+        "Gemini API Integration:  The primary area needing improvement is the integration with the Gemini API.  The API's response handling needs immediate attention to resolve the consistent 'Invalid response' errors and data inconsistencies.",
+        "Error Handling: The system's error handling is inadequate.  Generic error messages provide little diagnostic information.  More detailed error logging and more informative error messages are crucial.",
+        "Input Validation: The system needs more robust input validation to handle edge cases (empty inputs, long inputs, special characters) more gracefully.  The 500 error for empty inputs is unacceptable.",
+        "Caching Mechanism: The caching mechanism needs investigation.  The consistent `cached: false` suggests it's not functioning correctly or is not being utilized.",
+        "API Response Parsing: The API response parsing logic needs review. The discrepancies between the main response and the `content_preview` suggest a flaw in how the Gemini API's JSON response is parsed and handled."
+      ],
+      "recommendations_for_enhancement": [
+        "Debug Gemini API Integration: Prioritize debugging the Gemini API integration.  Thorough logging of API requests and responses is essential.  Investigate network issues, authentication problems, rate limits, and potential API-side issues.",
+        "Improve Error Handling and Logging: Implement more robust error handling and logging throughout the system.  Provide detailed error messages and log the raw API responses for debugging.",
+        "Robust Input Validation: Implement comprehensive input validation to handle a wider range of inputs and edge cases.",
+        "Fix Caching Mechanism: Investigate and fix the caching mechanism to improve performance and reduce API calls.",
+        "Review API Response Parsing: Review and improve the API response parsing logic to ensure consistent and accurate data handling.",
+        "Implement Retries and Fallbacks: Implement retry mechanisms and fallback strategies for API calls to handle transient network issues or API unavailability.",
+        "Monitor API Health: Implement monitoring of the Gemini API's health and performance to proactively identify and address potential issues.",
+        "Consider Alternative APIs: Explore alternative APIs if the Gemini API's reliability issues persist despite debugging efforts.",
+        "Unit and Integration Testing: Implement comprehensive unit and integration tests to ensure the system's reliability and stability."
+      ]
+    },
+    "system_metrics_summary": {
+      "total_tests": 5,
+      "completion_time": "2025-03-16 23:36:24.245544",
+      "component_status": {
+        "file_processing": "operational (but with Gemini API dependency issues)",
+        "matching": "operational (but with severe Gemini API dependency issues)"
+      }
+    }
+  },
+  "report": "# Test Report: Resume Processing System\n\n**Date:** 2025-03-17\n\n**Version:** 1.0\n\n\n## 1. Executive Summary\n\nThis report details the results of testing the resume processing system, conducted on 2025-03-16.  The testing revealed significant issues stemming from the integration with the Gemini API.  While individual components (File Processing Agent and Matching Agent) are operationally sound, the system's overall reliability and stability are extremely low due to pervasive \"Invalid response from Gemini API\" errors. These errors, coupled with inconsistencies between the main API response and a previewed JSON snippet, render the core resume matching functionality unreliable and unusable.  Immediate attention is required to address the Gemini API integration issues.\n\n\n## 2. Test Coverage Overview\n\nThe test suite covered file processing for various formats (.pdf, .docx, .txt) and invalid formats (.xyz, .exe, .zip).  The matching agent was tested with basic matching scenarios and edge cases (empty inputs, long inputs, special characters, exact match, no overlap).  Skill variations (different versions, skill levels, alternative names, skill combinations) were also tested.  A total of 5 tests were executed.\n\n\n## 3. Key Findings\n\n* **Gemini API Integration Failures:** The most critical finding is the consistent failure of the Gemini API integration.  The API frequently returns an \"Invalid response from Gemini API\" error, even with a 200 status code.  This error is accompanied by inconsistencies between the main response and a previewed JSON snippet, which often contains the expected, correct data. This strongly suggests a problem in the API's response handling or error reporting, not necessarily in the core logic of the resume processing system.\n\n* **Inconsistent Results:** The system produces highly inconsistent results.  Match scores and skill lists frequently differ between the main response and the previewed JSON.  This unreliability renders the system's output untrustworthy.\n\n* **Poor Edge Case Handling:** The system demonstrates poor handling of edge cases, particularly empty inputs, which resulted in a 500 server error.\n\n* **Caching Ineffectiveness:** The caching mechanism appears to be non-functional, as the `cached` flag is consistently false.\n\n\n## 4. Component-wise Analysis\n\n**4.1 File Processing Agent:**\n\nThe File Processing Agent successfully identified supported and unsupported file formats. However, its reliance on the Gemini API for content extraction resulted in failures for all tested file types due to the Gemini API's inconsistent responses.\n\n**4.2 Matching Agent:**\n\nThe Matching Agent's performance is entirely dependent on the Gemini API.  The \"Invalid response from Gemini API\" error consistently rendered its results unreliable, regardless of the test case.  The previewed JSON often showed correct matching data, indicating a problem with the API response handling, not necessarily the matching algorithm itself.\n\n\n## 5. Performance Metrics\n\nPerformance metrics (latency, throughput, resource utilization) cannot be reliably assessed due to the pervasive Gemini API errors.  The lack of caching further impacts performance.\n\n\n## 6. Risk Assessment\n\nThe primary risk is the unreliability of the system due to the Gemini API integration issues.  This renders the core functionality of resume matching unusable.  The reliance on an external API also introduces security risks if the Gemini API is compromised or if sensitive data is mishandled during the API interaction.\n\n\n## 7. Recommendations\n\n* **Prioritize Gemini API Debugging:** Immediately investigate and resolve the \"Invalid response from Gemini API\" error.  Thorough logging of API requests and responses is crucial.  Consider contacting Gemini API support.\n\n* **Improve Error Handling:** Implement more robust error handling and logging throughout the system.  Provide detailed, informative error messages instead of generic ones.\n\n* **Enhance Input Validation:** Improve input validation to handle edge cases more gracefully.\n\n* **Fix Caching Mechanism:** Investigate and resolve the caching mechanism's failure.\n\n* **Review API Response Parsing:** Review the API response parsing logic to ensure accurate data handling.\n\n* **Implement Retries and Fallbacks:** Implement retry mechanisms and fallback strategies for API calls to handle transient issues.\n\n* **Monitor API Health:** Implement monitoring of the Gemini API's health and performance.\n\n* **Consider Alternative APIs:** Explore alternative APIs if the Gemini API's problems persist.\n\n* **Comprehensive Testing:** Conduct thorough testing with a wider range of inputs after resolving the API issues.\n\n\n## 8. Next Steps\n\n1. **Immediate Action:**  Focus on debugging the Gemini API integration.  This includes logging API requests and responses, investigating network issues, authentication problems, and rate limits.  Contact Gemini API support if necessary.\n\n2. **Short-Term Goals:** Implement improved error handling and input validation.\n\n3. **Long-Term Goals:**  Address the caching mechanism, review API response parsing, and implement retry mechanisms.  Conduct comprehensive testing to validate the system's reliability and stability.  Consider alternative APIs if the Gemini API integration remains problematic."
+}

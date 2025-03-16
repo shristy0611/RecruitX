@@ -1,0 +1,764 @@
+{
+  "orchestrator_type": "TestOrchestrator",
+  "timestamp": "2025-03-16 21:27:31.973637",
+  "agent_results": {
+    "file_processing": {
+      "agent_type": "FileProcessingAgent",
+      "timestamp": "2025-03-16 21:27:31.973646",
+      "tests": {
+        "format_tests": {
+          "pdf": {
+            "format": ".pdf",
+            "status_code": 500,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error message points to a failure in the upstream Gemini API.  This could be due to various reasons, including network issues, temporary outages, rate limiting, or problems with the Gemini API's implementation."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.  Look for official announcements or status pages.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request is formatted correctly and adheres to any rate limits or other constraints.",
+                "Inspect Server Logs: Examine the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure. This will provide more context than the generic error message.",
+                "Retry the Request:  A temporary network glitch or a transient issue with the Gemini API might be the cause.  Try the request again after a short delay.",
+                "Implement Error Handling and Retries:  The application should include robust error handling and retry mechanisms to gracefully handle temporary failures and avoid cascading errors.",
+                "Contact Gemini API Support: If the problem persists, contact Gemini API support to report the issue and provide them with relevant information, such as timestamps, request parameters, and any error messages received."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "Test content with programming skills"
+              ]
+            }
+          },
+          "docx": {
+            "format": ".docx",
+            "status_code": 500,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Potential Upstream Dependency Failure: The error message indicates a failure in a dependency, likely the Gemini API. This could be due to issues on the Gemini side (e.g., outages, rate limits, bugs) or network connectivity problems."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.",
+                "Review API Call Parameters: Ensure that the parameters passed to the Gemini API are correct and within acceptable limits (e.g., rate limits).",
+                "Inspect Server Logs: Examine the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure.",
+                "Implement Retry Mechanism: Implement a retry mechanism with exponential backoff to handle transient network errors or temporary issues with the Gemini API.",
+                "Improve Error Handling: Enhance the error handling to provide more informative error messages to the client, including specific error codes and details from the Gemini API response (if available).",
+                "Monitor Gemini API Performance: Regularly monitor the performance of the Gemini API to identify potential issues early on.",
+                "Contact Gemini API Support: If the problem persists, contact Gemini API support for assistance."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "Test content with programming skills"
+              ]
+            }
+          },
+          "txt": {
+            "format": ".txt",
+            "status_code": 500,
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error points to a failure in the upstream Gemini API, which is outside the control of this server.  This could be due to temporary outages, rate limiting, or issues within the Gemini API infrastructure."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.  Look for official announcements or status pages.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request being made is correct, including parameters, authentication, and request format.",
+                "Retry the Request:  A temporary issue might have caused the failure.  Try the API request again after a short delay.",
+                "Implement Error Handling and Retries:  The application should include robust error handling and retry mechanisms to gracefully handle temporary failures in the Gemini API.",
+                "Examine Server Logs: Investigate the server logs for more detailed information about the error. This might reveal the specific cause of the failure and provide clues for debugging.",
+                "Contact Gemini API Support: If the problem persists, contact Gemini API support to report the issue and request assistance."
+              ]
+            },
+            "verification": {
+              "content_match": false,
+              "extraction_quality": 0,
+              "missing_elements": [
+                "Test content with programming skills"
+              ]
+            }
+          }
+        },
+        "invalid_formats": {
+          "invalid_format_tests": [
+            {
+              "format": ".xyz",
+              "status_code": 400,
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "The API request failed with a 400 Bad Request status code.",
+                  "The server reported an unsupported file format ('xyz').",
+                  "The client likely sent a file with an unsupported extension or type."
+                ],
+                "suggestions": [
+                  "Verify the file format being sent to the API.  Ensure it matches the API's documentation.",
+                  "Check the API documentation for a list of supported file formats.",
+                  "If the file format is supported, inspect the file itself for potential corruption or errors.",
+                  "Consider adding more robust file validation on the client-side before sending the request.",
+                  "If the file format is correct, examine the request headers to ensure they are properly set.",
+                  "If the problem persists, contact the API provider for support and provide the 'xyz' file for analysis."
+                ]
+              },
+              "verification": {
+                "content_match": false,
+                "extraction_quality": 0,
+                "missing_elements": [
+                  "All expected content is missing.  The response indicates an error."
+                ]
+              }
+            },
+            {
+              "format": ".exe",
+              "status_code": 400,
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "The API request failed with a 400 Bad Request status code.",
+                  "The server rejected the uploaded file due to an unsupported file format ('exe').",
+                  "The client likely attempted to upload an executable file, which is a security risk and often prohibited for upload."
+                ],
+                "suggestions": [
+                  "Check the file type being uploaded.  Ensure it's a supported format (e.g., .jpg, .png, .pdf, .txt, etc.).  The API documentation should specify allowed file types.",
+                  "Review the API documentation for details on supported file formats and size limits.",
+                  "If the intended file type *is* an executable, reconsider the approach. Executable uploads are generally discouraged due to security concerns. Explore alternative methods to achieve the desired functionality.",
+                  "If the correct file type is being uploaded, check the file itself for corruption.  Try uploading a different file of the same type to rule out issues with the specific file.",
+                  "If the problem persists, contact the API provider for support and provide the relevant details (file type, API endpoint, etc.)."
+                ]
+              },
+              "verification": {
+                "content_match": false,
+                "extraction_quality": 0,
+                "missing_elements": [
+                  "All expected content"
+                ]
+              }
+            },
+            {
+              "format": ".zip",
+              "status_code": 400,
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "The API request failed with a 400 Bad Request status code.",
+                  "The server indicated that the provided file format ('zip') is not supported.",
+                  "The client likely sent a ZIP file when a different file type was expected."
+                ],
+                "suggestions": [
+                  "Check the API documentation to determine the supported file formats.",
+                  "Ensure that the file being uploaded is in the correct format (e.g., CSV, JSON, etc.).",
+                  "If a ZIP file is necessary, consider extracting its contents and uploading the individual files if the API supports that.",
+                  "If the API documentation is unclear, contact the API provider for clarification on supported file types.",
+                  "Inspect the client-side code to verify that the correct file is being selected and sent."
+                ]
+              },
+              "verification": {
+                "content_match": false,
+                "extraction_quality": 0,
+                "missing_elements": [
+                  "All expected content"
+                ]
+              }
+            }
+          ]
+        },
+        "edge_cases": {
+          "edge_case_tests": [
+            {
+              "case": "empty_file",
+              "result": {
+                "format": ".pdf",
+                "status_code": 500,
+                "error": "429 Resource has been exhausted (e.g. check quota).",
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "Failed to process file: 429 Resource has been exhausted (e.g. check quota)."
+                  ],
+                  "suggestions": [
+                    "Check server logs for details"
+                  ]
+                }
+              }
+            },
+            {
+              "case": "large_file",
+              "result": {
+                "format": ".pdf",
+                "status_code": 500,
+                "analysis": {
+                  "is_success": false,
+                  "issues": [
+                    "The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                    "The 'Internal Server Error' response provides no specific details about the root cause of the failure.",
+                    "Debugging and resolving the issue requires access to server-side logs and error reports.",
+                    "The lack of specific error information hinders troubleshooting and prevents targeted solutions."
+                  ],
+                  "suggestions": [
+                    "Implement more robust error handling on the server-side to provide informative error messages.",
+                    "Enable detailed logging on the server to capture stack traces and other relevant information during errors.",
+                    "Use a centralized error monitoring system to track and alert on 500 errors.",
+                    "Implement comprehensive testing, including integration and end-to-end tests, to catch potential issues before deployment.",
+                    "Review server resources (CPU, memory, disk space) to rule out resource exhaustion as a cause.",
+                    "If applicable, check for database connection issues or other external dependencies.",
+                    "Consider using a more descriptive error code or message instead of a generic 'Internal Server Error'."
+                  ]
+                },
+                "verification": {
+                  "content_match": false,
+                  "extraction_quality": 0,
+                  "missing_elements": [
+                    "All expected content"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "analysis": "{\n  \"analysis\": {\n    \"overall_reliability\": \"Low\",\n    \"format_support_completeness\": \"Low\",\n    \"edge_case_handling\": \"Poor\",\n    \"security_implications\": \"Moderate\",\n    \"performance_considerations\": \"Potentially Poor\"\n  },\n  \"detailed_analysis\": {\n    \"overall_reliability\": \"The system exhibits low reliability due to the prevalent 500 Internal Server Errors across multiple file formats (.pdf, .docx, .txt).  This indicates a significant underlying issue, likely related to the Gemini API or server-side processing.\",\n    \"format_support_completeness\": \"Format support is incomplete.  Several common formats (.xyz, .exe, .zip) are explicitly rejected with 400 Bad Request errors, indicating a lack of support or inadequate handling of these file types.  The absence of error messages for unsupported formats beyond the 400 error code is also a concern.\",\n    \"edge_case_handling\": \"Edge case handling is poor.  The 'empty_file' test resulted in a 429 error ('Resource has been exhausted'), suggesting potential resource limitations or quota issues. The 'large_file' test also failed with a generic 500 error, highlighting a lack of robust handling for files exceeding a certain size or complexity.  The absence of specific error messages in these cases makes debugging difficult.\",\n    \"security_implications\": \"Moderate security implications exist due to the rejection of .exe files.  However, the lack of detailed error handling and logging for other file types raises concerns about potential vulnerabilities.  A more robust system would include more thorough input validation and sanitization to prevent malicious file uploads.\",\n    \"performance_considerations\": \"Performance is potentially poor. The 429 error suggests resource exhaustion, indicating potential performance bottlenecks.  The generic 500 errors for large files also point to performance issues that need investigation.  The lack of detailed error messages makes it difficult to pinpoint the exact performance bottlenecks.\"\n  },\n  \"recommendations\": {\n    \"reliability\": [\n      \"Investigate and resolve the root cause of the recurring 500 Internal Server Errors. This likely involves examining server logs, debugging the Gemini API interaction, and potentially improving server resource allocation.\",\n      \"Implement robust error handling and retry mechanisms to gracefully handle temporary failures in the Gemini API and other dependencies.\"\n    ],\n    \"format_support\": [\n      \"Clearly document supported file formats in the API documentation.\",\n      \"Improve error messages for unsupported file formats to provide more specific information to the client.\",\n      \"Consider adding support for additional file formats based on requirements.\"\n    ],\n    \"edge_case_handling\": [\n      \"Implement more robust error handling for edge cases such as empty files and large files.\",\n      \"Increase resource limits or implement better resource management to prevent 429 errors.\",\n      \"Improve error messages to provide more context and facilitate debugging.\",\n      \"Implement input validation and sanitization to prevent unexpected behavior or security vulnerabilities.\"\n    ],\n    \"security\": [\n      \"Implement more thorough input validation and sanitization to prevent malicious file uploads.\",\n      \"Regularly review and update security practices to address potential vulnerabilities.\"\n    ],\n    \"performance\": [\n      \"Investigate and address potential performance bottlenecks, such as resource exhaustion.\",\n      \"Monitor server resource usage (CPU, memory, disk space) to identify and resolve performance issues.\",\n      \"Optimize server-side processing to improve efficiency and reduce processing time for large files.\"\n    ]\n  }\n}"
+    },
+    "matching": {
+      "agent_type": "MatchingAgent",
+      "timestamp": "2025-03-16 21:28:43.531828",
+      "tests": {
+        "standard_cases": [
+          {
+            "test_case": {
+              "resume": {
+                "skills": [
+                  "Python",
+                  "Java",
+                  "SQL",
+                  "Data Analysis",
+                  "Machine Learning"
+                ],
+                "experience": [
+                  "Data Scientist at Google",
+                  "Software Engineer at Amazon"
+                ],
+                "education": [
+                  "PhD in Computer Science",
+                  "MS in Data Science"
+                ]
+              },
+              "job": {
+                "required_skills": [
+                  "Python",
+                  "SQL",
+                  "Data Analysis"
+                ],
+                "responsibilities": [
+                  "Develop data pipelines",
+                  "Analyze data",
+                  "Build machine learning models"
+                ],
+                "qualifications": [
+                  "MS in Computer Science or related field",
+                  "3+ years of experience"
+                ]
+              },
+              "expected": {
+                "match_score": 0.95,
+                "skill_match": 0.9,
+                "experience_match": 0.9,
+                "education_match": 1.0
+              }
+            },
+            "response": {
+              "detail": "Invalid response from Gemini API"
+            },
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error points to a failure within a dependency, specifically the Gemini API.  This could be due to issues on Gemini's side (outages, rate limits, bugs) or problems with network connectivity between the server and Gemini."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request is formatted correctly and adheres to any rate limits or other constraints.",
+                "Examine Server Logs: Investigate the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure.",
+                "Implement Retries with Exponential Backoff: Implement retry logic with exponential backoff to handle transient network issues or temporary unavailability of the Gemini API.",
+                "Improve Error Handling: Enhance error handling to provide more specific and informative error messages to the client, potentially including a more descriptive error code than 'Invalid response from Gemini API'.",
+                "Monitor Gemini API Response Times: Monitor the response times of the Gemini API to identify potential performance bottlenecks or degradation.",
+                "Implement Circuit Breaker Pattern: Consider using a circuit breaker pattern to prevent cascading failures if the Gemini API is consistently unavailable."
+              ]
+            },
+            "evaluation": {
+              "accuracy": 0,
+              "alignment_score": 0,
+              "discrepancies": [
+                "The match result indicates a complete failure to obtain a match from the Gemini API, resulting in no match data.",
+                "Expected characteristics represent a high degree of match across various criteria (skill, experience, education), while the actual result shows no match at all."
+              ],
+              "insights": [
+                "The Gemini API encountered an error preventing it from processing the match request.",
+                "Investigate the Gemini API error ('Invalid response from Gemini API') to identify the root cause.  Possible causes include network issues, API key problems, incorrect request format, or issues with the Gemini API itself.",
+                "The discrepancy highlights a critical failure in the matching process.  Addressing the API error is paramount before assessing the quality of the match."
+              ]
+            }
+          },
+          {
+            "test_case": {
+              "resume": {
+                "skills": [
+                  "Python",
+                  "JavaScript",
+                  "SQL",
+                  "Communication"
+                ],
+                "experience": [
+                  "Web Developer Intern",
+                  "Freelance Web Designer"
+                ],
+                "education": [
+                  "BS in Computer Science"
+                ]
+              },
+              "job": {
+                "required_skills": [
+                  "Python",
+                  "SQL",
+                  "Data Analysis",
+                  "Teamwork"
+                ],
+                "responsibilities": [
+                  "Develop data pipelines",
+                  "Analyze data",
+                  "Collaborate with team"
+                ],
+                "qualifications": [
+                  "BS in Computer Science or related field",
+                  "1+ years of experience"
+                ]
+              },
+              "expected": {
+                "match_score": 0.7,
+                "skill_match": 0.6,
+                "experience_match": 0.7,
+                "education_match": 1.0
+              }
+            },
+            "response": {
+              "detail": "Invalid response from Gemini API"
+            },
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error message points to a problem with the external Gemini API.  This could be due to issues on Gemini's side (e.g., outages, rate limits, bugs), network connectivity problems, or incorrect API credentials."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify that the Gemini API is operational. Look for any reported outages or service disruptions on their status page or documentation.",
+                "Review API Credentials: Ensure that the API keys and authentication details used to access the Gemini API are correct and have the necessary permissions.",
+                "Inspect Network Connectivity: Check the network connection between the server and the Gemini API.  Network issues can cause API calls to fail.",
+                "Examine API Request: Review the request sent to the Gemini API to ensure it's correctly formatted and adheres to the API's specifications.  Look for potential errors in parameters or data.",
+                "Implement Retry Logic: Add retry mechanisms to the API call to handle transient network errors or temporary unavailability of the Gemini API.  Exponential backoff strategies are recommended.",
+                "Improve Error Handling: Enhance the error handling to provide more specific and informative error messages.  Instead of a generic \"Invalid response\", capture and log the raw response from the Gemini API for debugging purposes.",
+                "Implement Logging: Add detailed logging to track API requests, responses, and errors. This will help in identifying the root cause of the problem.",
+                "Contact Gemini Support: If the issue persists after checking the above points, contact Gemini API support for assistance."
+              ]
+            },
+            "evaluation": {
+              "accuracy": 0,
+              "alignment_score": 0,
+              "discrepancies": [
+                "The match result indicates a complete failure ('Invalid response from Gemini API'), while expected characteristics suggest a partial match with non-zero scores across multiple criteria.",
+                "No match score, skill match, experience match, or education match was obtained.  The expected characteristics are entirely irrelevant given the API failure."
+              ],
+              "insights": [
+                "The Gemini API call failed. This is a critical error that needs to be investigated and resolved before any meaningful matching can occur.",
+                "Debugging the Gemini API is necessary. Potential causes include network issues, API key problems, incorrect request formatting, or server-side errors within the Gemini API itself.",
+                "Once the API issue is resolved, the matching process can be re-run to obtain the expected match scores."
+              ]
+            }
+          },
+          {
+            "test_case": {
+              "resume": {
+                "skills": [
+                  "Microsoft Office",
+                  "Communication"
+                ],
+                "experience": [
+                  "Customer Service Representative"
+                ],
+                "education": [
+                  "High School Diploma"
+                ]
+              },
+              "job": {
+                "required_skills": [
+                  "Python",
+                  "SQL",
+                  "Data Analysis"
+                ],
+                "responsibilities": [
+                  "Develop data pipelines",
+                  "Analyze data",
+                  "Build machine learning models"
+                ],
+                "qualifications": [
+                  "MS in Computer Science or related field",
+                  "3+ years of experience"
+                ]
+              },
+              "expected": {
+                "match_score": 0.3,
+                "skill_match": 0.1,
+                "experience_match": 0.2,
+                "education_match": 0.0
+              }
+            },
+            "response": {
+              "detail": "Invalid response from Gemini API"
+            },
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error points to a failure in the upstream Gemini API, which is outside the control of the current server.  This could be due to temporary outages, rate limiting, or issues within the Gemini API infrastructure."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.  Look for official announcements or status pages.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request being made is correct and adheres to the API's specifications (e.g., correct endpoints, parameters, authentication).",
+                "Retry the Request:  A temporary issue might be causing the problem.  Implement retry logic with exponential backoff to handle transient errors.",
+                "Examine Server Logs: Investigate the server logs for more detailed error messages that might provide clues about the root cause of the failure.  This will likely include more information than the generic 'Invalid response from Gemini API'.",
+                "Implement Robust Error Handling: Improve error handling to provide more informative error messages to the client, including specific error codes and details when possible.  Avoid exposing internal server errors directly to the client.",
+                "Contact Gemini API Support: If the problem persists after checking the API status and reviewing the documentation, contact Gemini API support to report the issue and request assistance."
+              ]
+            },
+            "evaluation": {
+              "accuracy": 0,
+              "alignment_score": 0,
+              "discrepancies": [
+                "The match result indicates a complete failure ('Invalid response from Gemini API'), while expected characteristics suggest a partial match with non-zero scores across multiple categories.",
+                "The expected characteristics imply a successful API call and subsequent matching process, which is directly contradicted by the actual result."
+              ],
+              "insights": [
+                "The Gemini API call failed.  This is a critical error that needs to be addressed before any matching can occur.",
+                "Debugging the Gemini API is necessary to determine the root cause of the 'Invalid response'.  Possible causes include network issues, API key problems, or issues with the request data.",
+                "Once the API issue is resolved, the matching algorithm can be evaluated against the expected characteristics."
+              ]
+            }
+          },
+          {
+            "test_case": {
+              "resume": {
+                "skills": [
+                  "Python",
+                  "Java",
+                  "C++",
+                  "Data Science",
+                  "Machine Learning",
+                  "Deep Learning"
+                ],
+                "experience": [
+                  "Senior Data Scientist at Google",
+                  "Lead Data Engineer at Facebook"
+                ],
+                "education": [
+                  "PhD in Computer Science",
+                  "MS in Electrical Engineering"
+                ]
+              },
+              "job": {
+                "required_skills": [
+                  "Python",
+                  "SQL",
+                  "Data Analysis"
+                ],
+                "responsibilities": [
+                  "Develop data pipelines",
+                  "Analyze data",
+                  "Build machine learning models"
+                ],
+                "qualifications": [
+                  "BS in Computer Science or related field",
+                  "3+ years of experience"
+                ]
+              },
+              "expected": {
+                "match_score": 0.8,
+                "skill_match": 0.8,
+                "experience_match": 0.9,
+                "education_match": 1.0
+              }
+            },
+            "response": {
+              "detail": "Invalid response from Gemini API"
+            },
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure: The error points to a failure in the upstream Gemini API, indicating a potential outage, bug, or rate-limiting issue on the Gemini side."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request is formatted correctly and adheres to any rate limits or usage restrictions.",
+                "Examine Server Logs: Investigate the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure.",
+                "Implement Retries with Exponential Backoff: Implement retry logic with exponential backoff to handle transient errors that might occur during communication with the Gemini API.",
+                "Implement Circuit Breaker: Consider using a circuit breaker pattern to prevent repeated calls to the failing Gemini API and to allow for graceful degradation.",
+                "Contact Gemini Support: If the issue persists, contact Gemini support to report the problem and seek assistance."
+              ]
+            },
+            "evaluation": {
+              "accuracy": 0,
+              "alignment_score": 0,
+              "discrepancies": [
+                "The match result indicates a complete failure to obtain a match, returning an error ('Invalid response from Gemini API') instead of match scores.",
+                "Expected characteristics show a high degree of match across various criteria (skill, experience, education), implying a successful match should have been found."
+              ],
+              "insights": [
+                "The Gemini API is likely unavailable or experiencing errors.  This needs to be investigated and resolved before further matching attempts can be made.",
+                "The discrepancy highlights a critical failure in the matching process, not a mismatch in candidate qualifications.",
+                "The expected characteristics suggest the candidate profile was likely well-suited for the job requirements, but the API error prevented a proper evaluation."
+              ]
+            }
+          },
+          {
+            "test_case": {
+              "resume": {
+                "skills": [
+                  "Basic Python"
+                ],
+                "experience": [
+                  "Recent College Graduate"
+                ],
+                "education": [
+                  "BS in Computer Science"
+                ]
+              },
+              "job": {
+                "required_skills": [
+                  "Python",
+                  "SQL",
+                  "Data Analysis",
+                  "AWS"
+                ],
+                "responsibilities": [
+                  "Develop data pipelines",
+                  "Analyze data",
+                  "Build machine learning models",
+                  "Deploy models to AWS"
+                ],
+                "qualifications": [
+                  "MS in Computer Science or related field",
+                  "3+ years of experience"
+                ]
+              },
+              "expected": {
+                "match_score": 0.2,
+                "skill_match": 0.2,
+                "experience_match": 0.1,
+                "education_match": 0.5
+              }
+            },
+            "response": {
+              "detail": "Invalid response from Gemini API"
+            },
+            "analysis": {
+              "is_success": false,
+              "issues": [
+                "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                "Upstream API Failure:  The error points to a failure within a dependency, specifically the Gemini API. This could be due to issues on Gemini's side (e.g., outages, rate limits, bugs) or problems with network connectivity between the server and Gemini."
+              ],
+              "suggestions": [
+                "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.  Look for official announcements or status pages.",
+                "Review API Documentation: Consult the Gemini API documentation to ensure the request being made is correct (parameters, authentication, etc.).",
+                "Examine Server Logs: Investigate the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure. This will provide more context than the generic 'Invalid response' message.",
+                "Implement Retries with Exponential Backoff:  If this is a transient error (e.g., temporary network glitch), implement retry logic with exponential backoff to handle intermittent failures. This prevents overwhelming the Gemini API and allows for recovery from temporary issues.",
+                "Improve Error Handling: Enhance the error handling to provide more specific and informative error messages to the client. Instead of a generic 'Invalid response', include details about the type of error encountered and potential causes.",
+                "Implement Circuit Breaker: For critical dependencies like the Gemini API, consider using a circuit breaker pattern. This will prevent repeated calls to a failing service and allow the system to gracefully degrade instead of cascading failures."
+              ]
+            },
+            "evaluation": {
+              "accuracy": 0,
+              "alignment_score": 0,
+              "discrepancies": [
+                "The match result indicates a complete failure to obtain a match, due to an 'Invalid response from Gemini API' error.  No match characteristics were produced.",
+                "Expected characteristics were defined (match_score, skill_match, experience_match, education_match), but the actual result provides no comparable data."
+              ],
+              "insights": [
+                "The Gemini API is malfunctioning or inaccessible, preventing the matching process from completing.",
+                "The system needs to handle API errors gracefully and provide informative feedback instead of a generic 'Invalid response' message.",
+                "Debugging the Gemini API is necessary to resolve the issue and enable accurate matching.",
+                "Consider implementing error handling and retry mechanisms for API calls to improve robustness."
+              ]
+            }
+          }
+        ],
+        "edge_cases": {
+          "edge_case_tests": [
+            {
+              "case": "empty_resume",
+              "response": {
+                "detail": "Invalid response from Gemini API"
+              },
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                  "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                  "Upstream API Failure: The error points to a failure in the upstream Gemini API, which is outside the control of the current server.  This could be due to temporary outages, rate limiting, or issues within the Gemini API infrastructure."
+                ],
+                "suggestions": [
+                  "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.  Look for official announcements or status pages.",
+                  "Review API Documentation: Consult the Gemini API documentation to ensure the request being made is correctly formatted and adheres to any rate limits or other restrictions.",
+                  "Retry the Request:  A temporary issue might have caused the failure.  Implement retry logic with exponential backoff to handle transient errors.",
+                  "Examine Server Logs: Investigate the server logs for more detailed error messages and stack traces to pinpoint the root cause of the problem. This will provide more context than the generic error message.",
+                  "Implement Robust Error Handling: Improve error handling to provide more informative error messages to the client, including specific error codes and context when possible.  Avoid returning generic error messages like \"Invalid response from Gemini API\".",
+                  "Contact Gemini API Support: If the problem persists after checking the API status and reviewing the documentation, contact Gemini API support to report the issue and seek assistance."
+                ]
+              }
+            },
+            {
+              "case": "empty_job",
+              "response": {
+                "detail": "Invalid response from Gemini API"
+              },
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                  "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                  "Upstream API Failure: The error points to a failure within a dependency, specifically the Gemini API. This could be due to various reasons such as network issues, rate limiting, server-side errors within Gemini, or incorrect API credentials."
+                ],
+                "suggestions": [
+                  "Check Gemini API Status: Verify if the Gemini API is experiencing any outages or issues. Check their status page or documentation for known problems.",
+                  "Review API Credentials: Ensure that the API keys and authentication methods used to access the Gemini API are correct and have the necessary permissions.",
+                  "Inspect Server Logs: Examine the server logs for more detailed error messages and stack traces to pinpoint the root cause of the failure. This will provide more context about the nature of the 'Invalid response' from Gemini.",
+                  "Implement Retry Mechanism: Implement a retry mechanism with exponential backoff to handle transient network issues or temporary unavailability of the Gemini API.",
+                  "Improve Error Handling: Enhance the error handling to provide more specific and informative error messages to the client. Instead of a generic 'Invalid response', include details about the type of error received from Gemini (if available).",
+                  "Rate Limiting Check:  If making many requests, ensure you are not exceeding Gemini's rate limits. Implement logic to handle rate limiting gracefully.",
+                  "Contact Gemini Support: If the problem persists after checking the above points, contact Gemini API support for assistance."
+                ]
+              }
+            },
+            {
+              "case": "non_overlapping_skills",
+              "response": {
+                "detail": "Invalid response from Gemini API"
+              },
+              "analysis": {
+                "is_success": false,
+                "issues": [
+                  "Internal Server Error (500): The server encountered an unexpected condition that prevented it from fulfilling the request.",
+                  "Invalid Gemini API Response: The API call to the Gemini service failed to return a valid response. This suggests a problem with the Gemini API itself or the communication between the server and the Gemini API.",
+                  "Upstream API Failure: The error points to a failure in the upstream Gemini API, which is outside the control of the current server.  This could be due to temporary outages, rate limits, or bugs in the Gemini API."
+                ],
+                "suggestions": [
+                  "Check Gemini API Status: Verify the status of the Gemini API to see if there are any reported outages or issues.",
+                  "Review API Documentation: Consult the Gemini API documentation to ensure the request is formatted correctly and adheres to any rate limits or other constraints.",
+                  "Examine Server Logs: Investigate the server logs for more detailed error messages that might pinpoint the root cause of the problem.  Look for exceptions or stack traces related to the Gemini API interaction.",
+                  "Implement Retries: Consider adding retry logic to the API call to handle transient errors.  This could involve exponential backoff to avoid overwhelming the Gemini API.",
+                  "Implement Error Handling: Improve error handling to provide more informative error messages to the client, potentially including a more user-friendly explanation than 'Invalid response from Gemini API'.",
+                  "Contact Gemini API Support: If the problem persists after checking the above, contact Gemini API support to report the issue and request assistance."
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "error": "'resume'",
+      "analysis": "{\n  \"analysis\": {\n    \"matching_accuracy_and_reliability\": {\n      \"overall\": \"Unable to assess due to complete API failure.\",\n      \"details\": \"All test cases, including standard and edge cases, resulted in 'Invalid response from Gemini API'.  This indicates a critical failure in the system's ability to connect to and receive a valid response from the Gemini API, preventing any evaluation of the matching algorithm's accuracy or reliability.  The reported 'Internal Server Error (500)' suggests a problem either within the server itself or with its communication to the Gemini API.\"\n    },\n    \"edge_case_handling\": {\n      \"overall\": \"Not applicable.\",\n      \"details\": \"The system did not handle any edge cases.  The consistent 'Invalid response from Gemini API' error across all edge cases (empty resume, empty job, non-overlapping skills) prevents any assessment of its ability to handle these scenarios. The underlying issue needs to be resolved before edge case handling can be evaluated.\"\n    },\n    \"cognitive_matching_capabilities\": {\n      \"overall\": \"Unable to assess.\",\n      \"details\": \"The Gemini API failure prevents any evaluation of the cognitive matching capabilities.  The expected match scores in the test cases suggest the algorithm might have some level of sophistication, but this cannot be verified without a functioning API connection.\"\n    },\n    \"performance_patterns\": {\n      \"overall\": \"Consistent API failure.\",\n      \"details\": \"The consistent failure to receive a valid response from the Gemini API across all test cases indicates a systemic problem, not a performance issue related to specific inputs.  The error is consistently 'Invalid response from Gemini API', suggesting a persistent issue with the API connection or the Gemini API itself.\"\n    },\n    \"areas_for_improvement\": {\n      \"priority_1\": [\n        \"Resolve Gemini API Connectivity Issues: This is the most critical issue.  Investigate the 'Internal Server Error (500)' and the 'Invalid response from Gemini API' error messages thoroughly. Check Gemini API status, review API credentials, inspect server logs, and potentially contact Gemini support.\",\n        \"Implement Robust Error Handling: The current error handling is insufficient.  The system should provide more informative error messages to the client, including specific error codes and details about the failure.  Generic error messages like 'Invalid response from Gemini API' are unhelpful for debugging.\"\n      ],\n      \"priority_2\": [\n        \"Implement Retry Logic with Exponential Backoff:  To handle transient network issues or temporary unavailability of the Gemini API, implement retry logic with exponential backoff. This will increase the robustness of the system.\",\n        \"Implement Circuit Breaker Pattern:  For a critical dependency like the Gemini API, a circuit breaker pattern can prevent cascading failures if the API is consistently unavailable.\"\n      ],\n      \"priority_3\": [\n        \"Thorough Testing After API Fix: Once the API connectivity issues are resolved, conduct comprehensive testing, including a wider range of edge cases and more diverse resume and job descriptions, to fully evaluate the matching algorithm's accuracy, reliability, and cognitive capabilities.\"\n      ]\n    }\n  },\n  \"summary\": \"The matching test results reveal a complete failure to connect to and receive a valid response from the Gemini API.  All test cases, both standard and edge cases, failed with the same error.  No assessment of matching accuracy, edge case handling, or cognitive capabilities is possible until the underlying API connectivity issue is resolved.  The primary focus should be on resolving the API connection problem and implementing robust error handling and retry mechanisms.\"\n}"
+    }
+  },
+  "system_metrics": {
+    "total_tests": 5,
+    "completion_time": "2025-03-16 21:29:44.972183",
+    "component_status": {
+      "file_processing": "operational",
+      "matching": "error"
+    }
+  },
+  "analysis": {
+    "analysis": {
+      "overall_system_health": "Critical",
+      "integration_points": {
+        "file_processing_matching": "The FileProcessingAgent and MatchingAgent both rely on the Gemini API.  Failures in the Gemini API directly impact both agents.  There's no apparent error handling or fallback mechanism if the Gemini API is unavailable or returns an invalid response."
+      },
+      "system_reliability_and_stability": "Extremely Low",
+      "performance_characteristics": {
+        "file_processing": "Potentially poor performance indicated by a 429 error ('Resource has been exhausted') for an empty file and a generic 500 error for a large file.  The root cause needs investigation.",
+        "matching": "Completely non-functional due to consistent failures to communicate with the Gemini API.  No performance data is available."
+      },
+      "security_considerations": "Moderate",
+      "areas_needing_improvement": [
+        "Gemini API Dependency: The heavy reliance on the Gemini API creates a single point of failure.  The system needs to be more resilient to API outages or errors.",
+        "Error Handling:  Error handling is inadequate. Generic 500 errors provide little diagnostic information.  More specific error messages and logging are crucial.",
+        "Retry Mechanisms:  The system lacks robust retry mechanisms with exponential backoff to handle transient errors in the Gemini API.",
+        "Input Validation:  While .exe files are rejected, input validation needs to be more comprehensive to prevent other potential security vulnerabilities.",
+        "Resource Management:  The 429 error suggests insufficient resource allocation or poor resource management.  This needs to be addressed to prevent service disruptions.",
+        "API Documentation:  The API documentation should clearly specify supported file formats and provide more detailed error codes and explanations."
+      ],
+      "recommendations_for_enhancement": [
+        {
+          "category": "Gemini API Resilience",
+          "recommendations": [
+            "Implement a circuit breaker pattern to prevent cascading failures if the Gemini API is unavailable.",
+            "Explore alternative APIs or implement a fallback mechanism if the Gemini API fails.",
+            "Implement health checks for the Gemini API to proactively detect outages.",
+            "Implement rate limiting logic to avoid exceeding the Gemini API's limits."
+          ]
+        },
+        {
+          "category": "Error Handling and Logging",
+          "recommendations": [
+            "Implement more detailed logging to capture stack traces and other relevant information during errors.",
+            "Provide more specific and informative error messages to the client, including error codes and suggestions for resolution.",
+            "Use a centralized error monitoring system to track and alert on errors."
+          ]
+        },
+        {
+          "category": "Retry Mechanisms",
+          "recommendations": [
+            "Implement retry logic with exponential backoff for all API calls to handle transient errors.",
+            "Implement configurable retry parameters (number of retries, backoff strategy) to allow for fine-tuning."
+          ]
+        },
+        {
+          "category": "Input Validation and Sanitization",
+          "recommendations": [
+            "Implement more robust input validation to prevent unexpected behavior or security vulnerabilities.",
+            "Sanitize all inputs before processing to prevent injection attacks."
+          ]
+        },
+        {
+          "category": "Resource Management",
+          "recommendations": [
+            "Investigate and address potential resource bottlenecks.",
+            "Monitor server resource usage (CPU, memory, disk space) to identify and resolve performance issues.",
+            "Implement resource limits and quotas to prevent resource exhaustion."
+          ]
+        },
+        {
+          "category": "Testing and Monitoring",
+          "recommendations": [
+            "Implement comprehensive testing, including integration and end-to-end tests, to catch potential issues before deployment.",
+            "Regularly monitor system performance and API response times to identify and address potential problems proactively."
+          ]
+        }
+      ]
+    },
+    "summary": "The system is currently in a critical state due to the complete failure of the MatchingAgent and significant issues within the FileProcessingAgent, both stemming from problems interacting with the Gemini API.  Addressing the Gemini API dependency, improving error handling, and implementing robust retry mechanisms are the highest priorities.  Without resolving these critical issues, the system is unreliable and unstable."
+  },
+  "report": "# Test Report: File Processing and Matching System\n\n**Date:** 2025-03-16\n\n**Version:** 1.0\n\n\n## 1. Executive Summary\n\nThis report details the results of testing conducted on the File Processing and Matching system on 2025-03-16 at 21:27:31.  The testing revealed a critical system state due to widespread failures stemming from the system's reliance on the Gemini API.  Both the File Processing Agent and the Matching Agent experienced significant issues, resulting in low reliability and instability.  The primary concern is the consistent failure to receive valid responses from the Gemini API, leading to numerous 500 Internal Server Errors.  Immediate action is required to address the Gemini API dependency, improve error handling, and implement robust retry mechanisms.\n\n\n## 2. Test Coverage Overview\n\nThe test suite covered various aspects of the system, including:\n\n* **File Processing Agent:**  Testing included format tests (.pdf, .docx, .txt, .xyz, .exe, .zip) and edge cases (empty file, large file).\n* **Matching Agent:** Testing included standard matching cases with varying degrees of expected match scores and edge cases (empty resume, empty job, non-overlapping skills).\n\nA total of 5 tests were executed.\n\n\n## 3. Key Findings\n\n* **Critical Gemini API Dependency:** The system's heavy reliance on the Gemini API constitutes a significant single point of failure.  Failures in the Gemini API directly caused the failure of all Matching Agent tests and severely impacted the File Processing Agent.\n* **Widespread 500 Internal Server Errors:**  The majority of tests resulted in 500 Internal Server Errors, indicating underlying issues within the server or its interaction with the Gemini API.\n* **Insufficient Error Handling:** Generic error messages provided little diagnostic information, hindering debugging and resolution.\n* **Lack of Retry Mechanisms:** The absence of robust retry mechanisms exacerbated the impact of transient errors.\n* **Poor Edge Case Handling:** The system demonstrated poor handling of edge cases, particularly for empty and large files.\n* **Incomplete Format Support:** Several file formats were explicitly rejected, indicating incomplete format support.\n* **Moderate Security Implications:** While .exe files were correctly rejected, more comprehensive input validation is needed to prevent other potential security vulnerabilities.\n\n\n## 4. Component-wise Analysis\n\n**4.1 File Processing Agent:**\n\nThe File Processing Agent exhibited low reliability due to frequent 500 Internal Server Errors across multiple file formats (.pdf, .docx, .txt).  Format support was incomplete, with several common formats (.xyz, .exe, .zip) rejected with 400 Bad Request errors. Edge case handling was poor, with failures for empty and large files resulting in 429 and 500 errors respectively.\n\n**4.2 Matching Agent:**\n\nThe Matching Agent was completely non-functional due to consistent \"Invalid response from Gemini API\" errors across all test cases (standard and edge cases).  This indicates a critical failure in the system's ability to communicate with the Gemini API.  No assessment of matching accuracy or reliability was possible.\n\n\n## 5. Performance Metrics\n\n* **Total Tests:** 5\n* **Completion Time:** 2025-03-16 21:29:44.972183\n* **File Processing Agent Status:** Operational (but with significant performance issues)\n* **Matching Agent Status:** Error (completely non-functional)\n\nPerformance was potentially poor, indicated by a 429 error (\"Resource has been exhausted\") for an empty file and a generic 500 error for a large file in the File Processing Agent.  The Matching Agent showed no performance data due to complete failure.\n\n\n## 6. Risk Assessment\n\nThe system's heavy reliance on the Gemini API presents a high risk of system failure.  The lack of robust error handling and retry mechanisms further increases the risk of service disruptions.  The incomplete format support and inadequate input validation introduce moderate security risks.  The overall system reliability and stability are extremely low.\n\n\n## 7. Recommendations\n\n* **Prioritize Gemini API Issues:** Immediately investigate and resolve the issues preventing communication with the Gemini API. This includes checking API status, reviewing API credentials, inspecting server logs, and contacting Gemini support.\n* **Implement Robust Error Handling:** Implement more detailed error handling and logging to provide specific error messages and facilitate debugging.\n* **Implement Retry Mechanisms:** Implement retry logic with exponential backoff for all API calls to handle transient errors.\n* **Enhance Input Validation:** Implement more comprehensive input validation and sanitization to prevent unexpected behavior and security vulnerabilities.\n* **Improve Resource Management:** Investigate and address potential resource bottlenecks to prevent resource exhaustion.\n* **Improve API Documentation:**  The API documentation should clearly specify supported file formats and provide more detailed error codes and explanations.\n* **Consider API Alternatives/Fallback:** Explore alternative APIs or implement a fallback mechanism in case the Gemini API is unavailable.\n* **Implement Circuit Breaker Pattern:** Implement a circuit breaker pattern to prevent cascading failures if the Gemini API is consistently unavailable.\n* **Comprehensive Testing:** Conduct thorough testing, including integration and end-to-end tests, to ensure system stability and reliability.\n\n\n## 8. Next Steps\n\n1. **Immediate Action:** Investigate and resolve the Gemini API connectivity issues.\n2. **Short-Term:** Implement robust error handling and retry mechanisms.\n3. **Mid-Term:** Enhance input validation and address resource management issues.\n4. **Long-Term:** Explore alternative APIs or fallback mechanisms, implement a circuit breaker pattern, and conduct comprehensive testing.  Regularly monitor system performance and API response times."
+}

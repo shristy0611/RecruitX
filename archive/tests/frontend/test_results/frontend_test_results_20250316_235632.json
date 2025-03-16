@@ -1,0 +1,426 @@
+{
+  "orchestrator_type": "FrontendTestOrchestrator",
+  "timestamp": "2025-03-16 23:52:10.394189",
+  "agent_results": {
+    "ui_component": {
+      "agent_type": "UIComponentAgent",
+      "timestamp": "2025-03-16 23:52:10.394200",
+      "components_tested": 10,
+      "components_passed": 0,
+      "components_failed": 10,
+      "tests": [
+        {
+          "component": "Dashboard",
+          "timestamp": "2025-03-16 23:52:10.635189",
+          "rendering_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:10.705819",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:20.757444",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:30.805406",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "FileUpload",
+          "timestamp": "2025-03-16 23:52:30.807731",
+          "rendering_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:30.837890",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:40.884370",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:50.928338",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Navbar",
+          "timestamp": "2025-03-16 23:52:50.930477",
+          "rendering_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:52:50.961375",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:53:01.011305",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:53:11.055230",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Footer",
+          "timestamp": "2025-03-16 23:53:11.058484",
+          "rendering_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:53:11.087614",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:53:21.135411",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:53:31.173549",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ResumeAnalysis",
+          "timestamp": "2025-03-16 23:53:31.175960",
+          "rendering_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:53:31.204474",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:53:41.253225",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:53:51.300276",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "JobAnalysis",
+          "timestamp": "2025-03-16 23:54:01.307801",
+          "rendering_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:54:01.349858",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:54:11.394715",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:54:21.442574",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Matching",
+          "timestamp": "2025-03-16 23:54:31.448505",
+          "rendering_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:54:31.487969",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:54:41.535060",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:54:51.579135",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ApiStatus",
+          "timestamp": "2025-03-16 23:55:01.586221",
+          "rendering_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:55:01.624689",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:55:11.671441",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:55:21.718740",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "SkillList",
+          "timestamp": "2025-03-16 23:55:31.727633",
+          "rendering_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:55:31.768685",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:55:41.819232",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:55:51.865789",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "NotFound",
+          "timestamp": "2025-03-16 23:55:51.868633",
+          "rendering_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:55:51.897558",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/nonexistent-page\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:56:01.943597",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/nonexistent-page\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:56:11.984270",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        }
+      ]
+    },
+    "performance": {
+      "agent_type": "PerformanceAgent",
+      "timestamp": "2025-03-16 23:56:12.296904",
+      "routes_tested": 1,
+      "page_load_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-16 23:56:12.538667",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"networkidle\"\n"
+          ]
+        }
+      ],
+      "responsiveness_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-16 23:56:22.668836",
+          "interactions": [],
+          "errors": [
+            "Page.goto: Timeout 10000ms exceeded.\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"networkidle\"\n"
+          ]
+        }
+      ],
+      "summary": {},
+      "errors": []
+    }
+  },
+  "system_metrics": {
+    "total_components_tested": 10,
+    "total_routes_tested": 1,
+    "completion_time": "2025-03-16 23:56:32.713971",
+    "component_status": {
+      "ui_components": "0/10 passed"
+    }
+  }
+}

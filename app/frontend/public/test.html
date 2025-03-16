@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecruitX API Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    .test-section {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #0055aa;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>RecruitX API Test Page</h1>
+  <p>This is a simple test page for direct API calls without React or any framework.</p>
+  
+  <div class="test-section">
+    <h2>Backend Health Check</h2>
+    <button onclick="testDirectEndpoint()">Test Direct API</button>
+    <button onclick="testProxiedEndpoint()">Test Proxied API</button>
+    <div id="health-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>Backend Status</h2>
+    <div id="backend-status">Checking backend status...</div>
+  </div>
+  
+  <script>
+    // Function to show results
+    function showResult(elementId, success, message, data) {
+      const element = document.getElementById(elementId);
+      element.innerHTML = `
+        <p style="color: ${success ? 'green' : 'red'}">
+          ${success ? '✓' : '✗'} ${message}
+        </p>
+        ${data ? `<pre>${JSON.stringify(data, null, 2)}</pre>` : ''}
+      `;
+    }
+    
+    // Test direct endpoint
+    async function testDirectEndpoint() {
+      try {
+        const response = await fetch('http://localhost:8000/health');
+        const data = await response.json();
+        showResult('health-result', true, 'Direct API call successful!', data);
+      } catch (error) {
+        showResult('health-result', false, `Direct API call failed: ${error.message}`);
+      }
+    }
+    
+    // Test proxied endpoint
+    async function testProxiedEndpoint() {
+      try {
+        const response = await fetch('/api/health');
+        const data = await response.json();
+        showResult('health-result', true, 'Proxied API call successful!', data);
+      } catch (error) {
+        showResult('health-result', false, `Proxied API call failed: ${error.message}`);
+      }
+    }
+    
+    // Check backend status on load
+    (async function checkBackendStatus() {
+      const statusElement = document.getElementById('backend-status');
+      
+      try {
+        // Try direct first
+        try {
+          const directResponse = await fetch('http://localhost:8000/health');
+          const directData = await directResponse.json();
+          statusElement.innerHTML = `
+            <p style="color: green">✓ Backend is running at http://localhost:8000</p>
+            <p>Testing Mode: ${directData.testing_mode ? 'Enabled' : 'Disabled'}</p>
+            <pre>${JSON.stringify(directData, null, 2)}</pre>
+          `;
+          return;
+        } catch (directError) {
+          console.error('Direct connection failed:', directError);
+        }
+        
+        // Try proxied next
+        const proxiedResponse = await fetch('/api/health');
+        const proxiedData = await proxiedResponse.json();
+        statusElement.innerHTML = `
+          <p style="color: green">✓ Backend is running (via proxy)</p>
+          <p>Testing Mode: ${proxiedData.testing_mode ? 'Enabled' : 'Disabled'}</p>
+          <pre>${JSON.stringify(proxiedData, null, 2)}</pre>
+        `;
+      } catch (error) {
+        statusElement.innerHTML = `
+          <p style="color: red">✗ Backend is not reachable</p>
+          <p>Error: ${error.message}</p>
+          <p>Please make sure the backend server is running at http://localhost:8000</p>
+        `;
+      }
+    })();
+  </script>
+</body>
+</html> 

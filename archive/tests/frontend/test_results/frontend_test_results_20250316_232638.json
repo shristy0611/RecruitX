@@ -1,0 +1,532 @@
+{
+  "orchestrator_type": "FrontendTestOrchestrator",
+  "timestamp": "2025-03-16 23:26:34.173821",
+  "agent_results": {
+    "ui_component": {
+      "agent_type": "UIComponentAgent",
+      "timestamp": "2025-03-16 23:26:34.173832",
+      "components_tested": 10,
+      "components_passed": 0,
+      "components_failed": 10,
+      "tests": [
+        {
+          "component": "Dashboard",
+          "timestamp": "2025-03-16 23:26:35.627532",
+          "rendering_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.177232",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.211962",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Dashboard",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.241999",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "FileUpload",
+          "timestamp": "2025-03-16 23:26:36.243848",
+          "rendering_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.270747",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.300458",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "FileUpload",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.331135",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Navbar",
+          "timestamp": "2025-03-16 23:26:36.332880",
+          "rendering_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.358916",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.388303",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Navbar",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.418502",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Footer",
+          "timestamp": "2025-03-16 23:26:36.420678",
+          "rendering_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.445259",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.475023",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Footer",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.504601",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ResumeAnalysis",
+          "timestamp": "2025-03-16 23:26:36.506373",
+          "rendering_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:26:36.531944",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/resume-analysis\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:26:36.561891",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/resume-analysis\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "ResumeAnalysis",
+            "route": "/resume-analysis",
+            "timestamp": "2025-03-16 23:26:36.591920",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/resume-analysis\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "JobAnalysis",
+          "timestamp": "2025-03-16 23:26:36.596427",
+          "rendering_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:26:36.622303",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/job-analysis\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:26:36.652336",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/job-analysis\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "JobAnalysis",
+            "route": "/job-analysis",
+            "timestamp": "2025-03-16 23:26:36.682519",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/job-analysis\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "Matching",
+          "timestamp": "2025-03-16 23:26:36.687505",
+          "rendering_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:26:36.713409",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/matching\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:26:36.743456",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/matching\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "Matching",
+            "route": "/matching",
+            "timestamp": "2025-03-16 23:26:36.773939",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/matching\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "ApiStatus",
+          "timestamp": "2025-03-16 23:26:36.778489",
+          "rendering_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:26:36.804462",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/api-status\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:26:36.835179",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/api-status\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "ApiStatus",
+            "route": "/api-status",
+            "timestamp": "2025-03-16 23:26:36.865518",
+            "status": "error",
+            "api_calls": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/api-status\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"load\"\n"
+            ]
+          },
+          "status": "failed"
+        },
+        {
+          "component": "SkillList",
+          "timestamp": "2025-03-16 23:26:36.870200",
+          "rendering_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.895456",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.925164",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "SkillList",
+            "route": "/",
+            "timestamp": "2025-03-16 23:26:36.954587",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        },
+        {
+          "component": "NotFound",
+          "timestamp": "2025-03-16 23:26:36.956452",
+          "rendering_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:26:36.981304",
+            "status": "error",
+            "visible": false,
+            "screenshot": null,
+            "network_requests": [],
+            "ui_analysis": {},
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/nonexistent-page\nCall log:\n  - navigating to \"http://localhost:5173/nonexistent-page\", waiting until \"load\"\n"
+            ]
+          },
+          "interaction_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:26:37.012320",
+            "status": "error",
+            "interactions": [],
+            "errors": [
+              "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/nonexistent-page\nCall log:\n  - navigating to \"http://localhost:5173/nonexistent-page\", waiting until \"load\"\n"
+            ]
+          },
+          "api_test": {
+            "component": "NotFound",
+            "route": "/nonexistent-page",
+            "timestamp": "2025-03-16 23:26:37.043342",
+            "status": "skipped",
+            "api_calls": [],
+            "errors": []
+          },
+          "status": "failed"
+        }
+      ]
+    },
+    "performance": {
+      "agent_type": "PerformanceAgent",
+      "timestamp": "2025-03-16 23:26:37.062069",
+      "routes_tested": 5,
+      "page_load_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-16 23:26:37.294843",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"networkidle\"\n",
+            "Iteration 2: : Tracing has been already started",
+            "Iteration 3: : Tracing has been already started"
+          ]
+        },
+        {
+          "route": "ResumeAnalysis",
+          "path": "/resume-analysis",
+          "timestamp": "2025-03-16 23:26:37.581981",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: : Tracing has been already started",
+            "Iteration 2: : Tracing has been already started",
+            "Iteration 3: : Tracing has been already started"
+          ]
+        },
+        {
+          "route": "JobAnalysis",
+          "path": "/job-analysis",
+          "timestamp": "2025-03-16 23:26:37.729582",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: : Tracing has been already started",
+            "Iteration 2: : Tracing has been already started",
+            "Iteration 3: : Tracing has been already started"
+          ]
+        },
+        {
+          "route": "Matching",
+          "path": "/matching",
+          "timestamp": "2025-03-16 23:26:37.874611",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: : Tracing has been already started",
+            "Iteration 2: : Tracing has been already started",
+            "Iteration 3: : Tracing has been already started"
+          ]
+        },
+        {
+          "route": "ApiStatus",
+          "path": "/api-status",
+          "timestamp": "2025-03-16 23:26:38.021627",
+          "load_times": [],
+          "dom_content_loaded_times": [],
+          "first_paint_times": [],
+          "largest_contentful_paint_times": [],
+          "cumulative_layout_shift": [],
+          "network_requests": [],
+          "resource_sizes": {},
+          "errors": [
+            "Iteration 1: : Tracing has been already started",
+            "Iteration 2: : Tracing has been already started",
+            "Iteration 3: : Tracing has been already started"
+          ]
+        }
+      ],
+      "responsiveness_results": [
+        {
+          "route": "Home",
+          "path": "/",
+          "timestamp": "2025-03-16 23:26:37.550353",
+          "interactions": [],
+          "errors": [
+            "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/\nCall log:\n  - navigating to \"http://localhost:5173/\", waiting until \"networkidle\"\n"
+          ]
+        },
+        {
+          "route": "ResumeAnalysis",
+          "path": "/resume-analysis",
+          "timestamp": "2025-03-16 23:26:37.698354",
+          "interactions": [],
+          "errors": [
+            "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/resume-analysis\nCall log:\n  - navigating to \"http://localhost:5173/resume-analysis\", waiting until \"networkidle\"\n"
+          ]
+        },
+        {
+          "route": "JobAnalysis",
+          "path": "/job-analysis",
+          "timestamp": "2025-03-16 23:26:37.844431",
+          "interactions": [],
+          "errors": [
+            "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/job-analysis\nCall log:\n  - navigating to \"http://localhost:5173/job-analysis\", waiting until \"networkidle\"\n"
+          ]
+        },
+        {
+          "route": "Matching",
+          "path": "/matching",
+          "timestamp": "2025-03-16 23:26:37.990081",
+          "interactions": [],
+          "errors": [
+            "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/matching\nCall log:\n  - navigating to \"http://localhost:5173/matching\", waiting until \"networkidle\"\n"
+          ]
+        },
+        {
+          "route": "ApiStatus",
+          "path": "/api-status",
+          "timestamp": "2025-03-16 23:26:38.139340",
+          "interactions": [],
+          "errors": [
+            "Page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5173/api-status\nCall log:\n  - navigating to \"http://localhost:5173/api-status\", waiting until \"networkidle\"\n"
+          ]
+        }
+      ],
+      "summary": {},
+      "errors": []
+    }
+  },
+  "system_metrics": {
+    "total_components_tested": 10,
+    "total_routes_tested": 5,
+    "completion_time": "2025-03-16 23:26:38.187998",
+    "component_status": {
+      "ui_components": "0/10 passed"
+    }
+  }
+}
