@@ -159,33 +159,26 @@ const Matching = () => {
     );
   };
 
-  // Helper function to extract text from skill objects
+  // Helper function to extract text from skill objects with potentially different formats
   const getSkillText = (skill) => {
+    if (!skill) return '';
+    
     if (typeof skill === 'string') {
       return skill;
     }
     
-    // If it has a 'skill' property
+    // If it has a 'skill' property (some API responses use this format)
     if (skill.skill) {
-      const match_level = skill.match_level || skill.level || skill.proficiency || '';
-      return match_level ? `${skill.skill} (${match_level})` : skill.skill;
+      return skill.level ? `${skill.skill} (${skill.level})` : skill.skill;
     }
     
-    // If it has a 'name' property
+    // If it has a 'name' property (some API responses use this format)
     if (skill.name) {
-      const match_level = skill.match_level || skill.level || skill.proficiency || '';
-      return match_level ? `${skill.name} (${match_level})` : skill.name;
+      return skill.level ? `${skill.name} (${skill.level})` : skill.name;
     }
     
-    // If it has any description or detail
-    if (skill.description || skill.detail) {
-      const base = skill.description || skill.detail;
-      const level = skill.importance || skill.proficiency || '';
-      return level ? `${base} (${level})` : base;
-    }
-    
-    // Fallback
-    return String(skill) !== '[object Object]' ? String(skill) : language === 'ja' ? 'スキルの詳細が利用できません' : 'Skill details unavailable';
+    // Fallback - stringify the object if possible
+    return String(skill) !== '[object Object]' ? String(skill) : 'Unknown skill';
   };
 
   return (
@@ -359,49 +352,61 @@ const Matching = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
               <h3 className="text-xl font-semibold mb-4">{t('matching.matchingSkills')}</h3>
-              <ul className="space-y-2">
-                {matchResult.matching_skills?.map((skill, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5 mr-2">
-                      <span className="text-green-600 text-xs">✓</span>
-                    </div>
-                    <span>{getSkillText(skill)}</span>
-                  </li>
-                ))}
-              </ul>
+              {Array.isArray(matchResult.matching_skills) ? (
+                <ul className="space-y-2">
+                  {matchResult.matching_skills.map((skill, index) => (
+                    <li key={index} className="flex items-start">
+                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5 mr-2">
+                        <span className="text-green-600 text-xs">✓</span>
+                      </div>
+                      <span>{getSkillText(skill)}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500 italic">{t('common.noData')}</p>
+              )}
             </div>
 
             <div className="card">
               <h3 className="text-xl font-semibold mb-4">{t('matching.missingSkills')}</h3>
-              <ul className="space-y-2">
-                {matchResult.missing_skills?.map((skill, index) => (
-                  <li key={index} className="flex items-start">
-                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center mt-0.5 mr-2">
-                      <span className="text-orange-600 text-xs">!</span>
-                    </div>
-                    <span>{getSkillText(skill)}</span>
-                  </li>
-                ))}
-              </ul>
+              {Array.isArray(matchResult.missing_skills) ? (
+                <ul className="space-y-2">
+                  {matchResult.missing_skills.map((skill, index) => (
+                    <li key={index} className="flex items-start">
+                      <div className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-100 flex items-center justify-center mt-0.5 mr-2">
+                        <span className="text-orange-600 text-xs">!</span>
+                      </div>
+                      <span>{getSkillText(skill)}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500 italic">{t('common.noData')}</p>
+              )}
             </div>
           </div>
 
           <div className="card">
             <h3 className="text-xl font-semibold mb-4">{t('matching.recommendations')}</h3>
-            <ul className="space-y-2">
-              {matchResult.recommendations?.map((recommendation, index) => (
-                <li key={index} className="flex items-start">
-                  <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5 mr-2">
-                    <span className="text-blue-600 text-xs">i</span>
-                  </div>
-                  <span>
-                    {typeof recommendation === 'string' 
-                      ? recommendation 
-                      : (recommendation.description || recommendation.text || recommendation.recommendation || String(recommendation))}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            {Array.isArray(matchResult.recommendations) ? (
+              <ul className="space-y-2">
+                {matchResult.recommendations.map((recommendation, index) => (
+                  <li key={index} className="flex items-start">
+                    <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5 mr-2">
+                      <span className="text-blue-600 text-xs">i</span>
+                    </div>
+                    <span>
+                      {typeof recommendation === 'string' 
+                        ? recommendation 
+                        : (recommendation.description || recommendation.text || recommendation.recommendation || String(recommendation))}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 italic">{t('common.noData')}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

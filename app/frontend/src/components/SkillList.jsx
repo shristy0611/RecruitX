@@ -1,37 +1,42 @@
 import React from 'react';
 
 const SkillList = ({ skills, title, className = '', badgeColor = 'blue' }) => {
-  if (!skills || skills.length === 0) {
+  // Handle case where skills might be an object with details property
+  if (skills && skills.details && Array.isArray(skills.details)) {
+    skills = skills.details;
+  }
+  
+  if (!skills || !Array.isArray(skills) || skills.length === 0) {
     return null;
   }
 
   // Function to extract the skill text from a skill item, which might be a string or an object
   const getSkillText = (skill) => {
+    if (!skill) return '';
+    
     if (typeof skill === 'string') {
       return skill;
     }
     
     // If it has a 'skill' property (some API responses use this format)
     if (skill.skill) {
-      return skill.proficiency ? `${skill.skill} (${skill.proficiency})` : skill.skill;
+      const level = skill.level || skill.proficiency || skill.importance || '';
+      return level ? `${skill.skill} (${level})` : skill.skill;
     }
     
     // If it has a 'name' property (some API responses use this format)
     if (skill.name) {
+      const level = skill.level || skill.proficiency || skill.importance || '';
+      
       // Handle nested items if they exist
       if (Array.isArray(skill.items)) {
-        return skill.proficiency 
-          ? `${skill.name}: ${skill.items.join(', ')} (${skill.proficiency})` 
+        return level 
+          ? `${skill.name}: ${skill.items.join(', ')} (${level})` 
           : `${skill.name}: ${skill.items.join(', ')}`;
       }
       
-      // Just name and proficiency
-      return skill.proficiency ? `${skill.name} (${skill.proficiency})` : skill.name;
-    }
-    
-    // If it has an 'importance' property (for job skills)
-    if (skill.importance) {
-      return `${skill.skill || skill.name} (${skill.importance})`;
+      // Just name and level
+      return level ? `${skill.name} (${level})` : skill.name;
     }
     
     // Fallback - try to convert to string or return a placeholder

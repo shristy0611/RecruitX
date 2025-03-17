@@ -126,7 +126,7 @@ const ResumeAnalysis = () => {
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">{t('resume.experience')}</h3>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {analysisResult.experience?.map((exp, index) => (
+                {analysisResult.experience?.details?.map((exp, index) => (
                   <li key={index}>{getItemText(exp)}</li>
                 ))}
               </ul>
@@ -135,22 +135,20 @@ const ResumeAnalysis = () => {
             <div className="mb-6">
               <h3 className="text-lg font-semibold mb-2">{t('resume.education')}</h3>
               <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {analysisResult.education?.map((edu, index) => (
+                {analysisResult.education?.details?.map((edu, index) => (
                   <li key={index}>{getItemText(edu)}</li>
                 ))}
               </ul>
             </div>
-
-            {analysisResult.achievements && analysisResult.achievements.length > 0 && (
-              <div className="mb-6">
-                <h3 className="text-lg font-semibold mb-2">{t('resume.achievements')}</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-700">
-                  {analysisResult.achievements.map((achievement, index) => (
-                    <li key={index}>{getItemText(achievement)}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-2">{t('resume.achievements')}</h3>
+              <ul className="list-disc list-inside space-y-1 text-gray-700">
+                {analysisResult.achievements?.details?.map((achievement, index) => (
+                  <li key={index}>{getItemText(achievement)}</li>
+                ))}
+              </ul>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
               {analysisResult.key_strengths && analysisResult.key_strengths.length > 0 && (
