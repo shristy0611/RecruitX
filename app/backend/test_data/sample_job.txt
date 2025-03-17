@@ -1,0 +1,26 @@
+Software Engineer Position
+
+Required Skills:
+- Python programming
+- JavaScript
+- React
+- Docker
+
+Preferred Skills:
+- Machine Learning
+- Kubernetes
+- AWS
+
+Responsibilities:
+- Develop web applications
+- Participate in code reviews
+- Troubleshoot and debug issues
+
+Qualifications:
+- Bachelor's degree in Computer Science
+- 3+ years of experience
+- Strong problem-solving skills
+
+Company Culture:
+- Remote-friendly
+- Flexible hours

@@ -1,0 +1,11 @@
+Job Title: Software Engineer
+
+Required Skills:
+- Python
+- Java
+- JavaScript
+
+Responsibilities:
+- Develop web applications
+- Code reviews
+- Testing
