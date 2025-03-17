@@ -233,8 +233,19 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
         logger.info(f"Resume analysis completed: {json.dumps(raw_result)[:100]}...")
         
         # Transform the response to match frontend's expected format
+        # Process skills safely to handle different formats from AI response
+        skills_details = []
+        if "skills" in raw_result:
+            if isinstance(raw_result["skills"], list):
+                for skill in raw_result["skills"]:
+                    if isinstance(skill, dict):
+                        # Keep the full skill object with proficiency info
+                        skills_details.append(skill)
+                    elif isinstance(skill, str):
+                        skills_details.append(skill)
+        
         transformed_result = {
-            "skills": {"details": raw_result.get("skills", [])},
+            "skills": {"details": skills_details},
             "experience": {"details": raw_result.get("experience", [])},
             "education": {"details": raw_result.get("education", [])},
             "achievements": {"details": raw_result.get("achievements", [])}
@@ -254,9 +265,28 @@ async def analyze_job(file: UploadFile = File(...), language: str = Query("en", 
         logger.info(f"Job analysis completed: {json.dumps(raw_result)[:100]}...")
         
         # Transform the response to match frontend's expected format
+        # Handle different possible data structures for skills
+        required_skills_details = []
+        if "required_skills" in raw_result:
+            if isinstance(raw_result["required_skills"], list):
+                for skill in raw_result["required_skills"]:
+                    if isinstance(skill, dict) and "skill" in skill:
+                        required_skills_details.append(skill["skill"])
+                    elif isinstance(skill, str):
+                        required_skills_details.append(skill)
+        
+        preferred_skills_details = []
+        if "preferred_skills" in raw_result:
+            if isinstance(raw_result["preferred_skills"], list):
+                for skill in raw_result["preferred_skills"]:
+                    if isinstance(skill, dict) and "skill" in skill:
+                        preferred_skills_details.append(skill["skill"])
+                    elif isinstance(skill, str):
+                        preferred_skills_details.append(skill)
+        
         transformed_result = {
-            "required_skills": {"details": [skill["skill"] for skill in raw_result.get("required_skills", [])]},
-            "preferred_skills": {"details": [skill["skill"] for skill in raw_result.get("preferred_skills", [])]},
+            "required_skills": {"details": required_skills_details},
+            "preferred_skills": {"details": preferred_skills_details},
             "responsibilities": {"details": raw_result.get("responsibilities", [])},
             "qualifications": {"details": raw_result.get("qualifications", [])},
             "company_info": {"details": raw_result.get("company_culture", []) + raw_result.get("job_benefits", [])}
