@@ -229,9 +229,18 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
     """Analyze a resume/CV document"""
     try:
         content = await extract_text_from_file(file)
-        result = await analyze_document(content, "resume", language)
-        logger.info(f"Resume analysis completed: {json.dumps(result)[:100]}...")
-        return result
+        raw_result = await analyze_document(content, "resume", language)
+        logger.info(f"Resume analysis completed: {json.dumps(raw_result)[:100]}...")
+        
+        # Transform the response to match frontend's expected format
+        transformed_result = {
+            "skills": {"details": raw_result.get("skills", [])},
+            "experience": {"details": raw_result.get("experience", [])},
+            "education": {"details": raw_result.get("education", [])},
+            "achievements": {"details": raw_result.get("achievements", [])}
+        }
+        
+        return transformed_result
     except Exception as e:
         logger.error(f"Resume analysis error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -241,9 +250,19 @@ async def analyze_job(file: UploadFile = File(...), language: str = Query("en", 
     """Analyze a job description document"""
     try:
         content = await extract_text_from_file(file)
-        result = await analyze_document(content, "job description", language)
-        logger.info(f"Job analysis completed: {json.dumps(result)[:100]}...")
-        return result
+        raw_result = await analyze_document(content, "job description", language)
+        logger.info(f"Job analysis completed: {json.dumps(raw_result)[:100]}...")
+        
+        # Transform the response to match frontend's expected format
+        transformed_result = {
+            "required_skills": {"details": [skill["skill"] for skill in raw_result.get("required_skills", [])]},
+            "preferred_skills": {"details": [skill["skill"] for skill in raw_result.get("preferred_skills", [])]},
+            "responsibilities": {"details": raw_result.get("responsibilities", [])},
+            "qualifications": {"details": raw_result.get("qualifications", [])},
+            "company_info": {"details": raw_result.get("company_culture", []) + raw_result.get("job_benefits", [])}
+        }
+        
+        return transformed_result
     except Exception as e:
         logger.error(f"Job analysis error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
