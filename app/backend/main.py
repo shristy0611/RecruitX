@@ -133,27 +133,35 @@ async def analyze_document(content: str, doc_type: str, language: str = "en") ->
         # Choose prompt based on document type and language
         if doc_type == "resume":
             if doc_language == "ja":
-                prompt = """この履歴書を詳細に分析し、以下のJSON形式で情報を抽出してください：
+                prompt = """この履歴書を詳細に分析し、以下のJSON形式で情報を抽出してください。全てのフィールドについての情報を必ず含めてください：
                 {
                     "skills": [技術的なスキルとソフトスキルのリスト、レベルが示されている場合はそれも含む],
-                    "experience": [仕事経験のリスト、主な責任と成果を含む],
-                    "education": [教育資格のリスト、関連詳細を含む],
+                    "experience": [仕事経験の詳細リスト、会社名、役職、主な責任と成果を含む],
+                    "education": [教育資格の詳細リスト、学校名、学位、専攻を含む],
                     "achievements": [注目すべき成果や業績のリスト],
                     "key_strengths": [履歴書に基づく候補者の主な強みのリスト],
                     "development_areas": [職業能力開発の可能性のある分野]
                 }
+                
+                全てのフィールドについて、できるだけ詳細な情報を提供してください。特に、experience、education、achievementsのフィールドを空にしないでください。
+                情報が不足している場合でも、履歴書から読み取れる部分的な情報を使って回答してください。
+
                 重要：回答は追加テキストなしの有効なJSONオブジェクトでなければなりません。
                 内容：""" + content
             else:
-                prompt = """Analyze this resume in detail and extract in JSON format:
+                prompt = """Analyze this resume in detail and extract in JSON format. INCLUDE INFORMATION FOR ALL FIELDS:
                 {
                     "skills": [list of technical and soft skills with proficiency levels where indicated],
-                    "experience": [list of work experiences with key responsibilities and achievements],
-                    "education": [list of educational qualifications with relevant details],
+                    "experience": [detailed list of work experiences with company name, position/title, key responsibilities and achievements],
+                    "education": [detailed list of educational qualifications with institution name, degree, major],
                     "achievements": [list of notable achievements and accomplishments],
                     "key_strengths": [list of the candidate's key strengths based on the resume],
                     "development_areas": [potential areas for professional development]
                 }
+                
+                Please provide detailed information for ALL fields. DO NOT leave the experience, education, or achievements fields empty.
+                Even if information is limited, use whatever partial information is available in the resume.
+                
                 IMPORTANT: Your response MUST be a valid JSON object with no additional text.
                 Content: """ + content
         else:  # job description
@@ -230,12 +238,13 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
     try:
         content = await extract_text_from_file(file)
         raw_result = await analyze_document(content, "resume", language)
-        logger.info(f"Resume analysis completed: {json.dumps(raw_result)[:100]}...")
+        logger.info(f"Resume analysis raw data keys: {list(raw_result.keys())}")
         
         # Transform the response to match frontend's expected format
         # Process skills safely to handle different formats from AI response
         skills_details = []
         if "skills" in raw_result:
+            logger.info(f"Skills type: {type(raw_result['skills'])}")
             if isinstance(raw_result["skills"], list):
                 for skill in raw_result["skills"]:
                     if isinstance(skill, dict):
@@ -248,41 +257,117 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
                     elif isinstance(skill, str):
                         skills_details.append(skill)
             # Handle nested skills structure that might appear in Japanese
-            elif isinstance(raw_result["skills"], dict) and "items" in raw_result["skills"]:
-                if isinstance(raw_result["skills"]["items"], list):
-                    for item in raw_result["skills"]["items"]:
-                        if isinstance(item, str):
-                            skills_details.append(item)
+            elif isinstance(raw_result["skills"], dict):
+                if "items" in raw_result["skills"]:
+                    if isinstance(raw_result["skills"]["items"], list):
+                        for item in raw_result["skills"]["items"]:
+                            if isinstance(item, str):
+                                skills_details.append(item)
+                # Handle other dictionary structures
+                for key, value in raw_result["skills"].items():
+                    if isinstance(value, list):
+                        for item in value:
+                            if isinstance(item, str):
+                                skills_details.append(item)
+                            elif isinstance(item, dict) and "skill" in item:
+                                skills_details.append(item["skill"])
         
-        # Process experience safely
+        # Process experience safely with more flexible approach
         experience_details = []
-        if "experience" in raw_result:
-            if isinstance(raw_result["experience"], list):
-                for exp in raw_result["experience"]:
-                    if isinstance(exp, dict) and "position" in exp:
-                        experience_details.append(exp["position"])
-                    elif isinstance(exp, str):
-                        experience_details.append(exp)
+        experience_keys = ["experience", "work_experience", "職歴", "実務経験"]
+        for exp_key in experience_keys:
+            if exp_key in raw_result:
+                logger.info(f"Found experience under key: {exp_key}, type: {type(raw_result[exp_key])}")
+                if isinstance(raw_result[exp_key], list):
+                    for exp in raw_result[exp_key]:
+                        if isinstance(exp, dict):
+                            # Try various possible field names
+                            for field in ["position", "title", "role", "job", "description", "company"]:
+                                if field in exp:
+                                    detail = exp[field]
+                                    if "company" in exp and field != "company":
+                                        detail = f"{detail} at {exp['company']}"
+                                    experience_details.append(detail)
+                                    break
+                            else:
+                                # If no specific field found, use the whole dict as string
+                                experience_details.append(str(exp))
+                        elif isinstance(exp, str):
+                            experience_details.append(exp)
+                elif isinstance(raw_result[exp_key], dict):
+                    # Handle nested structure
+                    for company, details in raw_result[exp_key].items():
+                        if isinstance(details, list):
+                            for detail in details:
+                                experience_details.append(f"{detail} at {company}")
+                        else:
+                            experience_details.append(f"{details} at {company}")
         
-        # Process education safely
+        # Process education safely with more flexible approach
         education_details = []
-        if "education" in raw_result:
-            if isinstance(raw_result["education"], list):
-                for edu in raw_result["education"]:
-                    if isinstance(edu, dict) and "degree" in edu:
-                        education_details.append(edu["degree"])
-                    elif isinstance(edu, str):
-                        education_details.append(edu)
+        education_keys = ["education", "educational_background", "学歴", "教育"]
+        for edu_key in education_keys:
+            if edu_key in raw_result:
+                logger.info(f"Found education under key: {edu_key}, type: {type(raw_result[edu_key])}")
+                if isinstance(raw_result[edu_key], list):
+                    for edu in raw_result[edu_key]:
+                        if isinstance(edu, dict):
+                            # Try various possible field names
+                            for field in ["degree", "institution", "school", "university", "qualification", "description"]:
+                                if field in edu:
+                                    detail = edu[field]
+                                    if "institution" in edu and field != "institution":
+                                        detail = f"{detail} at {edu['institution']}"
+                                    education_details.append(detail)
+                                    break
+                            else:
+                                # If no specific field found, use the whole dict as string
+                                education_details.append(str(edu))
+                        elif isinstance(edu, str):
+                            education_details.append(edu)
+                elif isinstance(raw_result[edu_key], dict):
+                    # Handle nested structure
+                    for institution, details in raw_result[edu_key].items():
+                        if isinstance(details, list):
+                            for detail in details:
+                                education_details.append(f"{detail} at {institution}")
+                        else:
+                            education_details.append(f"{details} at {institution}")
         
-        # Process achievements safely
+        # Process achievements safely with more flexible approach
         achievements_details = []
-        if "achievements" in raw_result:
-            if isinstance(raw_result["achievements"], list):
-                for achievement in raw_result["achievements"]:
-                    if isinstance(achievement, dict) and "achievement" in achievement:
-                        achievements_details.append(achievement["achievement"])
-                    elif isinstance(achievement, str):
-                        achievements_details.append(achievement)
+        achievement_keys = ["achievements", "accomplishments", "projects", "notable_projects", "業績", "成果", "プロジェクト"]
+        for ach_key in achievement_keys:
+            if ach_key in raw_result:
+                logger.info(f"Found achievements under key: {ach_key}, type: {type(raw_result[ach_key])}")
+                if isinstance(raw_result[ach_key], list):
+                    for ach in raw_result[ach_key]:
+                        if isinstance(ach, dict):
+                            # Try various possible field names
+                            for field in ["achievement", "accomplishment", "description", "project", "title"]:
+                                if field in ach:
+                                    achievements_details.append(ach[field])
+                                    break
+                            else:
+                                # If no specific field found, use the whole dict as string
+                                achievements_details.append(str(ach))
+                        elif isinstance(ach, str):
+                            achievements_details.append(ach)
+                elif isinstance(raw_result[ach_key], dict):
+                    # Handle nested structure
+                    for project_name, details in raw_result[ach_key].items():
+                        if isinstance(details, list):
+                            for detail in details:
+                                achievements_details.append(f"{project_name}: {detail}")
+                        else:
+                            achievements_details.append(f"{project_name}: {details}")
+        
+        # Check for key_strengths and development_areas as alternative sources
+        if not achievements_details:
+            strength_keys = ["key_strengths", "strengths", "強み"]
+            for key in strength_keys:
+                if key in raw_result and isinstance(raw_result[key], list):
+                    achievements_details.extend([f"Strength: {s}" for s in raw_result[key]])
         
         transformed_result = {
             "skills": {"details": skills_details},
@@ -291,6 +376,7 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
             "achievements": {"details": achievements_details}
         }
         
+        logger.info(f"Transformed resume result: experience={len(experience_details)}, education={len(education_details)}, achievements={len(achievements_details)}")
         return transformed_result
     except Exception as e:
         logger.error(f"Resume analysis error: {str(e)}")
