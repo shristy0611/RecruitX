@@ -7,7 +7,12 @@ const SkillList = ({ skills, title, className = '', badgeColor = 'blue' }) => {
   }
   
   if (!skills || !Array.isArray(skills) || skills.length === 0) {
-    return null;
+    return (
+      <div className={className}>
+        {title && <h3 className="text-lg font-semibold mb-2 text-high-contrast">{title}</h3>}
+        <p className="text-medium-contrast italic text-sm">No items found</p>
+      </div>
+    );
   }
 
   // Function to extract the skill text from a skill item, which might be a string or an object
@@ -45,13 +50,26 @@ const SkillList = ({ skills, title, className = '', badgeColor = 'blue' }) => {
 
   return (
     <div className={className}>
-      {title && <h3 className="text-lg font-semibold mb-2">{title}</h3>}
+      {title && <h3 className="text-lg font-semibold mb-2 text-high-contrast">{title}</h3>}
       <div className="flex flex-wrap gap-2">
-        {skills.map((skill, index) => (
-          <span key={index} className={`badge badge-${badgeColor}`}>
-            {getSkillText(skill)}
-          </span>
-        ))}
+        {skills.map((skill, index) => {
+          const badgeClasses = {
+            blue: "bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-50",
+            green: "bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-50",
+            yellow: "bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-50",
+            red: "bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-50",
+            purple: "bg-purple-100 text-purple-800 dark:bg-purple-700 dark:text-purple-50"
+          };
+          
+          return (
+            <span 
+              key={index} 
+              className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${badgeClasses[badgeColor] || badgeClasses['blue']}`}
+            >
+              {getSkillText(skill)}
+            </span>
+          );
+        })}
       </div>
     </div>
   );

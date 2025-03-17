@@ -141,16 +141,22 @@ const Matching = () => {
         <div className="flex items-center justify-between">
           <div className="w-full">
             <div className="relative">
-              <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+              <div className="overflow-hidden h-2 text-xs flex rounded bg-gray-200 dark:bg-gray-700">
                 <div
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-500"
                   style={{ width: `${(step / 3) * 100}%` }}
                 ></div>
               </div>
-              <div className="flex justify-between text-xs text-gray-600 mt-2">
-                <div className={`font-medium ${step >= 1 ? 'text-primary-600' : ''}`}>{language === 'ja' ? 'ファイルのアップロード' : 'Upload Files'}</div>
-                <div className={`font-medium ${step >= 2 ? 'text-primary-600' : ''}`}>{language === 'ja' ? '分析' : 'Analysis'}</div>
-                <div className={`font-medium ${step >= 3 ? 'text-primary-600' : ''}`}>{language === 'ja' ? '結果' : 'Results'}</div>
+              <div className="flex justify-between text-xs mt-2">
+                <div className={`font-medium ${step >= 1 ? 'text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-400'}`}>
+                  {language === 'ja' ? 'ファイルのアップロード' : 'Upload Files'}
+                </div>
+                <div className={`font-medium ${step >= 2 ? 'text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-400'}`}>
+                  {language === 'ja' ? '分析' : 'Analysis'}
+                </div>
+                <div className={`font-medium ${step >= 3 ? 'text-primary-600 dark:text-primary-400' : 'text-gray-600 dark:text-gray-400'}`}>
+                  {language === 'ja' ? '結果' : 'Results'}
+                </div>
               </div>
             </div>
           </div>
@@ -258,35 +264,75 @@ const Matching = () => {
         <div className="space-y-6 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">{t('matching.resumeAnalysis')}</h2>
+              <h2 className="text-xl font-semibold mb-4 text-high-contrast">{t('matching.resumeAnalysis')}</h2>
               <SkillList
                 title={t('resume.skills')}
                 skills={resumeData.skills}
                 className="mb-4"
                 badgeColor="blue"
               />
-              <div className="text-gray-700 text-sm">
-                <strong>{t('resume.experience')}:</strong> {resumeData.experience?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
+              <div className="text-medium-contrast text-sm mb-2">
+                <strong className="text-high-contrast">{t('resume.experience')}:</strong> {resumeData.experience?.details?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
-              <div className="text-gray-700 text-sm">
-                <strong>{t('resume.education')}:</strong> {resumeData.education?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
+              {resumeData.experience?.details?.length > 0 && (
+                <ul className="mb-3 text-sm text-medium-contrast pl-5 list-disc">
+                  {resumeData.experience.details.slice(0, 3).map((exp, index) => (
+                    <li key={index}>{typeof exp === 'string' ? exp : (exp.position || exp.title || String(exp))}</li>
+                  ))}
+                  {resumeData.experience.details.length > 3 && (
+                    <li className="italic">+{resumeData.experience.details.length - 3} more</li>
+                  )}
+                </ul>
+              )}
+              <div className="text-medium-contrast text-sm mb-2">
+                <strong className="text-high-contrast">{t('resume.education')}:</strong> {resumeData.education?.details?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
+              {resumeData.education?.details?.length > 0 && (
+                <ul className="mb-3 text-sm text-medium-contrast pl-5 list-disc">
+                  {resumeData.education.details.slice(0, 2).map((edu, index) => (
+                    <li key={index}>{typeof edu === 'string' ? edu : (edu.degree || edu.institution || String(edu))}</li>
+                  ))}
+                  {resumeData.education.details.length > 2 && (
+                    <li className="italic">+{resumeData.education.details.length - 2} more</li>
+                  )}
+                </ul>
+              )}
             </div>
 
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">{t('matching.jobAnalysis')}</h2>
+              <h2 className="text-xl font-semibold mb-4 text-high-contrast">{t('matching.jobAnalysis')}</h2>
               <SkillList
                 title={t('job.requiredSkills')}
                 skills={jobData.required_skills}
                 className="mb-4"
                 badgeColor="yellow"
               />
-              <div className="text-gray-700 text-sm">
-                <strong>{t('job.responsibilities')}:</strong> {jobData.responsibilities?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
+              <div className="text-medium-contrast text-sm mb-2">
+                <strong className="text-high-contrast">{t('job.responsibilities')}:</strong> {jobData.responsibilities?.details?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
-              <div className="text-gray-700 text-sm">
-                <strong>{t('job.qualifications')}:</strong> {jobData.qualifications?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
+              {jobData.responsibilities?.details?.length > 0 && (
+                <ul className="mb-3 text-sm text-medium-contrast pl-5 list-disc">
+                  {jobData.responsibilities.details.slice(0, 3).map((resp, index) => (
+                    <li key={index}>{typeof resp === 'string' ? resp : String(resp)}</li>
+                  ))}
+                  {jobData.responsibilities.details.length > 3 && (
+                    <li className="italic">+{jobData.responsibilities.details.length - 3} more</li>
+                  )}
+                </ul>
+              )}
+              <div className="text-medium-contrast text-sm mb-2">
+                <strong className="text-high-contrast">{t('job.qualifications')}:</strong> {jobData.qualifications?.details?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
+              {jobData.qualifications?.details?.length > 0 && (
+                <ul className="mb-3 text-sm text-medium-contrast pl-5 list-disc">
+                  {jobData.qualifications.details.slice(0, 2).map((qual, index) => (
+                    <li key={index}>{typeof qual === 'string' ? qual : String(qual)}</li>
+                  ))}
+                  {jobData.qualifications.details.length > 2 && (
+                    <li className="italic">+{jobData.qualifications.details.length - 2} more</li>
+                  )}
+                </ul>
+              )}
             </div>
           </div>
 
