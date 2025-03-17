@@ -239,16 +239,56 @@ async def analyze_resume(file: UploadFile = File(...), language: str = Query("en
             if isinstance(raw_result["skills"], list):
                 for skill in raw_result["skills"]:
                     if isinstance(skill, dict):
-                        # Keep the full skill object with proficiency info
-                        skills_details.append(skill)
+                        # If this is a full skill object with details
+                        if "skill" in skill:
+                            skills_details.append(skill["skill"])
+                        else:
+                            # Keep the full skill object as is
+                            skills_details.append(skill)
                     elif isinstance(skill, str):
                         skills_details.append(skill)
+            # Handle nested skills structure that might appear in Japanese
+            elif isinstance(raw_result["skills"], dict) and "items" in raw_result["skills"]:
+                if isinstance(raw_result["skills"]["items"], list):
+                    for item in raw_result["skills"]["items"]:
+                        if isinstance(item, str):
+                            skills_details.append(item)
+        
+        # Process experience safely
+        experience_details = []
+        if "experience" in raw_result:
+            if isinstance(raw_result["experience"], list):
+                for exp in raw_result["experience"]:
+                    if isinstance(exp, dict) and "position" in exp:
+                        experience_details.append(exp["position"])
+                    elif isinstance(exp, str):
+                        experience_details.append(exp)
+        
+        # Process education safely
+        education_details = []
+        if "education" in raw_result:
+            if isinstance(raw_result["education"], list):
+                for edu in raw_result["education"]:
+                    if isinstance(edu, dict) and "degree" in edu:
+                        education_details.append(edu["degree"])
+                    elif isinstance(edu, str):
+                        education_details.append(edu)
+        
+        # Process achievements safely
+        achievements_details = []
+        if "achievements" in raw_result:
+            if isinstance(raw_result["achievements"], list):
+                for achievement in raw_result["achievements"]:
+                    if isinstance(achievement, dict) and "achievement" in achievement:
+                        achievements_details.append(achievement["achievement"])
+                    elif isinstance(achievement, str):
+                        achievements_details.append(achievement)
         
         transformed_result = {
             "skills": {"details": skills_details},
-            "experience": {"details": raw_result.get("experience", [])},
-            "education": {"details": raw_result.get("education", [])},
-            "achievements": {"details": raw_result.get("achievements", [])}
+            "experience": {"details": experience_details},
+            "education": {"details": education_details},
+            "achievements": {"details": achievements_details}
         }
         
         return transformed_result
@@ -284,12 +324,53 @@ async def analyze_job(file: UploadFile = File(...), language: str = Query("en", 
                     elif isinstance(skill, str):
                         preferred_skills_details.append(skill)
         
+        # Safely process responsibilities
+        responsibilities = []
+        if "responsibilities" in raw_result and isinstance(raw_result["responsibilities"], list):
+            for resp in raw_result["responsibilities"]:
+                if isinstance(resp, dict) and "responsibility" in resp:
+                    responsibilities.append(resp["responsibility"])
+                elif isinstance(resp, str):
+                    responsibilities.append(resp)
+        
+        # Safely process qualifications
+        qualifications = []
+        if "qualifications" in raw_result and isinstance(raw_result["qualifications"], list):
+            for qual in raw_result["qualifications"]:
+                if isinstance(qual, dict) and "qualification" in qual:
+                    qualifications.append(qual["qualification"])
+                elif isinstance(qual, str):
+                    qualifications.append(qual)
+        
+        # Safely process company culture and job benefits
+        company_culture = []
+        job_benefits = []
+        
+        if "company_culture" in raw_result:
+            if isinstance(raw_result["company_culture"], list):
+                for item in raw_result["company_culture"]:
+                    if isinstance(item, dict) and "culture" in item:
+                        company_culture.append(item["culture"])
+                    elif isinstance(item, str):
+                        company_culture.append(item)
+        
+        if "job_benefits" in raw_result:
+            if isinstance(raw_result["job_benefits"], list):
+                for item in raw_result["job_benefits"]:
+                    if isinstance(item, dict) and "benefit" in item:
+                        job_benefits.append(item["benefit"])
+                    elif isinstance(item, str):
+                        job_benefits.append(item)
+        
+        # Combine company info safely
+        company_info = company_culture + job_benefits
+        
         transformed_result = {
             "required_skills": {"details": required_skills_details},
             "preferred_skills": {"details": preferred_skills_details},
-            "responsibilities": {"details": raw_result.get("responsibilities", [])},
-            "qualifications": {"details": raw_result.get("qualifications", [])},
-            "company_info": {"details": raw_result.get("company_culture", []) + raw_result.get("job_benefits", [])}
+            "responsibilities": {"details": responsibilities},
+            "qualifications": {"details": qualifications},
+            "company_info": {"details": company_info}
         }
         
         return transformed_result
