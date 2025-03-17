@@ -306,7 +306,10 @@ async def match_resume_job(request: MatchRequest):
                 "matching_skills": [履歴書と求人の両方に見られるスキルの詳細なリスト、具体的な証拠を含む],
                 "missing_skills": [求人情報にあるが履歴書にないスキルの詳細なリスト],
                 "recommendations": [この求人に対するマッチを改善するための、候補者への詳細で実行可能な推奨事項],
-                "matching_experience": (候補者の経験が求人要件とどのように一致するかの分析)
+                "matching_experience": (候補者の経験が求人要件とどのように一致するかの分析),
+                "matching_education": (候補者の学歴が求人要件とどのように一致するかの分析),
+                "strengths": [この求人における候補者の強みのリスト],
+                "areas_for_improvement": [この求人に関する候補者の改善すべき分野のリスト]
             }}
             """
         else:
@@ -323,7 +326,10 @@ async def match_resume_job(request: MatchRequest):
                 "matching_skills": [detailed list of skills found in both resume and job with specific evidence],
                 "missing_skills": [detailed list of skills in job description but not in resume],
                 "recommendations": [detailed, actionable recommendations for the candidate to improve their match for this job],
-                "matching_experience": (analysis of how the candidate's experience aligns with job requirements)
+                "matching_experience": (analysis of how the candidate's experience aligns with job requirements),
+                "matching_education": (analysis of how the candidate's education aligns with job requirements),
+                "strengths": [list of the candidate's strengths for this job position],
+                "areas_for_improvement": [list of areas where the candidate could improve for this job position]
             }}
             """
         
