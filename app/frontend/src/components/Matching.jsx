@@ -192,7 +192,7 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiFile className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">{t('matching.selectResume')}</h2>
+              <h2 className="text-xl font-semibold">{t('matching.uploadResume')}</h2>
             </div>
             <FileUpload onFileUpload={handleResumeUpload} />
             {resumeFile && (
@@ -210,7 +210,7 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiBriefcase className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">{t('matching.selectJob')}</h2>
+              <h2 className="text-xl font-semibold">{t('matching.uploadJob')}</h2>
             </div>
             <FileUpload onFileUpload={handleJobUpload} />
             {jobFile && (
@@ -249,7 +249,7 @@ const Matching = () => {
       {resumeData && jobData && step === 1 && !isLoading && (
         <div className="flex justify-center mt-8">
           <button onClick={() => setStep(2)} className="btn btn-primary">
-            {language === 'ja' ? '分析に進む' : 'Continue to Analysis'}
+            {t('matching.continue')}
           </button>
         </div>
       )}
@@ -258,7 +258,7 @@ const Matching = () => {
         <div className="space-y-6 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">{language === 'ja' ? '履歴書分析' : 'Resume Analysis'}</h2>
+              <h2 className="text-xl font-semibold mb-4">{t('matching.resumeAnalysis')}</h2>
               <SkillList
                 title={t('resume.skills')}
                 skills={resumeData.skills}
@@ -266,15 +266,15 @@ const Matching = () => {
                 badgeColor="blue"
               />
               <div className="text-gray-700 text-sm">
-                <strong>{language === 'ja' ? '経験:' : 'Experience:'}</strong> {resumeData.experience?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
+                <strong>{t('resume.experience')}:</strong> {resumeData.experience?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
               <div className="text-gray-700 text-sm">
-                <strong>{language === 'ja' ? '学歴:' : 'Education:'}</strong> {resumeData.education?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
+                <strong>{t('resume.education')}:</strong> {resumeData.education?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
             </div>
 
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">{language === 'ja' ? '求人分析' : 'Job Analysis'}</h2>
+              <h2 className="text-xl font-semibold mb-4">{t('matching.jobAnalysis')}</h2>
               <SkillList
                 title={t('job.requiredSkills')}
                 skills={jobData.required_skills}
@@ -282,20 +282,20 @@ const Matching = () => {
                 badgeColor="yellow"
               />
               <div className="text-gray-700 text-sm">
-                <strong>{language === 'ja' ? '職務内容:' : 'Responsibilities:'}</strong> {jobData.responsibilities?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
+                <strong>{t('job.responsibilities')}:</strong> {jobData.responsibilities?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
               <div className="text-gray-700 text-sm">
-                <strong>{language === 'ja' ? '資格要件:' : 'Qualifications:'}</strong> {jobData.qualifications?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
+                <strong>{t('job.qualifications')}:</strong> {jobData.qualifications?.length || 0} {t(language === 'ja' ? 'common.entriesJa' : 'common.entries')}
               </div>
             </div>
           </div>
 
           <div className="flex justify-center mt-8 space-x-4">
             <button onClick={() => setStep(1)} className="btn btn-outline">
-              {t('common.back')}
+              {t('matching.back')}
             </button>
             <button onClick={handleMatch} className="btn btn-primary">
-              {language === 'ja' ? '履歴書と求人をマッチング' : 'Match Resume to Job'}
+              {t('matching.match')}
             </button>
           </div>
         </div>

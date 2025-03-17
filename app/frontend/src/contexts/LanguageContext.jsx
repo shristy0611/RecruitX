@@ -83,6 +83,10 @@ const translations = {
     // Common
     'common.error': 'An error occurred',
     'common.tryAgain': 'Please try again',
+    'common.loading': 'Loading...',
+    'common.noData': 'No data available',
+    'common.entries': 'entries',
+    'common.entriesJa': 'entries',
   },
   ja: {
     // Navbar
@@ -159,6 +163,10 @@ const translations = {
     // Common
     'common.error': 'エラーが発生しました',
     'common.tryAgain': 'もう一度お試しください',
+    'common.loading': '読み込み中...',
+    'common.noData': 'データがありません',
+    'common.entries': 'エントリー',
+    'common.entriesJa': 'エントリー',
   }
 };
 
