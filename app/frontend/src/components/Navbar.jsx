@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
+import LanguageSwitcher from './LanguageSwitcher';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -14,11 +17,11 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { to: '/', label: 'Dashboard' },
-    { to: '/resume', label: 'Resume Analysis' },
-    { to: '/job', label: 'Job Analysis' },
-    { to: '/matching', label: 'Matching' },
-    { to: '/api-test', label: 'API Test' },
+    { to: '/', label: t('navbar.dashboard') },
+    { to: '/resume', label: t('navbar.resume') },
+    { to: '/job', label: t('navbar.job') },
+    { to: '/matching', label: t('navbar.matching') },
+    { to: '/api-test', label: t('navbar.api') },
   ];
 
   return (
@@ -30,7 +33,7 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -44,10 +47,12 @@ const Navbar = () => {
                 {link.label}
               </NavLink>
             ))}
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center space-x-4">
+            <LanguageSwitcher />
             <button
               type="button"
               className="text-gray-600 hover:text-primary-500 focus:outline-none"

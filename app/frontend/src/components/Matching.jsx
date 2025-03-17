@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import FileUpload from './FileUpload';
 import SkillList from './SkillList';
-import recruitxApi from '../services/recruitxApi';
+import recruitxApi from '../api/recruitxApi';
 import { FiLoader, FiCheck, FiAlertCircle, FiFile, FiBriefcase } from 'react-icons/fi';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Matching = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +14,7 @@ const Matching = () => {
   const [resumeFile, setResumeFile] = useState(null);
   const [jobFile, setJobFile] = useState(null);
   const [step, setStep] = useState(1); // 1: Upload, 2: Analysis, 3: Results
+  const { t, language } = useLanguage();
 
   const handleResumeUpload = async (file) => {
     setResumeFile(file);
@@ -20,7 +22,7 @@ const Matching = () => {
     setIsLoading(true);
 
     try {
-      const result = await recruitxApi.analyzeResume(file);
+      const result = await recruitxApi.analyzeResume(file, language);
       
       // Check for API-specific errors in the response
       if (result && result.error) {
@@ -32,12 +34,12 @@ const Matching = () => {
       console.error('Resume analysis error:', err);
       
       // Create a more user-friendly error message
-      let errorMsg = 'Failed to analyze resume. Please try again.';
+      let errorMsg = language === 'ja' ? '履歴書の分析に失敗しました。もう一度お試しください。' : 'Failed to analyze resume. Please try again.';
       
       if (err.code === 'ECONNABORTED') {
-        errorMsg = 'Analysis timed out. The server is taking too long to process your resume.';
+        errorMsg = language === 'ja' ? '分析がタイムアウトしました。サーバーが履歴書の処理に時間がかかっています。' : 'Analysis timed out. The server is taking too long to process your resume.';
       } else if (err.message && err.message.includes('Network Error')) {
-        errorMsg = 'Network error. Please check your connection and try again.';
+        errorMsg = language === 'ja' ? 'ネットワークエラー。接続を確認して、もう一度お試しください。' : 'Network error. Please check your connection and try again.';
       } else if (err.message && err.message.includes('API Error')) {
         errorMsg = err.message;
       } else if (err.response?.data?.detail) {
@@ -56,7 +58,7 @@ const Matching = () => {
     setIsLoading(true);
 
     try {
-      const result = await recruitxApi.analyzeJob(file);
+      const result = await recruitxApi.analyzeJob(file, language);
       
       // Check for API-specific errors in the response
       if (result && result.error) {
@@ -68,12 +70,12 @@ const Matching = () => {
       console.error('Job analysis error:', err);
       
       // Create a more user-friendly error message
-      let errorMsg = 'Failed to analyze job description. Please try again.';
+      let errorMsg = language === 'ja' ? '求人情報の分析に失敗しました。もう一度お試しください。' : 'Failed to analyze job description. Please try again.';
       
       if (err.code === 'ECONNABORTED') {
-        errorMsg = 'Analysis timed out. The server is taking too long to process your job description.';
+        errorMsg = language === 'ja' ? '分析がタイムアウトしました。サーバーが求人情報の処理に時間がかかっています。' : 'Analysis timed out. The server is taking too long to process your job description.';
       } else if (err.message && err.message.includes('Network Error')) {
-        errorMsg = 'Network error. Please check your connection and try again.';
+        errorMsg = language === 'ja' ? 'ネットワークエラー。接続を確認して、もう一度お試しください。' : 'Network error. Please check your connection and try again.';
       } else if (err.message && err.message.includes('API Error')) {
         errorMsg = err.message;
       } else if (err.response?.data?.detail) {
@@ -92,7 +94,7 @@ const Matching = () => {
     setMatchResult(null);
 
     try {
-      const result = await recruitxApi.matchResumeToJob(resumeData, jobData);
+      const result = await recruitxApi.matchResumeToJob(resumeData, jobData, language);
       
       // Check for API-specific errors in the response
       if (result && result.error) {
@@ -105,12 +107,12 @@ const Matching = () => {
       console.error('Matching error:', err);
       
       // Create a more user-friendly error message
-      let errorMsg = 'Failed to match resume to job. Please try again.';
+      let errorMsg = language === 'ja' ? '履歴書と求人情報のマッチングに失敗しました。もう一度お試しください。' : 'Failed to match resume to job. Please try again.';
       
       if (err.code === 'ECONNABORTED') {
-        errorMsg = 'Matching timed out. The server is taking too long to process your request.';
+        errorMsg = language === 'ja' ? 'マッチングがタイムアウトしました。サーバーがリクエストの処理に時間がかかっています。' : 'Matching timed out. The server is taking too long to process your request.';
       } else if (err.message && err.message.includes('Network Error')) {
-        errorMsg = 'Network error. Please check your connection and try again.';
+        errorMsg = language === 'ja' ? 'ネットワークエラー。接続を確認して、もう一度お試しください。' : 'Network error. Please check your connection and try again.';
       } else if (err.message && err.message.includes('API Error')) {
         errorMsg = err.message;
       } else if (err.response?.data?.detail) {
@@ -146,9 +148,9 @@ const Matching = () => {
                 ></div>
               </div>
               <div className="flex justify-between text-xs text-gray-600 mt-2">
-                <div className={`font-medium ${step >= 1 ? 'text-primary-600' : ''}`}>Upload Files</div>
-                <div className={`font-medium ${step >= 2 ? 'text-primary-600' : ''}`}>Analysis</div>
-                <div className={`font-medium ${step >= 3 ? 'text-primary-600' : ''}`}>Results</div>
+                <div className={`font-medium ${step >= 1 ? 'text-primary-600' : ''}`}>{language === 'ja' ? 'ファイルのアップロード' : 'Upload Files'}</div>
+                <div className={`font-medium ${step >= 2 ? 'text-primary-600' : ''}`}>{language === 'ja' ? '分析' : 'Analysis'}</div>
+                <div className={`font-medium ${step >= 3 ? 'text-primary-600' : ''}`}>{language === 'ja' ? '結果' : 'Results'}</div>
               </div>
             </div>
           </div>
@@ -183,12 +185,12 @@ const Matching = () => {
     }
     
     // Fallback
-    return String(skill) !== '[object Object]' ? String(skill) : 'Skill details unavailable';
+    return String(skill) !== '[object Object]' ? String(skill) : language === 'ja' ? 'スキルの詳細が利用できません' : 'Skill details unavailable';
   };
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Resume-Job Matching</h1>
+      <h1 className="text-3xl font-bold mb-6">{t('matching.title')}</h1>
       
       {renderProgressBar()}
 
@@ -197,17 +199,17 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiFile className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">Upload Resume</h2>
+              <h2 className="text-xl font-semibold">{t('matching.selectResume')}</h2>
             </div>
             <FileUpload onFileUpload={handleResumeUpload} />
             {resumeFile && (
               <div className="mt-2 text-sm text-gray-600">
-                <strong>Selected file:</strong> {resumeFile.name} ({(resumeFile.size / 1024).toFixed(1)} KB)
+                <strong>{language === 'ja' ? '選択されたファイル:' : 'Selected file:'}</strong> {resumeFile.name} ({(resumeFile.size / 1024).toFixed(1)} KB)
               </div>
             )}
             {resumeData && (
               <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm">
-                <FiCheck className="inline-block mr-1" /> Resume analyzed successfully
+                <FiCheck className="inline-block mr-1" /> {language === 'ja' ? '履歴書の分析が完了しました' : 'Resume analyzed successfully'}
               </div>
             )}
           </div>
@@ -215,17 +217,17 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiBriefcase className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">Upload Job Description</h2>
+              <h2 className="text-xl font-semibold">{t('matching.selectJob')}</h2>
             </div>
             <FileUpload onFileUpload={handleJobUpload} />
             {jobFile && (
               <div className="mt-2 text-sm text-gray-600">
-                <strong>Selected file:</strong> {jobFile.name} ({(jobFile.size / 1024).toFixed(1)} KB)
+                <strong>{language === 'ja' ? '選択されたファイル:' : 'Selected file:'}</strong> {jobFile.name} ({(jobFile.size / 1024).toFixed(1)} KB)
               </div>
             )}
             {jobData && (
               <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm">
-                <FiCheck className="inline-block mr-1" /> Job description analyzed successfully
+                <FiCheck className="inline-block mr-1" /> {language === 'ja' ? '求人情報の分析が完了しました' : 'Job description analyzed successfully'}
               </div>
             )}
           </div>
@@ -235,7 +237,7 @@ const Matching = () => {
       {isLoading && (
         <div className="card flex items-center justify-center p-12 mt-6">
           <FiLoader className="h-8 w-8 text-primary-500 animate-spin" />
-          <span className="ml-3 text-lg">Processing...</span>
+          <span className="ml-3 text-lg">{t('common.loading')}</span>
         </div>
       )}
 
@@ -244,7 +246,7 @@ const Matching = () => {
           <div className="flex items-start">
             <FiAlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2" />
             <div>
-              <h3 className="text-lg font-semibold text-red-800 mb-1">Error</h3>
+              <h3 className="text-lg font-semibold text-red-800 mb-1">{language === 'ja' ? 'エラー' : 'Error'}</h3>
               <p className="text-red-700">{error}</p>
             </div>
           </div>
@@ -254,7 +256,7 @@ const Matching = () => {
       {resumeData && jobData && step === 1 && !isLoading && (
         <div className="flex justify-center mt-8">
           <button onClick={() => setStep(2)} className="btn btn-primary">
-            Continue to Analysis
+            {language === 'ja' ? '分析に進む' : 'Continue to Analysis'}
           </button>
         </div>
       )}
@@ -263,44 +265,44 @@ const Matching = () => {
         <div className="space-y-6 mt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">Resume Analysis</h2>
+              <h2 className="text-xl font-semibold mb-4">{language === 'ja' ? '履歴書分析' : 'Resume Analysis'}</h2>
               <SkillList
-                title="Skills"
+                title={t('resume.skills')}
                 skills={resumeData.skills}
                 className="mb-4"
                 badgeColor="blue"
               />
               <div className="text-gray-700 text-sm">
-                <strong>Experience:</strong> {resumeData.experience?.length || 0} entries
+                <strong>{language === 'ja' ? '経験:' : 'Experience:'}</strong> {resumeData.experience?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
               </div>
               <div className="text-gray-700 text-sm">
-                <strong>Education:</strong> {resumeData.education?.length || 0} entries
+                <strong>{language === 'ja' ? '学歴:' : 'Education:'}</strong> {resumeData.education?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
               </div>
             </div>
 
             <div className="card">
-              <h2 className="text-xl font-semibold mb-4">Job Analysis</h2>
+              <h2 className="text-xl font-semibold mb-4">{language === 'ja' ? '求人分析' : 'Job Analysis'}</h2>
               <SkillList
-                title="Required Skills"
+                title={t('job.requiredSkills')}
                 skills={jobData.required_skills}
                 className="mb-4"
                 badgeColor="yellow"
               />
               <div className="text-gray-700 text-sm">
-                <strong>Responsibilities:</strong> {jobData.responsibilities?.length || 0} entries
+                <strong>{language === 'ja' ? '職務内容:' : 'Responsibilities:'}</strong> {jobData.responsibilities?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
               </div>
               <div className="text-gray-700 text-sm">
-                <strong>Qualifications:</strong> {jobData.qualifications?.length || 0} entries
+                <strong>{language === 'ja' ? '資格要件:' : 'Qualifications:'}</strong> {jobData.qualifications?.length || 0} {language === 'ja' ? 'エントリー' : 'entries'}
               </div>
             </div>
           </div>
 
           <div className="flex justify-center mt-8 space-x-4">
             <button onClick={() => setStep(1)} className="btn btn-outline">
-              Back
+              {t('common.back')}
             </button>
             <button onClick={handleMatch} className="btn btn-primary">
-              Match Resume to Job
+              {language === 'ja' ? '履歴書と求人をマッチング' : 'Match Resume to Job'}
             </button>
           </div>
         </div>
@@ -309,14 +311,14 @@ const Matching = () => {
       {step === 3 && matchResult && (
         <div className="space-y-6 mt-6">
           <div className="card">
-            <h2 className="text-2xl font-bold mb-6 text-center">Match Results</h2>
+            <h2 className="text-2xl font-bold mb-6 text-center">{language === 'ja' ? 'マッチング結果' : 'Match Results'}</h2>
             
             <div className="flex justify-center mb-8">
               <div className="relative w-48 h-48">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-4xl font-bold text-primary-600">{matchResult.match_score}%</div>
-                    <div className="text-sm text-gray-500">Match Score</div>
+                    <div className="text-sm text-gray-500">{t('matching.matchScore')}</div>
                   </div>
                 </div>
                 <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -345,7 +347,7 @@ const Matching = () => {
             </div>
             
             <div className="border-t border-gray-200 pt-6">
-              <h3 className="text-xl font-semibold mb-4">Score Explanation</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('matching.explanation')}</h3>
               <p className="text-gray-700">
                 {typeof matchResult.score_explanation === 'string' 
                   ? matchResult.score_explanation 
@@ -356,7 +358,7 @@ const Matching = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Matching Skills</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('matching.matchingSkills')}</h3>
               <ul className="space-y-2">
                 {matchResult.matching_skills?.map((skill, index) => (
                   <li key={index} className="flex items-start">
@@ -370,7 +372,7 @@ const Matching = () => {
             </div>
 
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Missing Skills</h3>
+              <h3 className="text-xl font-semibold mb-4">{t('matching.missingSkills')}</h3>
               <ul className="space-y-2">
                 {matchResult.missing_skills?.map((skill, index) => (
                   <li key={index} className="flex items-start">
@@ -385,7 +387,7 @@ const Matching = () => {
           </div>
 
           <div className="card">
-            <h3 className="text-xl font-semibold mb-4">Recommendations</h3>
+            <h3 className="text-xl font-semibold mb-4">{t('matching.recommendations')}</h3>
             <ul className="space-y-2">
               {matchResult.recommendations?.map((recommendation, index) => (
                 <li key={index} className="flex items-start">
@@ -404,7 +406,7 @@ const Matching = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Experience Match</h3>
+              <h3 className="text-xl font-semibold mb-4">{language === 'ja' ? '経験のマッチ' : 'Experience Match'}</h3>
               <p className="text-gray-700">
                 {typeof matchResult.matching_experience === 'string' 
                   ? matchResult.matching_experience 
@@ -412,7 +414,7 @@ const Matching = () => {
               </p>
             </div>
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Education Match</h3>
+              <h3 className="text-xl font-semibold mb-4">{language === 'ja' ? '学歴のマッチ' : 'Education Match'}</h3>
               <p className="text-gray-700">
                 {typeof matchResult.matching_education === 'string' 
                   ? matchResult.matching_education 
@@ -423,7 +425,7 @@ const Matching = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Strengths</h3>
+              <h3 className="text-xl font-semibold mb-4">{language === 'ja' ? '強み' : 'Strengths'}</h3>
               <ul className="space-y-2">
                 {matchResult.strengths?.map((strength, index) => (
                   <li key={index} className="flex items-start">
@@ -436,7 +438,7 @@ const Matching = () => {
               </ul>
             </div>
             <div className="card">
-              <h3 className="text-xl font-semibold mb-4">Areas for Improvement</h3>
+              <h3 className="text-xl font-semibold mb-4">{language === 'ja' ? '改善点' : 'Areas for Improvement'}</h3>
               <ul className="space-y-2">
                 {matchResult.areas_for_improvement?.map((area, index) => (
                   <li key={index} className="flex items-start">
@@ -452,7 +454,7 @@ const Matching = () => {
 
           <div className="flex justify-center mt-8 space-x-4">
             <button onClick={resetAll} className="btn btn-primary">
-              Start Over
+              {language === 'ja' ? '最初からやり直す' : 'Start Over'}
             </button>
           </div>
         </div>

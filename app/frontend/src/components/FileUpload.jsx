@@ -1,8 +1,11 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { FiUploadCloud, FiFile, FiAlertCircle } from 'react-icons/fi';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const FileUpload = ({ onFileUpload, acceptedFileTypes = { 'application/pdf': ['.pdf'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'], 'text/plain': ['.txt'] } }) => {
+  const { language } = useLanguage();
+  
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       onFileUpload(acceptedFiles[0]);
@@ -18,7 +21,7 @@ const FileUpload = ({ onFileUpload, acceptedFileTypes = { 'application/pdf': ['.
 
   // Format file size
   const formatFileSize = (size) => {
-    if (size < 1024) return size + ' bytes';
+    if (size < 1024) return size + (language === 'ja' ? ' バイト' : ' bytes');
     else if (size < 1024 * 1024) return (size / 1024).toFixed(1) + ' KB';
     else return (size / (1024 * 1024)).toFixed(1) + ' MB';
   };
@@ -27,11 +30,15 @@ const FileUpload = ({ onFileUpload, acceptedFileTypes = { 'application/pdf': ['.
   const getErrorMessage = (fileRejection) => {
     const { errors } = fileRejection;
     if (errors[0]?.code === 'file-too-large') {
-      return `File is too large. Max size is 10MB.`;
+      return language === 'ja' 
+        ? `ファイルサイズが大きすぎます。最大サイズは10MBです。`
+        : `File is too large. Max size is 10MB.`;
     } else if (errors[0]?.code === 'file-invalid-type') {
-      return `Invalid file type. Please upload PDF, DOCX, or TXT.`;
+      return language === 'ja'
+        ? `無効なファイル形式です。PDF、DOCX、またはTXTをアップロードしてください。`
+        : `Invalid file type. Please upload PDF, DOCX, or TXT.`;
     }
-    return errors[0]?.message || 'Invalid file';
+    return errors[0]?.message || (language === 'ja' ? '無効なファイル' : 'Invalid file');
   };
 
   return (
@@ -46,13 +53,23 @@ const FileUpload = ({ onFileUpload, acceptedFileTypes = { 'application/pdf': ['.
         {isDragActive ? (
           <div className="flex flex-col items-center">
             <FiUploadCloud className="h-12 w-12 text-primary-500 mb-2" />
-            <p className="text-primary-500">Drop the file here...</p>
+            <p className="text-primary-500">
+              {language === 'ja' ? 'ここにファイルをドロップ...' : 'Drop the file here...'}
+            </p>
           </div>
         ) : (
           <div className="flex flex-col items-center">
             <FiUploadCloud className="h-12 w-12 text-gray-400 mb-2" />
-            <p className="text-gray-600 mb-1">Drag & drop a file here, or click to select a file</p>
-            <p className="text-xs text-gray-500">Supports PDF, DOCX, and TXT (max 10MB)</p>
+            <p className="text-gray-600 mb-1">
+              {language === 'ja' 
+                ? 'ファイルをここにドラッグ＆ドロップ、またはクリックして選択' 
+                : 'Drag & drop a file here, or click to select a file'}
+            </p>
+            <p className="text-xs text-gray-500">
+              {language === 'ja' 
+                ? 'PDF、DOCX、TXTに対応（最大10MB）' 
+                : 'Supports PDF, DOCX, and TXT (max 10MB)'}
+            </p>
           </div>
         )}
       </div>

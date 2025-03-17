@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import FileUpload from './FileUpload';
 import SkillList from './SkillList';
-import recruitxApi from '../services/recruitxApi';
+import recruitxApi from '../api/recruitxApi';
 import { FiLoader, FiCheck, FiAlertCircle } from 'react-icons/fi';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const JobAnalysis = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [analysisResult, setAnalysisResult] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+  const { t, language } = useLanguage();
 
   const handleFileUpload = async (file) => {
     setSelectedFile(file);
@@ -17,10 +19,10 @@ const JobAnalysis = () => {
     setAnalysisResult(null);
 
     try {
-      const result = await recruitxApi.analyzeJob(file);
+      const result = await recruitxApi.analyzeJob(file, language);
       setAnalysisResult(result);
     } catch (err) {
-      setError(err.response?.data?.detail || 'Failed to analyze job description. Please try again.');
+      setError(err.response?.data?.detail || t('common.error'));
       console.error('Job analysis error:', err);
     } finally {
       setIsLoading(false);
@@ -29,160 +31,110 @@ const JobAnalysis = () => {
 
   // Helper function to extract text from possibly nested API response objects
   const getItemText = (item) => {
-    if (typeof item === 'string') {
-      return item;
+    if (!item || !item.details || item.details.length === 0) {
+      return <p className="text-gray-500 italic">{t('job.noItems')}</p>;
     }
-    
-    // For responsibilities
-    if (item.responsibility) {
-      return item.description ? `${item.responsibility}: ${item.description}` : item.responsibility;
-    }
-    
-    // For qualifications
-    if (item.qualification) {
-      return item.importance 
-        ? `${item.qualification} (${item.importance})` 
-        : item.qualification;
-    }
-    
-    // Fallback - try to convert to string or return a placeholder
-    return String(item) !== '[object Object]' ? String(item) : 'Item details unavailable';
+
+    return (
+      <ul className="list-disc list-inside space-y-1">
+        {item.details.map((detail, index) => (
+          <li key={index}>{detail}</li>
+        ))}
+      </ul>
+    );
   };
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Job Description Analysis</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">{t('job.title')}</h1>
       
-      <div className="card mb-8">
-        <h2 className="text-xl font-semibold mb-4">Upload Job Description</h2>
-        <FileUpload onFileUpload={handleFileUpload} />
-        
-        {selectedFile && (
-          <div className="mt-2 text-sm text-gray-600">
-            <strong>Selected file:</strong> {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
-          </div>
-        )}
-      </div>
+      {!analysisResult && (
+        <div className="card">
+          <h2 className="text-xl font-semibold mb-4">{t('job.upload')}</h2>
+          <FileUpload onFileUpload={handleFileUpload} />
+          
+          {selectedFile && (
+            <div className="mt-2 text-sm text-gray-600">
+              <strong>{language === 'ja' ? '選択されたファイル:' : 'Selected file:'}</strong> {selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
+            </div>
+          )}
+        </div>
+      )}
 
       {isLoading && (
-        <div className="card flex items-center justify-center p-12">
-          <FiLoader className="h-8 w-8 text-primary-500 animate-spin" />
-          <span className="ml-3 text-lg">Analyzing job description...</span>
+        <div className="flex flex-col items-center justify-center p-8">
+          <div className="animate-pulse flex space-x-4 items-center mb-4">
+            <div className="h-12 w-12 bg-primary-200 rounded-full"></div>
+            <div className="space-y-2">
+              <div className="h-4 bg-primary-200 rounded w-36"></div>
+              <div className="h-4 bg-primary-100 rounded w-24"></div>
+            </div>
+          </div>
+          <p className="text-primary-600 font-medium">{t('job.analyzing')}</p>
         </div>
       )}
 
       {error && (
-        <div className="card bg-red-50 border border-red-200">
-          <div className="flex items-start">
-            <FiAlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2" />
-            <div>
-              <h3 className="text-lg font-semibold text-red-800 mb-1">Analysis Failed</h3>
-              <p className="text-red-700">{error}</p>
-            </div>
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex items-start">
+          <FiAlertCircle className="h-5 w-5 mr-2 mt-0.5 text-red-500" />
+          <div>
+            <p className="font-medium">{t('common.error')}</p>
+            <p>{error}</p>
+            <p className="mt-2 text-sm">{t('common.tryAgain')}</p>
           </div>
         </div>
       )}
 
       {analysisResult && (
         <div className="space-y-6">
-          <div className="card bg-green-50 border border-green-200">
-            <div className="flex items-start">
-              <FiCheck className="h-5 w-5 text-green-500 mt-0.5 mr-2" />
+          <div className="card bg-green-50 border border-green-100">
+            <div className="flex items-center">
+              <FiCheck className="h-6 w-6 text-green-500 mr-2" />
               <div>
-                <h3 className="text-lg font-semibold text-green-800 mb-1">Analysis Complete</h3>
-                <p className="text-green-700">Job description successfully analyzed.</p>
+                <h2 className="text-xl font-semibold text-green-700">{t('job.complete')}</h2>
+                <p className="text-green-600">{t('job.success')}</p>
               </div>
             </div>
-          </div>
-
-          <div className="card">
-            <h2 className="text-xl font-semibold mb-6">Analysis Results</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-              <div>
-                <SkillList 
-                  title="Required Skills" 
-                  skills={analysisResult.required_skills} 
-                  className="mb-6" 
-                  badgeColor="yellow" 
-                />
-              </div>
-              
-              {analysisResult.preferred_skills && analysisResult.preferred_skills.length > 0 && (
-                <div>
-                  <SkillList 
-                    title="Preferred Skills" 
-                    skills={analysisResult.preferred_skills} 
-                    className="mb-6" 
-                    badgeColor="blue" 
-                  />
-                </div>
-              )}
-            </div>
-            
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-2">Responsibilities</h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {analysisResult.responsibilities?.map((resp, index) => (
-                  <li key={index}>{getItemText(resp)}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-2">Qualifications</h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-700">
-                {analysisResult.qualifications?.map((qual, index) => (
-                  <li key={index}>{getItemText(qual)}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {analysisResult.job_benefits && analysisResult.job_benefits.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Job Benefits</h3>
-                  <ul className="space-y-2">
-                    {analysisResult.job_benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5 mr-2">
-                          <span className="text-green-600 text-xs">✓</span>
-                        </div>
-                        <span>{getItemText(benefit)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {analysisResult.company_culture && analysisResult.company_culture.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Company Culture</h3>
-                  <ul className="space-y-2">
-                    {analysisResult.company_culture.map((culture, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5 mr-2">
-                          <span className="text-blue-600 text-xs">i</span>
-                        </div>
-                        <span>{getItemText(culture)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-          
-          <div className="flex justify-center">
-            <button
+            <button 
               onClick={() => {
                 setSelectedFile(null);
                 setAnalysisResult(null);
-              }}
-              className="btn btn-outline"
+              }} 
+              className="mt-4 btn btn-outline-primary"
             >
-              Analyze Another Job Description
+              {t('job.upload')}
             </button>
+          </div>
+
+          <div className="card">
+            <h2 className="text-xl font-semibold mb-6">{t('job.results')}</h2>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-primary-700">{t('job.requiredSkills')}</h3>
+                {getItemText(analysisResult.required_skills)}
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-medium mb-2 text-primary-700">{t('job.preferredSkills')}</h3>
+                {getItemText(analysisResult.preferred_skills)}
+              </div>
+            </div>
+            
+            <div className="mt-6">
+              <h3 className="text-lg font-medium mb-2 text-primary-700">{t('job.responsibilities')}</h3>
+              {getItemText(analysisResult.responsibilities)}
+            </div>
+            
+            <div className="mt-6">
+              <h3 className="text-lg font-medium mb-2 text-primary-700">{t('job.qualifications')}</h3>
+              {getItemText(analysisResult.qualifications)}
+            </div>
+            
+            <div className="mt-6">
+              <h3 className="text-lg font-medium mb-2 text-primary-700">{t('job.companyInfo')}</h3>
+              {getItemText(analysisResult.company_info)}
+            </div>
           </div>
         </div>
       )}

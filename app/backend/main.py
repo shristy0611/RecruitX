@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Query
 from fastapi.middleware.cors import CORSMiddleware
 import google.generativeai as genai
 import os
@@ -10,6 +10,8 @@ from docx import Document
 import io
 import tempfile
 import logging
+from pydantic import BaseModel
+from typing import Optional
 
 # Configure logging
 logging.basicConfig(
@@ -43,6 +45,15 @@ def get_next_api_key():
     current_key_index = (current_key_index + 1) % len(GEMINI_API_KEYS)
     return key
 
+# Language detection helper
+async def detect_language(text):
+    """Attempt to detect if the text is primarily English or Japanese"""
+    # Simple heuristic: Count Japanese characters vs English
+    japanese_chars = sum(1 for char in text if ord(char) > 0x3000)
+    if japanese_chars > len(text) * 0.3:  # If more than 30% are Japanese characters
+        return "ja"
+    return "en"
+
 async def extract_text_from_file(file: UploadFile) -> str:
     """Extract text from different file formats"""
     logger.info(f"Extracting text from file: {file.filename}")
@@ -50,35 +61,42 @@ async def extract_text_from_file(file: UploadFile) -> str:
     if not content:
         raise HTTPException(status_code=400, detail="Empty file")
     
+    # Save to a temp file for processing
+    with tempfile.NamedTemporaryFile(delete=False) as temp:
+        temp.write(content)
+        temp_path = temp.name
+    
+    # Process based on file extension
     file_extension = file.filename.lower().split('.')[-1]
+    extracted_text = ""
     
-    if file_extension == 'pdf':
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_file:
-            temp_file.write(content)
-            temp_file.flush()
+    try:
+        if file_extension == 'pdf':
+            doc = fitz.open(temp_path)
+            for page in doc:
+                extracted_text += page.get_text()
+        elif file_extension in ['docx', 'doc']:
+            doc = Document(temp_path)
+            for para in doc.paragraphs:
+                extracted_text += para.text + "\n"
+        else:
+            # For text files or if format not recognized, try to decode as text
             try:
-                pdf_document = fitz.open(temp_file.name)
-                text = ""
-                for page_num in range(len(pdf_document)):
-                    text += pdf_document[page_num].get_text()
-                pdf_document.close()
-                return text
-            finally:
-                os.unlink(temp_file.name)
+                extracted_text = content.decode('utf-8')
+            except UnicodeDecodeError:
+                raise HTTPException(status_code=400, detail="Unsupported file format")
+    finally:
+        # Clean up temp file
+        os.unlink(temp_path)
     
-    elif file_extension == 'docx':
-        doc = Document(io.BytesIO(content))
-        return "\n".join([paragraph.text for paragraph in doc.paragraphs])
-    
-    elif file_extension == 'txt':
-        return content.decode('utf-8')
-    
-    else:
-        raise HTTPException(status_code=400, detail=f"Unsupported file format: {file_extension}")
+    return extracted_text
 
-async def analyze_document(content: str, doc_type: str) -> dict:
-    """Analyze document content using Gemini API"""
-    logger.info(f"Analyzing document of type: {doc_type}")
+class AnalysisRequest(BaseModel):
+    language: Optional[str] = "en"
+
+async def analyze_document(content: str, doc_type: str, language: str = "en") -> dict:
+    """Analyze document content using Gemini API with language support"""
+    logger.info(f"Analyzing document of type: {doc_type} in language: {language}")
     try:
         # Mock response for testing
         if os.getenv("TESTING") == "true":
@@ -101,35 +119,68 @@ async def analyze_document(content: str, doc_type: str) -> dict:
                     "company_culture": ["Collaborative", "Innovative"]
                 }
         
+        # Detect document language if not specified
+        doc_language = language
+        if language == "auto":
+            doc_language = await detect_language(content)
+            logger.info(f"Detected document language: {doc_language}")
+        
         # Real API integration
         api_key = get_next_api_key()
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel('gemini-1.5-flash')
         
+        # Choose prompt based on document type and language
         if doc_type == "resume":
-            prompt = """Analyze this resume in detail and extract in JSON format:
-            {
-                "skills": [list of technical and soft skills with proficiency levels where indicated],
-                "experience": [list of work experiences with key responsibilities and achievements],
-                "education": [list of educational qualifications with relevant details],
-                "achievements": [list of notable achievements and accomplishments],
-                "key_strengths": [list of the candidate's key strengths based on the resume],
-                "development_areas": [potential areas for professional development]
-            }
-            IMPORTANT: Your response MUST be a valid JSON object with no additional text.
-            Content: """ + content
-        else:
-            prompt = """Analyze this job description in detail and extract in JSON format:
-            {
-                "required_skills": [list of required skills with importance level],
-                "preferred_skills": [list of preferred but not required skills],
-                "responsibilities": [list of key responsibilities and expectations],
-                "qualifications": [list of required qualifications and experience],
-                "job_benefits": [list of benefits and perks offered],
-                "company_culture": [list of company culture aspects mentioned]
-            }
-            IMPORTANT: Your response MUST be a valid JSON object with no additional text.
-            Content: """ + content
+            if doc_language == "ja":
+                prompt = """この履歴書を詳細に分析し、以下のJSON形式で情報を抽出してください：
+                {
+                    "skills": [技術的なスキルとソフトスキルのリスト、レベルが示されている場合はそれも含む],
+                    "experience": [仕事経験のリスト、主な責任と成果を含む],
+                    "education": [教育資格のリスト、関連詳細を含む],
+                    "achievements": [注目すべき成果や業績のリスト],
+                    "key_strengths": [履歴書に基づく候補者の主な強みのリスト],
+                    "development_areas": [職業能力開発の可能性のある分野]
+                }
+                重要：回答は追加テキストなしの有効なJSONオブジェクトでなければなりません。
+                内容：""" + content
+            else:
+                prompt = """Analyze this resume in detail and extract in JSON format:
+                {
+                    "skills": [list of technical and soft skills with proficiency levels where indicated],
+                    "experience": [list of work experiences with key responsibilities and achievements],
+                    "education": [list of educational qualifications with relevant details],
+                    "achievements": [list of notable achievements and accomplishments],
+                    "key_strengths": [list of the candidate's key strengths based on the resume],
+                    "development_areas": [potential areas for professional development]
+                }
+                IMPORTANT: Your response MUST be a valid JSON object with no additional text.
+                Content: """ + content
+        else:  # job description
+            if doc_language == "ja":
+                prompt = """この求人情報を詳細に分析し、以下のJSON形式で情報を抽出してください：
+                {
+                    "required_skills": [必須スキルのリスト、重要度レベル付き],
+                    "preferred_skills": [優遇されるが必須ではないスキルのリスト],
+                    "responsibilities": [主な責任と期待事項のリスト],
+                    "qualifications": [必要な資格と経験のリスト],
+                    "job_benefits": [提供される福利厚生と特典のリスト],
+                    "company_culture": [言及されている企業文化の側面のリスト]
+                }
+                重要：回答は追加テキストなしの有効なJSONオブジェクトでなければなりません。
+                内容：""" + content
+            else:
+                prompt = """Analyze this job description in detail and extract in JSON format:
+                {
+                    "required_skills": [list of required skills with importance level],
+                    "preferred_skills": [list of preferred but not required skills],
+                    "responsibilities": [list of key responsibilities and expectations],
+                    "qualifications": [list of required qualifications and experience],
+                    "job_benefits": [list of benefits and perks offered],
+                    "company_culture": [list of company culture aspects mentioned]
+                }
+                IMPORTANT: Your response MUST be a valid JSON object with no additional text.
+                Content: """ + content
         
         # Get response from Gemini API
         try:
@@ -168,42 +219,48 @@ async def analyze_document(content: str, doc_type: str) -> dict:
             return {
                 "error": f"Gemini API error: {str(api_error)}",
                 "document_type": doc_type,
-                "success": False
             }
     except Exception as e:
-        # Handle any other exceptions
-        logger.error(f"Error analyzing document: {str(e)}")
-        return {
-            "error": f"Error analyzing document: {str(e)}",
-            "document_type": doc_type,
-            "success": False
-        }
+        logger.error(f"Document analysis error: {str(e)}")
+        return {"error": f"Analysis failed: {str(e)}"}
 
 @app.post("/analyze/resume")
-async def analyze_resume(file: UploadFile = File(...)):
-    """Analyze a resume file"""
-    logger.info(f"Received resume analysis request for file: {file.filename}")
-    text_content = await extract_text_from_file(file)
-    result = await analyze_document(text_content, "resume")
-    logger.info(f"Resume analysis completed: {json.dumps(result)[:100]}...")
-    return result
+async def analyze_resume(file: UploadFile = File(...), language: str = Query("en", description="Language for analysis response: en, ja, or auto")):
+    """Analyze a resume/CV document"""
+    try:
+        content = await extract_text_from_file(file)
+        result = await analyze_document(content, "resume", language)
+        logger.info(f"Resume analysis completed: {json.dumps(result)[:100]}...")
+        return result
+    except Exception as e:
+        logger.error(f"Resume analysis error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/analyze/job")
-async def analyze_job(file: UploadFile = File(...)):
-    """Analyze a job description file"""
-    logger.info(f"Received job description analysis request for file: {file.filename}")
-    text_content = await extract_text_from_file(file)
-    result = await analyze_document(text_content, "job description")
-    logger.info(f"Job analysis completed: {json.dumps(result)[:100]}...")
-    return result
+async def analyze_job(file: UploadFile = File(...), language: str = Query("en", description="Language for analysis response: en, ja, or auto")):
+    """Analyze a job description document"""
+    try:
+        content = await extract_text_from_file(file)
+        result = await analyze_document(content, "job description", language)
+        logger.info(f"Job analysis completed: {json.dumps(result)[:100]}...")
+        return result
+    except Exception as e:
+        logger.error(f"Job analysis error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+class MatchRequest(BaseModel):
+    resume_data: dict
+    job_data: dict
+    language: Optional[str] = "en"
 
 @app.post("/match")
-async def match_resume_job(request: dict):
+async def match_resume_job(request: MatchRequest):
     """Match a resume against a job description"""
-    logger.info(f"Received matching request: {json.dumps(request)[:100]}...")
+    logger.info(f"Received matching request: {json.dumps(request.dict())[:100]}...")
     try:
-        resume_data = request.get("resume_data", {})
-        job_data = request.get("job_data", {})
+        resume_data = request.resume_data
+        job_data = request.job_data
+        language = request.language
         
         # Use text directly if provided in the data objects
         resume_text = resume_data.get("text", "")
@@ -232,28 +289,45 @@ async def match_resume_job(request: dict):
         # Real API integration
         api_key = get_next_api_key()
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash-002')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         
-        prompt = f"""Compare this resume and job description and provide a detailed matching analysis in JSON format:
-        Resume: {resume_text if resume_text else json.dumps(resume_data)}
-        Job Description: {job_text if job_text else json.dumps(job_data)}
+        # Choose prompt based on language
+        if language == "ja":
+            prompt = f"""この履歴書と求人情報を比較し、詳細なマッチング分析をJSON形式で提供してください：
+            履歴書: {resume_text if resume_text else json.dumps(resume_data, ensure_ascii=False)}
+            求人情報: {job_text if job_text else json.dumps(job_data, ensure_ascii=False)}
+            
+            この候補者と求人の間のマッチについて包括的で詳細な分析が必要です。
+            
+            以下の形式の有効なJSONのみを返し、追加のテキストは含めないでください：
+            {{
+                "match_score": (0-100、全体的なスキルと資格のマッチに基づいてこれを計算してください),
+                "score_explanation": (マッチスコアにどのようにたどり着いたかの詳細な説明、具体的な証拠を含む),
+                "matching_skills": [履歴書と求人の両方に見られるスキルの詳細なリスト、具体的な証拠を含む],
+                "missing_skills": [求人情報にあるが履歴書にないスキルの詳細なリスト],
+                "recommendations": [この求人に対するマッチを改善するための、候補者への詳細で実行可能な推奨事項],
+                "matching_experience": (候補者の経験が求人要件とどのように一致するかの分析)
+            }}
+            """
+        else:
+            prompt = f"""Compare this resume and job description and provide a detailed matching analysis in JSON format:
+            Resume: {resume_text if resume_text else json.dumps(resume_data)}
+            Job Description: {job_text if job_text else json.dumps(job_data)}
+            
+            I need a comprehensive and detailed analysis of the match between this candidate and job. 
+            
+            Return ONLY a JSON with the following format and no additional text:
+            {{
+                "match_score": (0-100, calculate this based on overall skill and qualification match),
+                "score_explanation": (detailed explanation of how you arrived at the match score with specific evidence),
+                "matching_skills": [detailed list of skills found in both resume and job with specific evidence],
+                "missing_skills": [detailed list of skills in job description but not in resume],
+                "recommendations": [detailed, actionable recommendations for the candidate to improve their match for this job],
+                "matching_experience": (analysis of how the candidate's experience aligns with job requirements)
+            }}
+            """
         
-        I need a comprehensive and detailed analysis of the match between this candidate and job. 
-        
-        Return ONLY a JSON with the following format and no additional text:
-        {{
-            "match_score": (0-100, calculate this based on overall skill and qualification match),
-            "score_explanation": (detailed explanation of how you arrived at the match score with specific evidence),
-            "matching_skills": [detailed list of skills found in both resume and job with specific evidence],
-            "missing_skills": [detailed list of skills in job description but not in resume],
-            "recommendations": [detailed, actionable recommendations for the candidate to improve their match for this job],
-            "matching_experience": (analysis of how the candidate's experience aligns with job requirements),
-            "matching_education": (analysis of how the candidate's education aligns with job requirements),
-            "strengths": [areas where the candidate is particularly strong for this role],
-            "areas_for_improvement": [specific areas where the candidate could improve for this role]
-        }}
-        """
-        
+        # Get response from Gemini API
         try:
             response_obj = await asyncio.to_thread(lambda: model.generate_content(prompt))
             response_text = response_obj.text
@@ -262,7 +336,6 @@ async def match_resume_job(request: dict):
             logger.info(f"Raw Gemini API match response: {response_text[:200]}...")
             
             # Clean the response to ensure it's valid JSON
-            # First, find the first '{' and the last '}'
             first_brace = response_text.find('{')
             last_brace = response_text.rfind('}')
             
@@ -273,49 +346,34 @@ async def match_resume_job(request: dict):
                     logger.info(f"Match completed: {json.dumps(result)[:100]}...")
                     return result
                 except json.JSONDecodeError as e:
-                    logger.error(f"JSON parse error after cleanup: {str(e)}")
-                    # Fall through to the general error case
+                    logger.error(f"JSON parse error: {str(e)}")
             
             # If we can't find valid JSON brackets or parsing fails, try parsing the raw response
             try:
                 result = json.loads(response_text.strip())
-                logger.info(f"Match completed: {json.dumps(result)[:100]}...")
+                logger.info(f"Match completed (alternative parsing): {json.dumps(result)[:100]}...")
                 return result
             except json.JSONDecodeError:
-                # If JSON parsing fails, return a structured error response
-                logger.error(f"Error parsing Gemini API response: {response_text[:100]}...")
-                return {
+                # Return a structured error response
+                error_response = {
                     "error": "Invalid response from Gemini API",
-                    "match_score": 0,
-                    "matching_skills": [],
-                    "missing_skills": [],
+                    "message": "Could not parse API response as JSON",
                     "content_preview": response_text[:200] + "..." if len(response_text) > 200 else response_text
                 }
+                logger.error(f"Match failed: {json.dumps(error_response)}")
+                return error_response
         except Exception as api_error:
-            # Handle any API-specific exceptions
-            logger.error(f"Gemini API error in match: {str(api_error)}")
-            return {
-                "error": f"Gemini API error: {str(api_error)}",
-                "match_score": 0,
-                "matching_skills": [],
-                "missing_skills": [],
-                "success": False
-            }
+            logger.error(f"Gemini API error during matching: {str(api_error)}")
+            return {"error": f"API error: {str(api_error)}"}
     except Exception as e:
-        # Handle any other exceptions
-        logger.error(f"Error matching resume to job: {str(e)}")
-        return {
-            "error": f"Error matching resume to job: {str(e)}",
-            "match_score": 0,
-            "matching_skills": [],
-            "missing_skills": []
-        }
+        logger.error(f"Match error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint"""
+    """Simple health check endpoint"""
     logger.info("Health check endpoint called")
-    return {"status": "ok", "testing_mode": os.getenv("TESTING") == "true"}
+    return {"status": "ok", "testing": os.getenv("TESTING", "false")}
 
 if __name__ == "__main__":
     import uvicorn
