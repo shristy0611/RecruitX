@@ -183,7 +183,7 @@ const Matching = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">{t('matching.title')}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-high-contrast">{t('matching.title')}</h1>
       
       {renderProgressBar()}
 
@@ -192,16 +192,16 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiFile className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">{t('matching.uploadResume')}</h2>
+              <h2 className="text-xl font-semibold text-high-contrast">{t('matching.uploadResume')}</h2>
             </div>
             <FileUpload onFileUpload={handleResumeUpload} />
             {resumeFile && (
-              <div className="mt-2 text-sm text-gray-600">
+              <div className="mt-2 text-sm text-medium-contrast">
                 <strong>{language === 'ja' ? '選択されたファイル:' : 'Selected file:'}</strong> {resumeFile.name} ({(resumeFile.size / 1024).toFixed(1)} KB)
               </div>
             )}
             {resumeData && (
-              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm">
+              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm dark:bg-green-900 dark:border-green-800 dark:text-green-300">
                 <FiCheck className="inline-block mr-1" /> {language === 'ja' ? '履歴書の分析が完了しました' : 'Resume analyzed successfully'}
               </div>
             )}
@@ -210,16 +210,16 @@ const Matching = () => {
           <div className="card">
             <div className="flex items-center mb-4">
               <FiBriefcase className="h-5 w-5 text-primary-500 mr-2" />
-              <h2 className="text-xl font-semibold">{t('matching.uploadJob')}</h2>
+              <h2 className="text-xl font-semibold text-high-contrast">{t('matching.uploadJob')}</h2>
             </div>
             <FileUpload onFileUpload={handleJobUpload} />
             {jobFile && (
-              <div className="mt-2 text-sm text-gray-600">
+              <div className="mt-2 text-sm text-medium-contrast">
                 <strong>{language === 'ja' ? '選択されたファイル:' : 'Selected file:'}</strong> {jobFile.name} ({(jobFile.size / 1024).toFixed(1)} KB)
               </div>
             )}
             {jobData && (
-              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm">
+              <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 text-sm dark:bg-green-900 dark:border-green-800 dark:text-green-300">
                 <FiCheck className="inline-block mr-1" /> {language === 'ja' ? '求人情報の分析が完了しました' : 'Job description analyzed successfully'}
               </div>
             )}
@@ -230,17 +230,17 @@ const Matching = () => {
       {isLoading && (
         <div className="card flex items-center justify-center p-12 mt-6">
           <FiLoader className="h-8 w-8 text-primary-500 animate-spin" />
-          <span className="ml-3 text-lg">{t('common.loading')}</span>
+          <span className="ml-3 text-lg text-high-contrast">{t('common.loading')}</span>
         </div>
       )}
 
       {error && (
-        <div className="card bg-red-50 border border-red-200 mt-6">
+        <div className="card bg-red-50 border border-red-200 mt-6 dark:bg-red-900 dark:border-red-800">
           <div className="flex items-start">
-            <FiAlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2" />
+            <FiAlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2 dark:text-red-300" />
             <div>
-              <h3 className="text-lg font-semibold text-red-800 mb-1">{language === 'ja' ? 'エラー' : 'Error'}</h3>
-              <p className="text-red-700">{error}</p>
+              <h3 className="text-lg font-semibold text-red-800 mb-1 dark:text-red-200">{language === 'ja' ? 'エラー' : 'Error'}</h3>
+              <p className="text-red-700 dark:text-red-300">{error}</p>
             </div>
           </div>
         </div>
