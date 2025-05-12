@@ -1,0 +1,96 @@
+{
+  "name": "soft_skills",
+  "category": "domain",
+  "aliases": [],
+  "metadata": {},
+  "children": [
+    {
+      "name": "Communication",
+      "category": "soft",
+      "aliases": [],
+      "metadata": {},
+      "children": [
+        {
+          "name": "Public Speaking",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Writing",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Active Listening",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Negotiation",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Presentation",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Conflict Resolution",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "name": "Leadership",
+      "category": "soft",
+      "aliases": [],
+      "metadata": {},
+      "children": [
+        {
+          "name": "Team Management",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Strategic Planning",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Delegation",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Mentoring",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Motivation",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        },
+        {
+          "name": "Decision Making",
+          "category": "soft",
+          "aliases": [],
+          "metadata": {}
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+# Docker Compose file for lightweight LLM containers optimized for MacBook Air (16GB RAM) with Apple Silicon
+# This model is an alternative to the free Gemini API for local development
+
+services:
+  # Gemma 3 - Multimodal model with vision capabilities (4GB RAM)
+  # Excellent for Japanese and English language support
+  gemma3:
+    image: ai/gemma3:4B-Q4_K_M
+    container_name: recruitx-gemma3
+    restart: unless-stopped
+    platform: linux/arm64
+    ports:
+      - "8084:8000"
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 3G
+    environment:
+      - MODEL_NAME=gemma3
+      - MAX_INPUT_TOKENS=131000
+      - MAX_BATCH_SIZE=4
+
+# Usage Instructions for Apple Silicon MacBooks:
+# 1. Start the Gemma 3 model:
+#    docker-compose -f docker-compose.llm.yml up -d gemma3
+#
+# 2. Wait for the model to download and load (check logs):
+#    docker-compose -f docker-compose.llm.yml logs -f gemma3
+#
+# 3. Update src/utils/config.py with the correct URL:
+#    OLLAMA_BASE_URL = "http://localhost:8084"
+#
+# 4. API endpoints (for reference):
+#    - Text completion: http://localhost:8084/v1/completions
+#    - Chat completion: http://localhost:8084/v1/chat/completions
+#    - Model info: http://localhost:8084/v1/models
+#
+# 5. Gemma 3 advantages:
+#    - Multimodal capabilities (text + vision)
+#    - Bilingual support (Japanese and English)
+#    - More efficient token usage (131K context window)
+#    - Great for recruitment scenarios requiring visual understanding

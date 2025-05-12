@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitPro AI - XAI Demos</title>
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --danger-color: #EA4335;
+            --warning-color: #FBBC05;
+            --text-color: #333;
+            --background-color: #fff;
+            --card-background: #f9f9f9;
+            --border-color: #ddd;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+        }
+        
+        .card {
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        
+        .card h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .visualization-frame {
+            width: 100%;
+            height: 600px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background-color: #e0e0e0;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 4px 4px 0 0;
+        }
+        
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: none;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RecruitPro AI - Explainable AI (XAI) Demos</h1>
+            <p>This page demonstrates the XAI visualization capabilities of RecruitPro AI, providing transparent explanations for all agent decisions.</p>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="matching">Matching Explanations</div>
+            <div class="tab" data-tab="sourcing">Sourcing Explanations</div>
+            <div class="tab" data-tab="screening">Screening Explanations</div>
+        </div>
+        
+        <div class="tab-content active" id="matching-tab">
+            <div class="card">
+                <h2>Matching Explanation Visualization</h2>
+                <p>Visualize explanations for job-candidate matching decisions.</p>
+                
+                <form id="matching-form">
+                    <div class="form-group">
+                        <label for="matching-job-id">Job ID:</label>
+                        <input type="text" id="matching-job-id" required placeholder="Enter job ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="matching-candidate-id">Candidate ID:</label>
+                        <input type="text" id="matching-candidate-id" required placeholder="Enter candidate ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="matching-detail-level">Detail Level:</label>
+                        <select id="matching-detail-level">
+                            <option value="brief">Brief</option>
+                            <option value="standard">Standard</option>
+                            <option value="detailed" selected>Detailed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="matching-theme">Theme:</label>
+                        <select id="matching-theme">
+                            <option value="light" selected>Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit">Visualize Explanation</button>
+                </form>
+                
+                <iframe id="matching-frame" class="visualization-frame" style="display: none;"></iframe>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="sourcing-tab">
+            <div class="card">
+                <h2>Sourcing Explanation Visualization</h2>
+                <p>Visualize explanations for candidate sourcing operations. This requires raw JSON input for the explanation request.</p>
+                
+                <form id="sourcing-form">
+                    <div class="form-group">
+                        <label for="sourcing-request">Explanation Request (JSON):</label>
+                        <textarea id="sourcing-request" rows="10" required placeholder='{"job_description": {"title": "Data Scientist", "company": "ABC Corp"}, "candidates": [{"name": "John Doe", "skills": ["Python", "ML"]}], "detail_level": "detailed"}'
+                            style="width: 100%; font-family: monospace;"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sourcing-theme">Theme:</label>
+                        <select id="sourcing-theme">
+                            <option value="light" selected>Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit">Visualize Explanation</button>
+                </form>
+                
+                <iframe id="sourcing-frame" class="visualization-frame" style="display: none;"></iframe>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="screening-tab">
+            <div class="card">
+                <h2>Screening Explanation Visualization</h2>
+                <p>Visualize explanations for screening decisions. This requires raw JSON input for the explanation request.</p>
+                
+                <form id="screening-form">
+                    <div class="form-group">
+                        <label for="screening-request">Explanation Request (JSON):</label>
+                        <textarea id="screening-request" rows="10" required placeholder='{"candidate_profile": {"name": "Jane Smith", "experience": "5 years"}, "job_description": {"title": "Software Engineer"}, "screening_result": {"decision": "pass", "overall_score": 85.5}}'
+                            style="width: 100%; font-family: monospace;"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="screening-theme">Theme:</label>
+                        <select id="screening-theme">
+                            <option value="light" selected>Light</option>
+                            <option value="dark">Dark</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit">Visualize Explanation</button>
+                </form>
+                
+                <iframe id="screening-frame" class="visualization-frame" style="display: none;"></iframe>
+            </div>
+        </div>
+        
+        <footer>
+            <p>RecruitPro AI - Privacy-First Recruitment Multi-Agent System</p>
+            <p>© 2025 RecruitPro AI</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Tab handling
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+        
+        // Form handling - Matching
+        document.getElementById('matching-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const jobId = document.getElementById('matching-job-id').value;
+            const candidateId = document.getElementById('matching-candidate-id').value;
+            const detailLevel = document.getElementById('matching-detail-level').value;
+            const theme = document.getElementById('matching-theme').value;
+            
+            const url = `/visualizations/matching/${jobId}/${candidateId}?detail_level=${detailLevel}&theme=${theme}`;
+            
+            const frame = document.getElementById('matching-frame');
+            frame.src = url;
+            frame.style.display = 'block';
+        });
+        
+        // Form handling - Sourcing
+        document.getElementById('sourcing-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const requestData = JSON.parse(document.getElementById('sourcing-request').value);
+                const theme = document.getElementById('sourcing-theme').value;
+                
+                // Create a form to submit the JSON data
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/visualizations/sourcing?theme=${theme}`;
+                form.target = 'sourcing-frame';
+                
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'data';
+                input.value = JSON.stringify(requestData);
+                
+                form.appendChild(input);
+                document.body.appendChild(form);
+                
+                const frame = document.getElementById('sourcing-frame');
+                frame.style.display = 'block';
+                
+                form.submit();
+                document.body.removeChild(form);
+            } catch (error) {
+                alert('Invalid JSON: ' + error.message);
+            }
+        });
+        
+        // Form handling - Screening
+        document.getElementById('screening-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+                const requestData = JSON.parse(document.getElementById('screening-request').value);
+                const theme = document.getElementById('screening-theme').value;
+                
+                // Create a form to submit the JSON data
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/visualizations/screening?theme=${theme}`;
+                form.target = 'screening-frame';
+                
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'data';
+                input.value = JSON.stringify(requestData);
+                
+                form.appendChild(input);
+                document.body.appendChild(form);
+                
+                const frame = document.getElementById('screening-frame');
+                frame.style.display = 'block';
+                
+                form.submit();
+                document.body.removeChild(form);
+            } catch (error) {
+                alert('Invalid JSON: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

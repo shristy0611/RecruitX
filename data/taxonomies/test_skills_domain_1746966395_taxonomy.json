@@ -1,0 +1,22 @@
+{
+  "name": "test_skills_domain_1746966395",
+  "category": "domain",
+  "aliases": [],
+  "metadata": {},
+  "children": [
+    {
+      "name": "Programming Languages",
+      "category": "technical",
+      "aliases": [],
+      "metadata": {},
+      "children": [
+        {
+          "name": "Go Programming",
+          "category": "technical",
+          "aliases": [],
+          "metadata": {}
+        }
+      ]
+    }
+  ]
+}

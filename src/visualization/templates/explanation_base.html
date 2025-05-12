@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}}</title>
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --danger-color: #EA4335;
+            --warning-color: #FBBC05;
+            --text-color: #333;
+            --background-color: #fff;
+            --card-background: #f9f9f9;
+            --border-color: #ddd;
+        }
+        
+        .theme-dark {
+            --primary-color: #8ab4f8;
+            --secondary-color: #81c995;
+            --danger-color: #f28b82;
+            --warning-color: #fdd663;
+            --text-color: #e8eaed;
+            --background-color: #202124;
+            --card-background: #292a2d;
+            --border-color: #5f6368;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .explanation-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background-color: var(--card-background);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .agent-type {
+            padding: 5px 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .score-display {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .score-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+        
+        .score-label {
+            font-size: 18px;
+            color: var(--text-color);
+        }
+        
+        .explanation-text {
+            margin-bottom: 30px;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 20px 0 15px;
+            color: var(--primary-color);
+        }
+        
+        .factors-chart {
+            margin: 30px 0;
+        }
+        
+        .factor-bar {
+            margin-bottom: 15px;
+        }
+        
+        .factor-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .factor-name {
+            font-weight: 500;
+        }
+        
+        .factor-score {
+            font-weight: 700;
+        }
+        
+        .factor-bar-outer {
+            width: 100%;
+            height: 10px;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .factor-bar-inner {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+        
+        .factor-explanation {
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            color: rgba(var(--text-color-rgb), 0.8);
+        }
+        
+        .strengths-section, .improvements-section {
+            margin: 20px 0;
+        }
+        
+        .strength-item, .improvement-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .strength-item:before {
+            content: '✓';
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+        
+        .improvement-item:before {
+            content: '!';
+            color: var(--warning-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .metadata-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .metadata-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .metadata-table th, .metadata-table td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .metadata-table th {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .decision-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .decision-pass {
+            background-color: var(--secondary-color);
+        }
+        
+        .decision-hold {
+            background-color: var(--warning-color);
+            color: #333;
+        }
+        
+        .decision-reject {
+            background-color: var(--danger-color);
+        }
+        
+        .candidate-list {
+            margin-top: 10px;
+        }
+        
+        .candidate-item {
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 4px;
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(var(--text-color-rgb), 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .agent-type {
+                margin-top: 10px;
+            }
+            
+            .score-display {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .score-value {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body class="{{THEME_CLASS}}">
+    <div class="explanation-container">
+        <div class="header">
+            <h1 class="title">{{TITLE}}</h1>
+            <div class="agent-type">{{AGENT_TYPE}} Agent</div>
+        </div>
+        
+        <div class="score-display">
+            <div class="score-value">{{OVERALL_SCORE}}</div>
+            <div class="score-label">Overall Score</div>
+        </div>
+        
+        <div class="explanation-text">
+            {{EXPLANATION_TEXT}}
+        </div>
+        
+        {{FACTORS_CHART}}
+        
+        {{STRENGTHS_SECTION}}
+        
+        {{IMPROVEMENTS_SECTION}}
+        
+        {{METADATA_SECTION}}
+        
+        <div class="footer">
+            <p>RecruitPro AI - Explainable AI Layer</p>
+            <p>This explanation is generated for transparency and understanding only</p>
+        </div>
+    </div>
+    
+    <script>
+        // Add any interactive JavaScript here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make factor bars clickable to show explanations
+            document.querySelectorAll('.factor-bar').forEach(function(element) {
+                const explanation = element.querySelector('.factor-explanation');
+                if (explanation) {
+                    // Toggle explanation on click
+                    element.querySelector('.factor-header').addEventListener('click', function() {
+                        explanation.style.display = explanation.style.display === 'none' ? 'block' : 'none';
+                    });
+                    
+                    // Start with explanations hidden
+                    explanation.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

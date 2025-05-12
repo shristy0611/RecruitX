@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+    --radius: 0.75rem;
+  }
+  /* Removed global border that was causing boxes around all elements */
+  * {
+    /* @apply border; */
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden rounded-xl backdrop-blur-xl bg-white/[0.03] 
+           border border-white/[0.05] shadow-xl transition-all duration-300
+           hover:shadow-2xl hover:bg-white/[0.05] hover:border-white/[0.08];
+  }
+
+  .gradient-border {
+    @apply relative p-[1px] rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20
+           before:absolute before:inset-0 before:rounded-xl before:p-[1px]
+           before:bg-gradient-to-br before:from-blue-500 before:to-purple-500
+           before:opacity-0 before:transition-opacity hover:before:opacity-100;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400
+           hover:from-blue-300 hover:via-purple-300 hover:to-pink-300 transition-all duration-300;
+  }
+
+  .btn-modern {
+    @apply px-4 py-2 rounded-lg font-medium bg-gradient-to-r from-blue-500 to-purple-500
+           hover:from-blue-600 hover:to-purple-600 text-white shadow-lg transition-all duration-300
+           hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0;
+  }
+}
+
+@layer utilities {
+  .animate-gradient {
+    @apply bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-[length:200%_200%]
+           animate-gradient-x;
+  }
+}

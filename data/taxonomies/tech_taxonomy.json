@@ -1,0 +1,328 @@
+{
+  "name": "tech",
+  "category": "domain",
+  "aliases": [],
+  "metadata": {
+    "description": "Technology skills taxonomy",
+    "version": "1.0.0"
+  },
+  "children": [
+    {
+      "name": "Programming Languages",
+      "category": "technical",
+      "aliases": ["coding languages", "development languages"],
+      "metadata": {
+        "description": "Computer programming languages"
+      },
+      "children": [
+        {
+          "name": "Python",
+          "category": "technical",
+          "aliases": ["py"],
+          "metadata": {
+            "popularity": "high",
+            "paradigm": "multi-paradigm",
+            "typing": "dynamic"
+          },
+          "children": [
+            {
+              "name": "Django",
+              "category": "technical",
+              "aliases": ["django framework"],
+              "metadata": {
+                "type": "web framework"
+              },
+              "children": []
+            },
+            {
+              "name": "Flask",
+              "category": "technical",
+              "aliases": ["flask framework"],
+              "metadata": {
+                "type": "micro web framework"
+              },
+              "children": []
+            },
+            {
+              "name": "FastAPI",
+              "category": "technical",
+              "aliases": ["fastapi framework"],
+              "metadata": {
+                "type": "web framework",
+                "performance": "high"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "JavaScript",
+          "category": "technical",
+          "aliases": ["js", "ecmascript"],
+          "metadata": {
+            "popularity": "high",
+            "paradigm": "multi-paradigm",
+            "typing": "dynamic"
+          },
+          "children": [
+            {
+              "name": "React",
+              "category": "technical",
+              "aliases": ["reactjs", "react.js"],
+              "metadata": {
+                "type": "frontend library"
+              },
+              "children": []
+            },
+            {
+              "name": "Node.js",
+              "category": "technical",
+              "aliases": ["nodejs", "node"],
+              "metadata": {
+                "type": "runtime environment"
+              },
+              "children": []
+            },
+            {
+              "name": "Express.js",
+              "category": "technical",
+              "aliases": ["expressjs", "express"],
+              "metadata": {
+                "type": "web framework"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "Java",
+          "category": "technical",
+          "aliases": [],
+          "metadata": {
+            "popularity": "high",
+            "paradigm": "object-oriented",
+            "typing": "static"
+          },
+          "children": [
+            {
+              "name": "Spring",
+              "category": "technical",
+              "aliases": ["spring framework"],
+              "metadata": {
+                "type": "framework"
+              },
+              "children": []
+            },
+            {
+              "name": "Spring Boot",
+              "category": "technical",
+              "aliases": ["springboot"],
+              "metadata": {
+                "type": "framework"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Databases",
+      "category": "technical",
+      "aliases": ["data storage", "DBMS"],
+      "metadata": {
+        "description": "Database management systems"
+      },
+      "children": [
+        {
+          "name": "SQL",
+          "category": "technical",
+          "aliases": ["structured query language"],
+          "metadata": {
+            "type": "query language"
+          },
+          "children": [
+            {
+              "name": "PostgreSQL",
+              "category": "technical",
+              "aliases": ["postgres"],
+              "metadata": {
+                "type": "relational database"
+              },
+              "children": []
+            },
+            {
+              "name": "MySQL",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "relational database"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "NoSQL",
+          "category": "technical",
+          "aliases": ["non-relational"],
+          "metadata": {
+            "type": "database category"
+          },
+          "children": [
+            {
+              "name": "MongoDB",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "document database"
+              },
+              "children": []
+            },
+            {
+              "name": "Redis",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "key-value store"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Machine Learning",
+      "category": "technical",
+      "aliases": ["ML", "artificial intelligence", "AI"],
+      "metadata": {
+        "description": "Machine learning and AI technologies"
+      },
+      "children": [
+        {
+          "name": "Deep Learning",
+          "category": "technical",
+          "aliases": ["DL", "neural networks"],
+          "metadata": {
+            "description": "Neural network-based machine learning"
+          },
+          "children": [
+            {
+              "name": "TensorFlow",
+              "category": "technical",
+              "aliases": ["tf"],
+              "metadata": {
+                "type": "deep learning framework"
+              },
+              "children": []
+            },
+            {
+              "name": "PyTorch",
+              "category": "technical",
+              "aliases": ["torch"],
+              "metadata": {
+                "type": "deep learning framework"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "Natural Language Processing",
+          "category": "technical",
+          "aliases": ["NLP", "text processing"],
+          "metadata": {
+            "description": "Processing and analyzing natural language"
+          },
+          "children": [
+            {
+              "name": "BERT",
+              "category": "technical",
+              "aliases": ["Bidirectional Encoder Representations from Transformers"],
+              "metadata": {
+                "type": "language model"
+              },
+              "children": []
+            },
+            {
+              "name": "GPT",
+              "category": "technical",
+              "aliases": ["Generative Pre-trained Transformer"],
+              "metadata": {
+                "type": "language model"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DevOps",
+      "category": "technical",
+      "aliases": ["Development Operations"],
+      "metadata": {
+        "description": "Development and operation practices and tools"
+      },
+      "children": [
+        {
+          "name": "Containerization",
+          "category": "technical",
+          "aliases": ["containers"],
+          "metadata": {
+            "description": "Application containerization technologies"
+          },
+          "children": [
+            {
+              "name": "Docker",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "container platform"
+              },
+              "children": []
+            },
+            {
+              "name": "Kubernetes",
+              "category": "technical",
+              "aliases": ["k8s"],
+              "metadata": {
+                "type": "container orchestration"
+              },
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "CI/CD",
+          "category": "technical",
+          "aliases": ["Continuous Integration", "Continuous Deployment"],
+          "metadata": {
+            "description": "Continuous integration and deployment tools"
+          },
+          "children": [
+            {
+              "name": "Jenkins",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "automation server"
+              },
+              "children": []
+            },
+            {
+              "name": "GitHub Actions",
+              "category": "technical",
+              "aliases": [],
+              "metadata": {
+                "type": "CI/CD platform"
+              },
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

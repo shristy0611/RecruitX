@@ -1,0 +1,53 @@
+# Core dependencies
+fastapi==0.104.1
+pydantic>=2.5.0
+python-dotenv==1.0.0
+uvicorn==0.23.2
+tenacity==8.2.2
+psutil==5.9.5
+
+# Vector database client
+weaviate-client==4.4.0
+
+# Embedding models
+sentence-transformers==2.2.2
+torch>=2.2.0
+
+# LLM interface
+langchain==0.0.351
+langchain-community==0.0.13
+llama-cpp-python==0.2.18
+ollama==0.1.6
+google-generativeai==0.3.2
+transformers>=4.35.0
+
+# RAG components
+langchain_weaviate==0.0.1
+qdrant-client==1.6.4
+
+# Data processing & utilities
+pandas==2.1.1
+numpy==1.26.0
+python-multipart==0.0.6
+boto3==1.28.64
+regex==2023.8.8
+httpx>=0.26.0
+jq==1.4.1
+
+# NLP/Skills extraction
+spacy==3.7.2
+presidio-analyzer==2.2.33
+presidio-anonymizer==2.2.33
+# Required SpaCy language models - these will be downloaded on-demand
+# python -m spacy download en_core_web_sm
+# python -m spacy download en_core_web_lg
+# For multilingual support (uncomment as needed):
+# python -m spacy download de_core_news_lg
+# python -m spacy download fr_core_news_lg
+# python -m spacy download es_core_news_lg
+# python -m spacy download ja_core_news_lg
+# python -m spacy download zh_core_web_lg
+
+# Testing
+pytest==7.4.2
+pytest-asyncio==0.21.1

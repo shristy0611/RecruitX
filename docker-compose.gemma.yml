@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  gemma3-model:
+    build:
+      context: .
+      dockerfile: Dockerfile.gemma
+    image: recruitx/gemma3:latest
+    container_name: recruitx-gemma3-model
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_ID=google/gemma-3-4b
+      - HF_TOKEN=${HF_TOKEN}
+      - MAX_INPUT_TOKENS=131000
+      - MAX_BATCH_SIZE=4
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    labels:
+      ai.model.type: "llm"
+      ai.model.task: "text-generation"
+      ai.model.architecture: "gemma3"
+      ai.model.description: "Google Gemma 3 4B Model for text generation and multimodal capabilities" 

@@ -1,0 +1,55 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    wget \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install PyTorch and transformers
+RUN pip install --no-cache-dir torch torchvision torchaudio transformers
+
+# Install AI toolkit for Gemma
+RUN pip install --no-cache-dir accelerate \
+                               safetensors \
+                               huggingface_hub \
+                               sentencepiece \
+                               python-dotenv \
+                               protobuf \
+                               bitsandbytes
+
+# Install FastAPI and related dependencies
+RUN pip install --no-cache-dir fastapi \
+                               uvicorn \
+                               pydantic \
+                               requests
+
+# Clone Gemma 3 tools and examples
+RUN pip install --no-cache-dir transformers-stream-generator
+
+# Set up model directory
+RUN mkdir -p /app/models
+
+# Add model info for Docker Desktop
+LABEL ai.model.task="text-generation,chat,image-to-text"
+LABEL ai.model.architecture="gemma3"
+LABEL ai.model.license="https://ai.google.dev/terms"
+LABEL ai.model.description="Google Gemma 3 - Multimodal model with vision capabilities (4GB RAM) optimized for Japanese and English language support"
+
+# Copy startup script
+COPY start_model.sh /app/
+RUN chmod +x /app/start_model.sh
+
+# Set environment variables
+ENV MODEL_ID="meta-llama/Meta-Llama-3-8B-Instruct"
+ENV HF_TOKEN="YOUR_HUGGINGFACE_TOKEN"
+ENV MAX_INPUT_TOKENS=131000
+ENV MAX_BATCH_SIZE=4
+
+EXPOSE 8000
+
+# Start the model server
+CMD ["/app/start_model.sh"] 

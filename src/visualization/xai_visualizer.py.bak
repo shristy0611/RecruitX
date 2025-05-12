@@ -1,0 +1,424 @@
+"""
+XAI Visualization Components.
+
+This module provides visualization components for displaying explanations
+from the XAI layer in an interactive, user-friendly format.
+"""
+
+import os
+import json
+from dataclasses import dataclass
+from typing import Dict, Any, List, Optional
+
+# Path to templates directory
+TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "templates")
+
+
+@dataclass
+class ExplanationVisualizationConfig:
+    """Configuration for explanation visualizations."""
+    
+    title: str = "RecruitPro AI Explanation"
+    show_factors: bool = True
+    show_strengths: bool = True
+    show_improvements: bool = True
+    show_metadata: bool = False
+    theme: str = "light"  # "light" or "dark"
+    chart_colors: List[str] = None
+    
+    def __post_init__(self):
+        """Initialize default values."""
+        if self.chart_colors is None:
+            self.chart_colors = ["#4285F4", "#EA4335", "#FBBC05", "#34A853", "#FF6D01"]
+
+
+def generate_explanation_html(explanation_data: Dict[str, Any], config: Optional[ExplanationVisualizationConfig] = None) -> str:
+    """
+    Generate HTML visualization for an explanation.
+    
+    Args:
+        explanation_data: Explanation data from XAI module
+        config: Visualization configuration
+        
+    Returns:
+        HTML string containing the visualization
+    """
+    if config is None:
+        config = ExplanationVisualizationConfig()
+    
+    # Extract key information from explanation data
+    agent_type = explanation_data.get("agent_type", "unknown")
+    explanation_text = explanation_data.get("explanation", "No explanation available")
+    score = explanation_data.get("score", 0.0)
+    factors = explanation_data.get("factors", {})
+    metadata = explanation_data.get("metadata", {})
+    
+    # Extract optional data
+    factor_explanations = metadata.get("factor_explanations", {})
+    strengths = metadata.get("strengths", [])
+    improvement_areas = metadata.get("improvement_areas", [])
+    
+    # Load the base HTML template
+    html_template = _load_template("explanation_base.html")
+    
+    # Format the explanation text with proper styling
+    formatted_explanation = _format_markdown_text(explanation_text)
+    
+    # Generate the factors chart if needed
+    factors_chart = ""
+    if config.show_factors and factors:
+        factors_chart = _generate_factors_chart(factors, factor_explanations, config)
+    
+    # Generate strengths and improvements sections if needed
+    strengths_section = ""
+    if config.show_strengths and strengths:
+        strengths_section = _generate_list_section("Strengths", strengths, "strengths-section")
+    
+    improvements_section = ""
+    if config.show_improvements and improvement_areas:
+        improvements_section = _generate_list_section("Areas for Improvement", improvement_areas, "improvements-section")
+    
+    # Generate metadata section if needed
+    metadata_section = ""
+    if config.show_metadata and metadata:
+        filtered_metadata = {k: v for k, v in metadata.items() 
+                             if k not in ["factor_explanations", "strengths", "improvement_areas"]}
+        if filtered_metadata:
+            metadata_section = _generate_metadata_section(filtered_metadata)
+    
+    # Replace placeholders in the template
+    html = html_template.replace("{{TITLE}}", config.title)
+    html = html.replace("{{AGENT_TYPE}}", agent_type.title())
+    html = html.replace("{{THEME_CLASS}}", f"theme-{config.theme}")
+    html = html.replace("{{EXPLANATION_TEXT}}", formatted_explanation)
+    html = html.replace("{{OVERALL_SCORE}}", f"{score:.1f}")
+    html = html.replace("{{FACTORS_CHART}}", factors_chart)
+    html = html.replace("{{STRENGTHS_SECTION}}", strengths_section)
+    html = html.replace("{{IMPROVEMENTS_SECTION}}", improvements_section)
+    html = html.replace("{{METADATA_SECTION}}", metadata_section)
+    
+    return html
+
+
+def _load_template(template_name: str) -> str:
+    """
+    Load an HTML template from the templates directory.
+    
+    Args:
+        template_name: Name of the template file
+        
+    Returns:
+        Template content as string
+    """
+    try:
+        template_path = os.path.join(TEMPLATES_DIR, template_name)
+        
+        # Check if template file exists
+        if not os.path.exists(template_path):
+            raise FileNotFoundError(f"Template file not found: {template_path}")
+        
+        # Read the template file
+        with open(template_path, "r") as f:
+            return f.read()
+    except Exception as e:
+        # If there's an error loading the template, return a simple fallback
+        print(f"Error loading template {template_name}: {e}")
+        return f"""<!DOCTYPE html>
+<html>
+<head><title>{{TITLE}}</title></head>
+<body>
+    <h1>{{TITLE}}</h1>
+    <div>{{EXPLANATION_TEXT}}</div>
+    <div>Score: {{OVERALL_SCORE}}</div>
+    <div>{{FACTORS_CHART}}</div>
+    <div>{{STRENGTHS_SECTION}}</div>
+    <div>{{IMPROVEMENTS_SECTION}}</div>
+</body>
+</html>"""
+        
+
+        }
+        
+        .explanation-text {
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .factors-chart {
+            margin: 30px 0;
+        }
+        
+        .factors-chart h3 {
+            margin-bottom: 20px;
+        }
+        
+        .factor-bar {
+            margin-bottom: 15px;
+        }
+        
+        .factor-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .factor-score {
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-value {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .strengths-section, .improvements-section {
+            margin: 25px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .strengths-section {
+            background-color: rgba(52, 168, 83, 0.1);
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .improvements-section {
+            background-color: rgba(251, 188, 5, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .metadata-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+        
+        .factor-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .factor-tooltip .tooltip-icon {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+        
+        .factor-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 300px;
+            background-color: var(--card-background);
+            color: var(--text-color);
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -150px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border: 1px solid var(--border-color);
+        }
+        
+        .factor-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="{{THEME_CLASS}}">
+    <div class="explanation-container">
+        <div class="header">
+            <h1 class="title">{{TITLE}}</h1>
+            <span class="agent-type">{{AGENT_TYPE}} Agent</span>
+        </div>
+        
+        <div class="score-display">
+            <div class="score-value">{{OVERALL_SCORE}}</div>
+            <div class="score-label">Overall Match Score</div>
+        </div>
+        
+        <div class="explanation-text">
+            {{EXPLANATION_TEXT}}
+        </div>
+        
+        {{FACTORS_CHART}}
+        
+        {{STRENGTHS_SECTION}}
+        
+        {{IMPROVEMENTS_SECTION}}
+        
+        {{METADATA_SECTION}}
+    </div>
+</body>
+</html>"""
+    return ""
+
+
+def _format_markdown_text(text: str) -> str:
+    """
+    Format markdown-like text to HTML for the explanation.
+    
+    Args:
+        text: Markdown-formatted text
+        
+    Returns:
+        HTML-formatted text
+    """
+    # Very basic markdown formatting - this could be expanded
+    # Replace headers
+    for i in range(3, 0, -1):
+        h_tag = f"h{i}"
+        text = text.replace(f"{'#' * i} ", f"<{h_tag}>") \
+                   .replace(f"\n{'#' * i} ", f"<{h_tag}>")
+        
+        # Find all headers and close them
+        for line in text.split("\n"):
+            if line.startswith(f"<{h_tag}>"):
+                text = text.replace(line, f"{line}</{h_tag}>")
+    
+    # Replace bold text
+    text = text.replace("**", "<strong>", 1)
+    while "**" in text:
+        text = text.replace("**", "</strong>", 1)
+        if "**" in text:
+            text = text.replace("**", "<strong>", 1)
+    
+    # Replace italic text
+    text = text.replace("*", "<em>", 1)
+    while "*" in text:
+        text = text.replace("*", "</em>", 1)
+        if "*" in text:
+            text = text.replace("*", "<em>", 1)
+    
+    # Replace paragraphs
+    text = text.replace("\n\n", "</p><p>")
+    text = f"<p>{text}</p>"
+    
+    # Clean up empty paragraphs
+    text = text.replace("<p></p>", "")
+    
+    return text
+
+
+def _generate_factors_chart(factors: Dict[str, float], factor_explanations: Dict[str, str], config: ExplanationVisualizationConfig) -> str:
+    """
+    Generate HTML for the factors chart.
+    
+    Args:
+        factors: Dictionary of factor names and scores
+        factor_explanations: Dictionary of factor explanations
+        config: Visualization configuration
+        
+    Returns:
+        HTML string for factors chart
+    """
+    if not factors:
+        return ""
+    
+    html = '<div class="factors-chart"><h3>Factor Breakdown</h3>'
+    
+    # Generate bars for each factor
+    color_index = 0
+    for factor_name, factor_score in factors.items():
+        # Format the factor name for display
+        display_name = factor_name.replace("_", " ").replace("score", "").strip().title()
+        
+        # Get explanation for this factor if available
+        explanation = factor_explanations.get(factor_name, "")
+        tooltip = ""
+        if explanation:
+            tooltip = f'''
+            <div class="factor-tooltip">
+                <span class="tooltip-icon">ⓘ</span>
+                <span class="tooltip-text">{explanation}</span>
+            </div>
+            '''
+        
+        # Choose color for this factor
+        color = config.chart_colors[color_index % len(config.chart_colors)]
+        color_index += 1
+        
+        # Generate the progress bar
+        html += f'''
+        <div class="factor-bar">
+            <div class="factor-name">
+                <span>{display_name}{tooltip}</span>
+                <span class="factor-score">{factor_score:.1f}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-value" style="width: {factor_score}%; background-color: {color}"></div>
+            </div>
+        </div>
+        '''
+    
+    html += '</div>'
+    return html
+
+
+def _generate_list_section(title: str, items: List[str], css_class: str) -> str:
+    """
+    Generate HTML for a list section (strengths or improvements).
+    
+    Args:
+        title: Section title
+        items: List items to display
+        css_class: CSS class for styling
+        
+    Returns:
+        HTML string for list section
+    """
+    if not items:
+        return ""
+    
+    html = f'<div class="{css_class}"><h3>{title}</h3><ul>'
+    
+    for item in items:
+        html += f'<li>{item}</li>'
+    
+    html += '</ul></div>'
+    return html
+
+
+def _generate_metadata_section(metadata: Dict[str, Any]) -> str:
+    """
+    Generate HTML for metadata section.
+    
+    Args:
+        metadata: Dictionary of metadata
+        
+    Returns:
+        HTML string for metadata section
+    """
+    if not metadata:
+        return ""
+    
+    html = '<div class="metadata-section"><h3>Additional Information</h3><dl>'
+    
+    for key, value in metadata.items():
+        # Format the key for display
+        display_key = key.replace("_", " ").title()
+        
+        # Format the value based on its type
+        if isinstance(value, (list, dict)):
+            display_value = f'<pre>{json.dumps(value, indent=2)}</pre>'
+        else:
+            display_value = str(value)
+        
+        html += f'<dt>{display_key}</dt><dd>{display_value}</dd>'
+    
+    html += '</dl></div>'
+    return html
