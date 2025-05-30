@@ -56,6 +56,8 @@ The "Candidates" and "Jobs" modules are used for managing CVs and JDs respective
 
 ## 5. Performing Candidate-Job Analysis (Matching Module)
 
+RecruitX leverages the powerful Google Gemini AI directly within your browser. Advanced analytical processes, including conceptual elements of Retrieval Augmented Generation (RAG), are orchestrated through sophisticated interactions with this AI to provide comprehensive insights.
+
 Once at least one CV and one JD are available in the system:
 
 1.  Navigate to the **Matching** module.
@@ -70,6 +72,8 @@ Once at least one CV and one JD are available in the system:
     *   For bulk analyses, a summary message will be shown, and all generated reports will be available via the Dashboard.
 
 ## 6. Interpreting the Candidate Match Report
+
+RecruitX leverages the powerful Google Gemini AI directly within your browser. Advanced analytical processes, including conceptual elements of Retrieval Augmented Generation (RAG), are orchestrated through sophisticated interactions with this AI to provide comprehensive insights.
 
 The Candidate Match Report offers a detailed breakdown of the AI's findings:
 
@@ -128,7 +132,10 @@ Changes must be saved using "Save All Settings". "Reset to Defaults" reverts all
 
 ## 10. Troubleshooting & Support
 
-*   **API Key Configuration Errors:** Errors related to "API_KEY environment variable not set" or authentication issues indicate incorrect Gemini API key setup. Please verify configuration as per the `README.md`. The application expects `process.env.API_KEY` to be available in its runtime environment.
+*   **API Key Configuration Errors:** If you encounter errors related to API key authentication or messages like "API_KEY environment variable not set" (especially in non-Vite environments) or "Invalid API Key":
+    *   **For local development using Vite:** Ensure your `.env.local` file is correctly set up in the project root with `VITE_GOOGLE_GENAI_API_KEY=your-api-key-here`. The `VITE_` prefix is crucial. Refer to the `README.md` for detailed setup instructions.
+    *   **For other deployment environments:** Verify the API key configuration as per the specific environment's guidelines (e.g., `process.env.API_KEY` being correctly set and accessible).
+    *   Double-check that the API key itself is valid and has the necessary permissions for the Gemini API.
 *   **Analysis Errors:** Should an error occur during analysis, an alert will be displayed. Retry the operation. Persistent issues may indicate API service interruptions or problematic input data.
 *   **File Parsing Issues:** Ensure uploaded files are not corrupted and are of the supported types.
 

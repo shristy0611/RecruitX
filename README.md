@@ -13,9 +13,9 @@ RecruitX is an advanced AI-powered recruitment assistant developed by Shristyver
     *   **Comprehensive Scoring Model:** Delivers an overall match score and granular assessments for each active dimension.
 *   **Actionable Explanations:** Articulates the rationale behind AI-generated scores through clear, evidence-based explanations, emphasizing how Recruiter Notes and retrieved contextual information (from RAG) influenced the outcome.
 *   **Recruiter Insights Prioritization:** Enables recruiters to append contextual notes to CVs and JDs. The AI is programmed to assign high priority to these insights.
-*   **SOTA Agentic RAG Integration (Conceptual Foundation):** The system is designed to incorporate knowledge from an external, curated knowledge base through a conceptual Agentic Retrieval Augmented Generation pipeline. This allows the AI to access relevant definitions, benchmarks, and detailed context, leading to more accurate and deeply informed analyses.
+*   **Advanced Agentic RAG Integration (Conceptual Simulation):** The system's client-side implementation *simulates* the integration of knowledge from an external, curated knowledge base. This is achieved through sophisticated prompt engineering, where the *concept* of an Agentic Retrieval Augmented Generation pipeline is used to structure the interaction with the Gemini API. This allows the AI to conceptually access relevant definitions, benchmarks, and detailed context, leading to more accurate and deeply informed analyses.
 *   **Bilingual Support:** Offers full interface and AI report generation in both English and Japanese.
-*   **Conceptual Multi-Agent AI Framework:** The AI's analytical process is modeled on a collaborative team of specialized virtual agents (e.g., Data Ingestion, RAG Agents for planning and retrieval, Recruiter Insights Integration, Scoring Engine, Reporting), ensuring a structured and thorough evaluation.
+*   **Conceptual Multi-Agent AI Framework (Simulated):** The AI's analytical process is modeled on a collaborative team of specialized virtual agents (e.g., Data Ingestion, RAG Agents for planning and retrieval, Recruiter Insights Integration, Scoring Engine, Reporting). In the current client-side version, these interactions are *simulated* via prompt engineering to guide the Gemini API, ensuring a structured and thorough evaluation.
 *   **Client-Side Data Persistence:** Leverages `localStorage` for the persistence of CVs, JDs, match reports, and application settings, enabling users to retain their data across browser sessions (simulating database interaction for demonstration and single-user contexts).
 *   **Ethical AI Framework:** Designed with an emphasis on objectivity and transparency, aiming to mitigate bias in the AI's analytical outputs. The system requires AI to explain its reasoning for scores based on textual evidence.
 *   **Sophisticated User Interface:** A clean, responsive, and professional interface built with React and Tailwind CSS, designed for optimal user experience.
@@ -52,27 +52,30 @@ RecruitX is architected as a client-side application that interfaces directly wi
     Alternatively, ensure all project files are co-located in a dedicated directory.
 
 2.  **API Key Integration:**
-    *   The application is designed to obtain the Gemini API Key **exclusively** from the environment variable `process.env.API_KEY`.
-    *   It is assumed that this variable is pre-configured, valid, and accessible in the execution context where the application is run (e.g., provided by the AI Developer Hub environment or a similar platform).
-    *   **The application will not prompt for an API key or provide UI for its input.**
+    *   For local development using Vite (which is the recommended setup for this project), the application expects the Gemini API Key to be available as `import.meta.env.VITE_GOOGLE_GENAI_API_KEY`. This is typically set in a `.env.local` file at the project root (see "API Keys Setup" section below).
+    *   The `services/geminiService.ts` file uses `import.meta.env.VITE_GOOGLE_GENAI_API_KEY` to access the key.
+    *   If deploying to a specific platform (e.g., AI Developer Hub) that might use `process.env.API_KEY`, ensure that this environment variable is correctly made available to the application, potentially requiring adjustments in how the key is accessed in `services/geminiService.ts` or through build process configurations. For standard local development, `VITE_GOOGLE_GENAI_API_KEY` is the correct variable.
+    *   **The application will not prompt for an API key or provide a UI for its input if the key is not found or is invalid.** It will fall back to mock implementations as described in the "API Keys Setup" section.
 
-**Application Launch:**
+**Application Launch & Local Development:**
 
 The application's `index.html` uses an `importmap` for ES module resolution and dynamically loads React and other dependencies from CDNs (`esm.sh`). The core logic, including Gemini API interactions, resides in TypeScript (`.tsx`) files.
 
-*   **Intended Execution Environment:** RecruitX is designed to be run in an environment that can serve `index.html` and its associated ES modules, and crucially, provide the `process.env.API_KEY` to the JavaScript context. Platforms like the AI Developer Hub are examples of such environments.
-*   **Local Development:**
-    *   For local development and testing, you'll typically use a development server that can handle TypeScript/JSX and inject environment variables. Tools like Vite or `create-react-app` (with appropriate configuration) are common.
-    *   If using a simple static server (like `live-server`) for local viewing, it **will not** automatically process a `.env` file or make `process.env.API_KEY` available to the client-side JavaScript.
-    *   **For local testing without a full dev server setup that handles `.env` files:** You would need to temporarily modify `services/geminiService.ts` to directly embed your API key:
-        ```typescript
-        // In services/geminiService.ts - FOR LOCAL TESTING AND DEMONSTRATION ONLY
-        // const API_KEY = process.env.API_KEY; // Original line
-        const API_KEY = "YOUR_ACTUAL_GEMINI_API_KEY_HERE"; // Substitute with your key
+*   **Local Development with Vite:**
+    1.  Ensure you have Node.js and npm installed.
+    2.  Install project dependencies:
+        ```bash
+        npm install
         ```
-    *   **Critical Reminder:** Any hardcoded API keys **must be removed** before committing code or deploying to any shared/production environment. The primary mechanism relies on `process.env.API_KEY` being available in the runtime environment.
+    3.  Set up your `VITE_GOOGLE_GENAI_API_KEY` in a `.env.local` file as described in "API Keys Setup".
+    4.  Run the development server:
+        ```bash
+        npm run dev
+        ```
+        This will typically start the application on `http://localhost:5173` (or the next available port).
+*   **Note on `process.env.API_KEY`:** The previous mentions of `process.env.API_KEY` were relevant to specific deployment contexts. For local development with Vite, `import.meta.env.VITE_GOOGLE_GENAI_API_KEY` and the `.env.local` file method is the standard.
 
-Once the API key is accessible to the application's JavaScript context (either via the environment or temporary local modification), `index.html` can be served and opened in a browser.
+Once the API key is accessible to the application's JavaScript context, `index.html` (when served by Vite) can be opened in a browser.
 
 ## Strategic Vision & Future Enhancements
 
@@ -112,8 +115,9 @@ This application uses Google's Gemini API for AI features. To enable these featu
 2. Create a `.env.local` file in the project root with the following content:
 
 ```
-GOOGLE_GENAI_API_KEY=your-api-key-here
+VITE_GOOGLE_GENAI_API_KEY=your-api-key-here
 ```
+**Note:** The `VITE_` prefix is necessary for Vite to expose the variable to the client-side code during local development.
 
 Without a valid API key, the application will use mock implementations for AI features.
 
