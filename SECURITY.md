@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability within RecruitX, please send an email to [security@example.com](mailto:security@example.com). All security vulnerabilities will be promptly addressed.
+If you discover a security vulnerability within RecruitX, please report it by [Please report any security vulnerabilities by creating a GitHub issue with the 'security' label, or if sensitive, follow instructions for private disclosure if provided by project maintainers.]. All security vulnerabilities will be promptly addressed.
 
 ## Security Practices
 

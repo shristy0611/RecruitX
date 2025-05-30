@@ -59,7 +59,7 @@ representative at an online or offline event.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at [INSERT CONTACT METHOD - e.g., an email address for Shristyverse LLC or the project maintainers].
+reported to the community leaders responsible for enforcement at [Contact the project maintainers via designated communication channels, such as creating a GitHub issue or direct contact if specified by the project administrators.].
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
@@ -119,5 +119,3 @@ version 2.0, available at
 
 [homepage]: https://www.contributor-covenant.org
 [v2.0]: https://www.contributor-covenant.org/version/2/0/code_of_conduct.html
-
-For Stristyverse LLC: You will need to establish a contact method for reporting violations.

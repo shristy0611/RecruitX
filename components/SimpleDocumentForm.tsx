@@ -190,8 +190,6 @@ const SimpleDocumentForm: React.FC<SimpleDocumentFormProps> = ({
             className="hidden"
             disabled={isProcessingFile}
           />
-          {/* Bulk upload placeholder for test compatibility */}
-          <button type="button" className="text-sm font-medium text-neutral-400 border border-neutral-600 rounded px-3 py-1.5" aria-label={docType === 'cv' ? 'Bulk Upload CVs' : 'Bulk Upload Jobs'} disabled>{docType === 'cv' ? 'Bulk Upload CVs' : 'Bulk Upload Jobs'}</button>
           {isProcessingFile && !formInfo && <p className="text-xs text-primary-light mt-1 animate-pulse">{t('processingFile')}</p>}
         </div>
 
