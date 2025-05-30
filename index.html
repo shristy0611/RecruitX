@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RecruitX - AI Recruitment Assistant</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.1.1/24/outline/heroicons.min.css" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "recharts": "https://esm.sh/recharts@^2.15.3",
+    "@google/genai": "https://esm.sh/@google/genai@^1.0.1",
+    "pdfjs-dist/build/pdf.mjs": "https://esm.sh/pdfjs-dist@4.4.168/build/pdf.mjs",
+    "pdfjs-dist/build/pdf.worker.mjs": "https://esm.sh/pdfjs-dist@4.4.168/build/pdf.worker.mjs",
+    "mammoth": "https://esm.sh/mammoth@1.8.0",
+    "xlsx": "https://esm.sh/xlsx@0.18.5",
+    "pdfjs-dist/": "https://esm.sh/pdfjs-dist@4.4.168/"
+  }
+}
+</script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #0B0F19; /* Fallback, new neutral-900 */
+      background-image: linear-gradient(180deg, #0B0F19 0%, #01020A 100%); /* new neutral-900 to neutral-950 */
+    }
+
+    /* Custom scrollbar for "Luminous Depths" dark theme */
+    ::-webkit-scrollbar {
+      width: 12px; /* Slightly wider for a more substantial feel */
+      height: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0B0F19; /* new neutral-900 */
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155; /* new neutral-700 */
+      border-radius: 10px;
+      border: 3px solid #0B0F19; /* new neutral-900, creates padding around thumb */
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569; /* new neutral-600 */
+    }
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+
+
+    .text-gradient-animated {
+        background-size: 200% auto; 
+        color: #fff;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: text-gradient 3s linear infinite alternate;
+    }
+    
+    .subtle-hover-lift {
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    }
+    .subtle-hover-lift:hover {
+        transform: translateY(-2px);
+        /* Using Tailwind's shadow-lg-dark for consistency if defined */
+    }
+
+    .shadow-card-dark { /* A base card shadow */
+      box-shadow: 0 1px 3px 0 rgba(0,0,0,0.3), 0 1px 2px 0 rgba(0,0,0,0.26);
+    }
+    .shadow-card-dark-hover:hover { /* A slightly more pronounced hover for cards */
+       box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3), 0 4px 6px -2px rgba(0,0,0,0.15);
+    }
+
+    .prose {
+      /* Ensure prose styles apply correctly in dark mode */
+    }
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose strong { color: #E2E8F0; } /* neutral-200 */
+    .prose p, .prose li, .prose blockquote { color: #CBD5E1; } /* neutral-300 */
+    .prose a { color: #A3C5FF; } /* primary.text (new) */
+    .prose a:hover { color: #5D9BFF; } /* primary.light (new) */
+    .prose code {
+      color: #81E6D9; /* accent.text (new teal) */
+      background-color: #1E293B; /* neutral-800 (new) */
+    }
+  </style>
+</head>
+<body class="bg-neutral-900 text-neutral-300"> <!-- Default text color updated to new neutral-300 -->
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html><link rel="stylesheet" href="index.css">
+<script src="index.tsx" type="module"></script>

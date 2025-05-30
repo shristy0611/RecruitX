@@ -1,0 +1,35 @@
+{
+  "name": "recruitx",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "preview": "vite preview",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@google/genai": "^1.2.0",
+    "mammoth": "1.8.0",
+    "openai": "^5.0.1",
+    "pdfjs-dist": "4.4.168",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^2.15.3",
+    "xlsx": "0.18.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0"
+  }
+}
